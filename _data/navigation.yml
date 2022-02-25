@@ -10,8 +10,9 @@ main:
   - title: "Publications"    
     url: /pubs/
 
-#  - title: "Teaching"
-#    url: /teaching/    
-    
   - title: "CV"
     url: /cv/
+    
+  - title: "Teaching and Letters"
+    url: /teaching/    
+
