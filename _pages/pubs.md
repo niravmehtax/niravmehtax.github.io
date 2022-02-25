@@ -9,8 +9,7 @@ author_profile: true
 
 For a full list, see [my Google Scholar page](https://scholar.google.com/citations?user=uImv6UsAAAAJ&hl=en).
 
-## Labor, empirical contracting, education, and structural health
-
+## Labor, empirical contracting, and education
 
 * Competition in Public School Districts: Charter School Entry, Student Sorting, and School Input Determination. *International Economic Review*, 58(4), 1089-1116. 2017. [working paper](/files/charter_schools_Mehta_2016_07_06.pdf)
 
@@ -24,7 +23,7 @@ For a full list, see [my Google Scholar page](https://scholar.google.com/citatio
 
 * Time-Use and Academic Peer Effects in College (with Ralph Stinebrickner and Todd Stinebrickner). *Economic Inquiry*, 57(1), 162-171, 2019.
 
-## Other health and miscellaneous
+## Other (health and miscellaneous)
 
 * Production of Physician Services under Fee-For-Service and Blended Fee-For-Service: Evidence from Ontario, Canada (with Sisira Sarma, Nibene Habib Som&egrave;, Rose Anne Devlin, Gregory Zaric, Lihua Li, Salimah Shariff, Bachir Belhadji, Amardeep Thind, and Amit Garg). *Health Economics*, 28(12), 1418-1434. 
 
