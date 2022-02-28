@@ -12,15 +12,14 @@ author_profile: true
  
 * Social Interactions, Mechanisms, and Equilibrium: Evidence from a Model of Study Time and Academic Achievement (with [Tim Conley](https://economics.uwo.ca/people/faculty/conley.html), Ralph Stinebrickner, and [Todd Stinebrickner](https://economics.uwo.ca/people/faculty/stinebrickner.html)).
 Revise and resubmit *Journal of Political Economy*.
-[working paper (updated 10/2017)](/files/research/conley_mehta_stinebrickner_stinebrickner_friendstudy_2017_10_10.pdf)
+[**very old** working paper (updated 10/2017)](/files/research/Conley_Mehta_Stinebrickner_Stinebrickner_friendstudy_2017_10_10.pdf)
+**New version coming soon!**
 
 ## Working Papers
 
-* A Partial Identification Approach to Identifying the Determinants of Human Capital Accumulation.  
-*Funded by SSHRC IDG Grant Program*  
-**New version coming soon!**
+* A Partial Identification Approach to Identifying the Determinants of Human Capital Accumulation. *Funded by the SSHRC IDG Grant Program.* **New version coming soon!**
 
-* Why is there a “Return” to Teacher Experience? Using Evidence from an Incentive Pay Experiment to Distinguish between On-the-Job-Training and Learning-by-Doing Models of Human Capital. *Funded by SSHRC IDG Grant Program*
+* Why is there a "Return" to Teacher Experience? Using Evidence from an Incentive Pay Experiment to Distinguish between On-the-Job-Training and Learning-by-Doing Models of Human Capital. *Funded by the SSHRC IDG Grant Program.*
 
 ## In Progress
 
