@@ -10,3 +10,5 @@ redirect_from:
 {% include base_path %}
 
 [Link to CV](/files/nirav_mehta_cv.pdf)
+
+{% include nirav_mehta_cv.md %}
