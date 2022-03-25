@@ -262,6 +262,8 @@ Applied/Labor Lunch Workshop, 2013
 
 ::: list
 
+2022-2023: Faculty Research Development Fund Internal Award: \$9,814
+
 2020-2022: SSHRC Insight Development Grant, \$37,549
 
 2019-2021: Co-PI on World Bank grant (w/ Eeshani Kandpal and Gil
