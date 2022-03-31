@@ -19,7 +19,7 @@ Revise and resubmit at *Journal of Political Economy*.
 
 ## Working Papers
 
-* A Partial Identification Approach to Identifying the Determinants of Human Capital Accumulation. *Funded by the SSHRC IDG Grant Program.* [**New** working paper (3/30/2022)](/files/research/mehta_OJT_LBD_teachers_partial_identification.pdf)
+* A Partial Identification Approach to Identifying the Determinants of Human Capital Accumulation: An Application to Teachers. *Funded by the SSHRC IDG Grant Program.* [**New** working paper (3/30/2022)](/files/research/mehta_OJT_LBD_teachers_partial_identification.pdf)
 
 ## In Progress
 
