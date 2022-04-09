@@ -7,11 +7,15 @@ author_profile: true
 
 Last updated at {{ "now" | date: "%Y-%m-%d" }}
 
-## Revise and Resubmit
+## Revise and Resubmit :house: :arrow_right: :house_with_garden:
 
-* Optimal Contracting with Altruistic Agents: A Structural Model of Medicare Reimbursements for Dialysis Drugs (with [Martin Gaynor](https://www.andrew.cmu.edu/user/mgaynor/) and [Seth Richards-Shubik](http://www.lehigh.edu/~ser315/)). NBER Working Paper 27172. 
-Revise and resubmit at *American Economic Review*. [working paper (5/2020)](/files/research/medicare_screening_2020_05.pdf)
-	 <details>
+* [Optimal Contracting with Altruistic Agents: A Structural Model of Medicare Reimbursements for Dialysis Drugs](/files/research/medicare_screening_2020_05.pdf) (5/2020),
+with [Martin Gaynor](https://www.andrew.cmu.edu/user/mgaynor/) and [Seth Richards-Shubik](http://www.lehigh.edu/~ser315/). 
+NBER Working Paper 27172.  
+**R&R at *American Economic Review*.**
+New version coming soon! 
+		
+	<details>
   	<summary>Abstract</summary>  
   	<p>
   	We study health care provider agency and optimal payment policy in the context of an expensive medication for dialysis patients. 
@@ -22,10 +26,12 @@ The optimal contract is a flexible fee-for-service regime, with variable margina
 	</p>
 	</details>
 
-* Social Interactions, Mechanisms, and Equilibrium: Evidence from a Model of Study Time and Academic Achievement (with [Tim Conley](https://economics.uwo.ca/people/faculty/conley.html), Ralph Stinebrickner, and [Todd Stinebrickner](https://economics.uwo.ca/people/faculty/stinebrickner.html)). CESifo Working Paper 6896; NBER Working Paper 21418. 
-Revise and resubmit at *Journal of Political Economy*.
-[**very old** working paper (10/2017)](/files/research/Conley_Mehta_Stinebrickner_Stinebrickner_friendstudy_2017_10_10.pdf)
-**New version coming soon!**
+* [Social Interactions, Mechanisms, and Equilibrium: Evidence from a Model of Study Time and Academic Achievement](/files/research/Conley_Mehta_Stinebrickner_Stinebrickner_friendstudy_2017_10_10.pdf) (10/2017), 
+with [Tim Conley](https://economics.uwo.ca/people/faculty/conley.html), Ralph Stinebrickner, and [Todd Stinebrickner](https://economics.uwo.ca/people/faculty/stinebrickner.html). 
+CESifo Working Paper 6896; NBER Working Paper 21418.  
+**R&R at *Journal of Political Economy*.**
+New version coming soon! 
+	
 	<details>
   	<summary>Abstract</summary>  
   	<p>
@@ -40,9 +46,10 @@ measures mitigate econometric endogeneity concerns.
   	</p>
 	</details>
 
-## Working Papers
+## Working Papers :derelict_house: :arrow_right: :house:
 
-* A Partial Identification Approach to Identifying the Determinants of Human Capital Accumulation: An Application to Teachers. *Funded by SSHRC IDG Grant 430-2020-01098.* [working paper (3/30/2022)](/files/research/mehta_OJT_LBD_teachers_partial_identification.pdf) 
+* [A Partial Identification Approach to Identifying the Determinants of Human Capital Accumulation: An Application to Teachers](/files/research/mehta_OJT_LBD_teachers_partial_identification.pdf) (3/2022). Funded by SSHRC IDG Grant 430-2020-01098. 
+
 	<details>
   	<summary>Abstract</summary>  
 	<p>
@@ -53,16 +60,15 @@ measures mitigate econometric endogeneity concerns.
 	The results provide evidence of an LBD component, as well as an informative upper bound on the OJT component. 
 	</p>
 	</details>
-	
 
 
-## In Progress
+## In Progress :building_construction:
 
-* Why is there a "Return" to Teacher Experience? Using Evidence from an Incentive Pay Experiment to Distinguish between On-the-Job-Training and Learning-by-Doing Models of Human Capital. *Funded by SSHRC IDG Grant 430-2020-01098.*
+* Why is there a "Return" to Teacher Experience? Using Evidence from an Incentive Pay Experiment to Distinguish between On-the-Job-Training and Learning-by-Doing Models of Human Capital. Funded by SSHRC IDG Grant 430-2020-01098.
 
 * Untitled Paper about Health Production (with Tian Liu and [Seth Richards-Shubik](http://www.lehigh.edu/~ser315)).
 
-## Needing Resurrection
+## Needing Resurrection :derelict_house:
 
 These are zombie papers, but instead of regular zombies (which need brains), these need time from me and/or someone else (you?!)...
 

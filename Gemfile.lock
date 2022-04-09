@@ -283,6 +283,7 @@ DEPENDENCIES
   hawkins
   jekyll-feed
   jekyll-sitemap
+  jemoji
   webrick (~> 1.7)
 
 BUNDLED WITH

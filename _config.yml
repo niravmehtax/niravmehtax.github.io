@@ -109,7 +109,7 @@ author:
   stackoverflow    : # http://stackoverflow.com/users/123456/username
   steam            :
   tumblr           :
-#  twitter          : "replacethistwitterhandle"
+  twitter          : "nirav_mehta_x"
   vine             :
   weibo            :
   xing             :
@@ -258,6 +258,7 @@ permalink: /:categories/:title/
 timezone: Canada/Eastern # http://en.wikipedia.org/wiki/List_of_tz_database_time_zones
 
 
+
 # Plugins
 plugins:
   - jekyll-paginate
@@ -265,6 +266,7 @@ plugins:
   - jekyll-gist
   - jekyll-feed
   - jekyll-redirect-from
+  - jemoji
 # mimic GitHub Pages with --safe
 whitelist:
   - jekyll-paginate
