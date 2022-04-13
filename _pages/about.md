@@ -15,6 +15,8 @@ Some of my [current research](/curr_research) is about contracting in education 
 I did my Ph.D. in Economics at the University of Pennsylvania. 
 Before that, I did an M.Sc. in Economics at the LSE and my B.A. is from the University of South Carolina, in Economics and International Studies.
 
+Here is my [CV](/files/nirav_mehta_cv.pdf).
+
 ### Contact Information
 
 Email me at nirav [dot] mehta [at] uwo [dot] ca
