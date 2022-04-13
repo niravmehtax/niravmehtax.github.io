@@ -48,7 +48,7 @@ measures mitigate econometric endogeneity concerns.
 
 ## Working Papers :derelict_house: :arrow_right: :house:
 
-* [A Partial Identification Approach to Identifying the Determinants of Human Capital Accumulation: An Application to Teachers](/files/research/mehta_OJT_LBD_teachers_partial_identification.pdf) (3/2022). Funded by SSHRC IDG Grant 430-2020-01098. 
+* [A Partial Identification Approach to Identifying the Determinants of Human Capital Accumulation: An Application to Teachers](/files/research/mehta_OJT_LBD_teachers_partial_identification_working_paper.pdf) (3/2022). CESifo Working Paper 9681. Funded by SSHRC IDG Grant 430-2020-01098. 
 
 	<details>
   	<summary>Abstract</summary>  
@@ -70,7 +70,7 @@ measures mitigate econometric endogeneity concerns.
 
 ## Needing Resurrection :derelict_house:
 
-These are zombie papers, but instead of regular zombies (which need brains), these need time from me and/or someone else (you?!)...
+These are zombie papers, but instead of regular zombies (which need only brains), these need time from me and/or someone else (you?!)...
 
 * Supply, Demand, and Social Learning: An Application to Learning About Charter School Quality 
 {%comment%} (with Matt Chingos) {%endcomment%}
