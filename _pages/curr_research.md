@@ -64,7 +64,8 @@ measures mitigate econometric endogeneity concerns.
 
 ## In Progress :building_construction:
 
-* Why is there a "Return" to Teacher Experience? Using Evidence from an Incentive Pay Experiment to Distinguish between On-the-Job-Training and Learning-by-Doing Models of Human Capital. Funded by SSHRC IDG Grant 430-2020-01098.
+* The Importance of Hidden Types, Hidden Actions, and Human Capital Accumulation in Determining Teacher Quality: Evidence from a Dynamic Structural Model Estimated using an Incentive Pay Experiment. Funded by SSHRC IDG Grant 430-2020-01098.
+<!--Why is there a "Return" to Teacher Experience? Using Evidence from an Incentive Pay Experiment to Distinguish between On-the-Job-Training and Learning-by-Doing Models of Human Capital. Funded by SSHRC IDG Grant 430-2020-01098.-->
 
 * Untitled Paper about Health Production (with Tian Liu and [Seth Richards-Shubik](http://www.lehigh.edu/~ser315)).
 
