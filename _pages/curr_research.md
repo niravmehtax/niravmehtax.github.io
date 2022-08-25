@@ -26,29 +26,25 @@ Adopting the optimal contract would eliminate medically excessive dosages and re
 	</p>
 	</details>
 
-* [Social Interactions, Mechanisms, and Equilibrium: Evidence from a Model of Study Time and Academic Achievement](/files/research/Conley_Mehta_Stinebrickner_Stinebrickner_friendstudy_2017_10_10.pdf) (10/2017), 
+* [Social Interactions, Mechanisms, and Equilibrium: Evidence from a Model of Study Time and Academic Achievement](/files/research/Conley_Mehta_Stinebrickner_Stinebrickner_friendstudy_2022_07_13.pdf) (07/2022), 
 with [Tim Conley](https://economics.uwo.ca/people/faculty/conley.html), Ralph Stinebrickner, and [Todd Stinebrickner](https://economics.uwo.ca/people/faculty/stinebrickner.html). 
 CESifo Working Paper 6896; NBER Working Paper 21418.  
 **R&R at *Journal of Political Economy*.**
-New version coming soon! 
 	
 	<details>
   	<summary>Abstract</summary>  
   	<p>
   	We develop and estimate a model of student study time on a social network. 
-  	The model is designed to exploit unique data collected in the Berea Panel Study. Study
-time data allow us to quantify an intuitive mechanism for academic social interactions:
-own study time may depend on friend study time in a heterogeneous manner. Social
-network data allow us to embed study time and resulting academic achievement in
-an estimable equilibrium framework. We develop a specification test that exploits the
-equilibrium nature of social interactions and use it to show that novel study propensity
-measures mitigate econometric endogeneity concerns.	
+  	The model is designed to exploit unique data collected in the Berea Panel Study. 
+  	Study time data allow us to quantify an intuitive mechanism for academic social interactions: own study time may depend on friend study time in a heterogeneous manner. 
+  	Social network data allow us to embed study time and resulting academic achievement in an estimable equilibrium framework. 
+  	We develop a specification test that exploits the equilibrium nature of social interactions and use it to show that novel study propensity measures mitigate econometric endogeneity concerns.	
   	</p>
 	</details>
 
 ## Working Papers :derelict_house: :arrow_right: :house:
 
-* [A Partial Identification Approach to Identifying the Determinants of Human Capital Accumulation: An Application to Teachers](/files/research/mehta_OJT_LBD_teachers_partial_identification_working_paper.pdf) (3/2022). CESifo Working Paper 9681. Funded by SSHRC IDG Grant 430-2020-01098. 
+* [A Partial Identification Approach to Identifying the Determinants of Human Capital Accumulation: An Application to Teachers](/files/research/mehta_OJT_LBD_teachers_partial_identification_working_paper.pdf) (8/2022). CESifo Working Paper 9681. Funded by SSHRC IDG Grant 430-2020-01098. 
 
 	<details>
   	<summary>Abstract</summary>  
@@ -57,7 +53,7 @@ measures mitigate econometric endogeneity concerns.
 	Teacher quality exhibits substantial growth over teachers' careers, but why it improves is not well understood.
 	I use a human capital production function nesting On-the-Job-Training (OJT) and Learning-by-Doing (LBD) and experimental variation from Glewwe et al. (2010), a teacher incentive pay experiment in Kenya, to discern the presence and relative importance of these forces.
 	The identified set for the OJT and LBD components has a closed-form solution, which depends on experimentally estimated average treatment effects.
-	The results provide evidence of an LBD component, as well as an informative upper bound on the OJT component. 
+	The results provide evidence of an LBD component and an informative upper bound on the OJT component. 
 	</p>
 	</details>
 
