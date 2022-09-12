@@ -9,20 +9,21 @@ Last updated at {{ "now" | date: "%Y-%m-%d" }}
 
 ## Revise and Resubmit :house: :arrow_right: :house_with_garden:
 
- * [Optimal Contracting with Altruistic Agents: Medicare Payments for Dialysis Drugs](/files/research/medicare_screening_2020_05.pdf) (5/2020),
+ * [Optimal Contracting with Altruistic Agents: Medicare Payments for Dialysis Drugs](/files/research/medicare_screening_2022_09.pdf) (9/2022),
 with [Martin Gaynor](https://www.andrew.cmu.edu/user/mgaynor/) and [Seth Richards-Shubik](http://www.lehigh.edu/~ser315/). 
 NBER Working Paper 27172.  
 **R&R at *American Economic Review*.**
-New version coming soon! 
 		
 	<details>
   	<summary>Abstract</summary>  
   	<p>
   	We study health care provider agency and optimal payment policy in the context of an expensive medication for dialysis patients. 
-Using Medicare claims data we estimate a structural model of treatment decisions, in which physicians differ in their altruism and marginal costs, and this heterogeneity is unobservable to the government. 
-In a novel application of nonlinear pricing methods, we empirically characterize the optimal unrestricted contract in this screening environment with multidimensional heterogeneity.
-The optimal contract is a flexible fee-for-service regime, with variable marginal payment rates.
-Adopting the optimal contract would eliminate medically excessive dosages and reduce the government's expenditures by 27 percent.
+	Using Medicare claims data we estimate a structural model of treatment decisions, in which providers differ in their altruism and marginal costs, and this heterogeneity is unobservable to the government. 
+	In a novel application of nonlinear pricing methods, we empirically characterize the optimal unrestricted contracts in this screening environment with multidimensional heterogeneity. 
+	The optimal contracts initially pay similar amounts as the one used by Medicare at the time, but the marginal payment rates decline precipitously at higher dosages. 
+	Adopting the optimal contracts would eliminate medically excessive dosages and substantially reduce expenditures, resulting in approximately $300 million in gains from better contracting. 
+	The approach we develop could be applied to a broad class of problems in health care payment policy.
+
 	</p>
 	</details>
 
