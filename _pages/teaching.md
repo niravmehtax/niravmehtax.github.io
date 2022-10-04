@@ -12,25 +12,27 @@ author_profile: true
 ## My students:
 
 ### Advisor/Co-advisor
+
+* Tian Liu: in progress!
 	
-	- Martin Luccioni: Initial placement Post-doc at Olin Business School, Washington University, St. Louis [website](https://sites.google.com/view/martinluccioni)
+* Martin Luccioni: Initial placement Post-doc at Olin Business School, Washington University, St. Louis [website](https://sites.google.com/view/martinluccioni)
 	
-	- Tomasz Handler: Initial placement: StatsCan
+* Tomasz Handler: Initial placement: StatsCan
 	
-	- George Orlov: Initial placement: Post-doc in Economics Department at Cornell University [website](https://sites.google.com/site/orlovecon)
+* George Orlov: Initial placement: Post-doc in Economics Department at Cornell University [website](https://sites.google.com/site/orlovecon)
 	
-	- Jin Zhou: Initial placement Post-doc at Center for the Economics of Human Development, University of Chicago [website](https://sites.google.com/site/jinzhouecon)
+* Jin Zhou: Initial placement Post-doc at Center for the Economics of Human Development, University of Chicago [website](https://sites.google.com/site/jinzhouecon)
 	
 	
 ### Committee member:
 
-	- Bob Millard: Initial placement SUNY Stonybrook [website](https://www.robertgmillard.com)
+* Bob Millard: Initial placement SUNY Stonybrook [website](https://www.robertgmillard.com)
 	
-	- Marco Pariguana: Initial palcement Post-doc at Tulane [website](https://www.marcopariguana.com)
+* Marco Pariguana: Initial palcement Post-doc at Tulane [website](https://www.marcopariguana.com)
 	
-	- Qian Liu: Initial placement: Brock University [website](https://sites.google.com/view/qianliu)
+* Qian Liu: Initial placement: Brock University [website](https://sites.google.com/view/qianliu)
 
-	- Yifan Gong: Initial placement University of Nebraska-Lincoln [website](https://sites.google.com/view/yifan-gong/)
+* Yifan Gong: Initial placement University of Nebraska-Lincoln [website](https://sites.google.com/view/yifan-gong/)
 
 ## Current courses:
 
