@@ -9,31 +9,6 @@ author_profile: true
 
 * Undergrad students seeking a letter of recommendation: please use [these instructions](/files/teaching/nirav_instructions.pdf) to fill out [this template](/files/teaching/nirav_instructions_template.ods).
 
-## My students:
-
-### Advisor/Co-advisor
-
-* Tian Liu: in progress!
-	
-* Martin Luccioni: Initial placement Post-doc at Olin Business School, Washington University, St. Louis [website](https://sites.google.com/view/martinluccioni)
-	
-* Tomasz Handler: Initial placement: StatsCan
-	
-* George Orlov: Initial placement: Post-doc in Economics Department at Cornell University [website](https://sites.google.com/site/orlovecon)
-	
-* Jin Zhou: Initial placement Post-doc at Center for the Economics of Human Development, University of Chicago [website](https://sites.google.com/site/jinzhouecon)
-	
-	
-### Committee member:
-
-* Bob Millard: Initial placement SUNY Stonybrook [website](https://www.robertgmillard.com)
-	
-* Marco Pariguana: Initial palcement Post-doc at Tulane [website](https://www.marcopariguana.com)
-	
-* Qian Liu: Initial placement: Brock University [website](https://sites.google.com/view/qianliu)
-
-* Yifan Gong: Initial placement University of Nebraska-Lincoln [website](https://sites.google.com/view/yifan-gong/)
-
 ## Current courses:
 
 * **Econ 9770/9771/9880/9881: PhD Communication and Professional Development**  
@@ -56,4 +31,29 @@ We study welfare economics, the provision of public goods, and externalities. We
 * **Econ 2222A: Undergraduate Econometrics**  
 We cover probability and statistics, some ubiquitous probability distributions, how to make statistical inferences and test hypotheses, and linear regression models.
 
+
+## My PhD students:
+
+### Advisor/Co-advisor
+
+* Tian Liu: in progress!
+	
+* [Martin Luccioni](https://sites.google.com/view/martinluccioni): Initial placement Post-doc at Olin Business School, Washington University, St. Louis 
+	
+* Tomasz Handler: Initial placement: StatsCan
+	
+* [George Orlov](https://sites.google.com/site/orlovecon): Initial placement: Post-doc in Economics Department at Cornell University 
+	
+* [Jin Zhou](https://sites.google.com/site/jinzhouecon): Initial placement Post-doc at Center for the Economics of Human Development, University of Chicago 
+	
+	
+### Committee member:
+
+* [Bob Millard](https://www.robertgmillard.com): Initial placement SUNY Stonybrook 
+	
+* [Marco Pariguana](https://www.marcopariguana.com): Initial palcement Post-doc at Tulane 
+	
+* [Qian Liu](https://sites.google.com/view/qianliu): Initial placement: Brock University 
+
+* [Yifan Gong](https://sites.google.com/view/yifan-gong): Initial placement University of Nebraska-Lincoln 
 
