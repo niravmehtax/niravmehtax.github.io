@@ -10,10 +10,10 @@ redirect_from:
 
 
 I am an applied/labor economist at the University of Western Ontario. 
-Some of my [current research](/curr_research) is about contracting in education and health care, teacher incentive schemes, and social interaction models.
+Some of my [current research](/curr_research) is about contracting in health care and education, the determinants of teacher quality, and social interaction models.
 
 I did my Ph.D. in Economics at the University of Pennsylvania. 
-Before that, I did an M.Sc. in Economics at the LSE and my B.A. is from the University of South Carolina, in Economics and International Studies.
+Before that, I did an M.Sc. in Economics at the London School of Economics and my (dual) B.A. is from the University of South Carolina, in Economics and International Studies.
 
 Here is my [CV](/files/nirav_mehta_cv.pdf).
 

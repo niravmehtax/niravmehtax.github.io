@@ -87,10 +87,10 @@ author:
   bio              : "Associate Professor of Economics"
   employer         : "University of Western Ontario"
   location         : "London, Ontario, Canada"
-#  pubmed           : "https://www.ncbi.nlm.nih.gov/pubmed/?term=john+snow"
+  pubmed           : #"https://www.ncbi.nlm.nih.gov/pubmed/?term=john+snow"
   googlescholar    : "https://scholar.google.com/citations?user=uImv6UsAAAAJ&hl=en"
   email            : "nirav [dot] mehta [at] uwo [dot] ca"
-#  researchgate     :  # example: "https://www.researchgate.net/profile/yourprofile"
+  #researchgate     :  # example: "https://www.researchgate.net/profile/yourprofile"
   uri              :
   bitbucket        :
   codepen          :
@@ -101,6 +101,7 @@ author:
 #  github           : "niravmehtax"
   google_plus      :
   keybase          :
+  ideas                : "https://ideas.repec.org/f/pme460.html" 
   instagram        :
   impactstory      : #"https://profiles.impactstory.org/u/xxxx-xxxx-xxxx-xxxx"
   lastfm           :
@@ -111,7 +112,7 @@ author:
   stackoverflow    : # http://stackoverflow.com/users/123456/username
   steam            :
   tumblr           :
-  twitter          : "nirav_mehta_x"
+  twitter          : #"nirav_mehta_x"
   vine             :
   weibo            :
   xing             :

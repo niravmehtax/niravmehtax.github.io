@@ -36,24 +36,24 @@ We cover probability and statistics, some ubiquitous probability distributions, 
 
 ### Advisor/Co-advisor
 
-* Tian Liu: in progress!
+* Tian Liu: In progress!
 	
-* [Martin Luccioni](https://sites.google.com/view/martinluccioni): Initial placement Post-doc at Olin Business School, Washington University, St. Louis 
+* [Martin Luccioni](https://sites.google.com/view/martinluccioni): Initial placement: Post-doc at Olin Business School, Washington University, St. Louis 
 	
 * Tomasz Handler: Initial placement: StatsCan
 	
 * [George Orlov](https://sites.google.com/site/orlovecon): Initial placement: Post-doc in Economics Department at Cornell University 
 	
-* [Jin Zhou](https://sites.google.com/site/jinzhouecon): Initial placement Post-doc at Center for the Economics of Human Development, University of Chicago 
+* [Jin Zhou](https://sites.google.com/site/jinzhouecon): Initial placement: Post-doc at Center for the Economics of Human Development, University of Chicago 
 	
 	
 ### Committee member:
 
-* [Bob Millard](https://www.robertgmillard.com): Initial placement SUNY Stonybrook 
+* [Bob Millard](https://www.robertgmillard.com): Initial placement: SUNY Stonybrook 
 	
-* [Marco Pariguana](https://www.marcopariguana.com): Initial palcement Post-doc at Tulane 
+* [Marco Pariguana](https://www.marcopariguana.com): Initial placement: Post-doc at Tulane 
 	
 * [Qian Liu](https://sites.google.com/view/qianliu): Initial placement: Brock University 
 
-* [Yifan Gong](https://sites.google.com/view/yifan-gong): Initial placement University of Nebraska-Lincoln 
+* [Yifan Gong](https://sites.google.com/view/yifan-gong): Initial placement: University of Nebraska-Lincoln 
 
