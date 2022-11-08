@@ -8,7 +8,6 @@ redirect_from:
   - /about.html
 ---
 
-
 I am an applied/labor economist at the University of Western Ontario. 
 Some of my [current research](/curr_research) is about contracting in health care and education, the determinants of teacher quality, and social interaction models.
 
