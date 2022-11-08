@@ -22,6 +22,9 @@
   <div class="author__urls-wrapper">
     <button class="btn btn--inverse">Follow</button>
     <ul class="author__urls social-icons">
+      {% if author.cv %}
+        <li><i class="fa fa-file-text-o" aria-hidden="true"></i> {{ author.cv }}</li>
+      {% endif %}
       {% if author.location %}
         <li><i class="fas fa-fw fa-map-marker" aria-hidden="true"></i> {{ author.location }}</li>
       {% endif %}
