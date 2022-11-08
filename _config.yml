@@ -86,7 +86,7 @@ author:
   avatar           : "profile.png"
   bio              : "Associate Professor of Economics"
   employer         : "University of Western Ontario"
-  cv                    : "/files/nirav_mehta_cv.pdf"
+  cv                    : /files/nirav_mehta_cv.pdf
   location         : "London, Ontario, Canada"
   pubmed           : #"https://www.ncbi.nlm.nih.gov/pubmed/?term=john+snow"
   googlescholar    : "https://scholar.google.com/citations?user=uImv6UsAAAAJ&hl=en"
