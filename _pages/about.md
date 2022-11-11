@@ -10,7 +10,7 @@ redirect_from:
 
 I am an applied/labor economist at the University of Western Ontario.
 In my main line of research I develop and estimate models of human behavior to deliver quantitive answers to important public policy questions.
-Some of my [current research](/curr_research) in this line is about contracting in [health care](/files/research/medicare_screening_2022_09.pdf) and education, the determinants of teacher quality, and [social interactions models](/files/research/Conley_Mehta_Stinebrickner_Stinebrickner_friendstudy_2022_07_13.pdf).
+Some of my [current research](/curr_research) here is about contracting in [health care](/files/research/medicare_screening_2022_09.pdf) and education, the determinants of teacher quality, and [social interactions models](/files/research/Conley_Mehta_Stinebrickner_Stinebrickner_friendstudy_2022_07_13.pdf).
 In prior work, I've studied how [charter school policy](https://www.jstor.org/stable/45018807) affects the distribution of student achievement, as well as the determinants and consequences of [ability tracking](https://doi.org/10.1086/697559).
 
 I also use economic theory to help interpret data, even when not explicitly estimating behavioral models.
