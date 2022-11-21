@@ -63,7 +63,7 @@ CESifo Working Paper 6896; NBER Working Paper 21418.
 ## In Progress :building_construction:
 
 * The Importance of Hidden Types, Hidden Actions, and Human Capital Accumulation in Determining Teacher Quality: Evidence from a Dynamic Structural Model Estimated using an Incentive Pay Experiment. Funded by SSHRC IDG Grant 430-2020-01098.
-<!--Why is there a "Return" to Teacher Experience? Using Evidence from an Incentive Pay Experiment to Distinguish between On-the-Job-Training and Learning-by-Doing Models of Human Capital. Funded by SSHRC IDG Grant 430-2020-01098.-->
+{%comment%} Why is there a "Return" to Teacher Experience? Using Evidence from an Incentive Pay Experiment to Distinguish between On-the-Job-Training and Learning-by-Doing Models of Human Capital. Funded by SSHRC IDG Grant 430-2020-01098. {%endcomment%}
 
 * Untitled Paper about Health Production (with Tian Liu and [Seth Richards-Shubik](http://www.lehigh.edu/~ser315)).
 Funded by the UWO Social Science Research Fund.
@@ -77,3 +77,17 @@ These are zombie papers, but instead of regular zombies (which need only brains)
 
 * The Impact of Primary Health Care Reform on Population Health: Theory and Evidence from Ontario 
 {%comment%} (with Sisira Sarma) {%endcomment%}
+
+## Research Tools
+
+* Programming, listed in order of decreasing start-up time (for me):
+
+	* [R](https://www.r-project.org/): Free, reasonably easy to use, and reasonably fast to get started with. Can be slow if you're not super clever. 
+	
+	* [Julia](): Free, rapidly changing (in my view), and can be pretty speedy if you're clever enough to use it correctly.
+	
+	* [FORTRAN](https://fortran-lang.org/en/): Free and non-free, and for when you aren't feeling clever but also are feeling like it's [crunch time](https://stuff.mit.edu/afs/athena/software/g95_v0.94/G95Manual.pdf)! 
+	
+* etc.
+
+	* DNS: To remotely access my office machine (to check programs I'm running), I use [Free DNS](https://freedns.afraid.org/), which makes it very easy to ssh into my office machine via a memorable name (which then points to the machine's IP address). 
