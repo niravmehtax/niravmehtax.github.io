@@ -12,7 +12,7 @@ Last updated at {{ "now" | date: "%Y-%m-%d" }}
  * [Optimal Contracting with Altruistic Agents: Medicare Payments for Dialysis Drugs](/files/research/medicare_screening_2022_09.pdf) (9/2022),
 with [Martin Gaynor](https://www.andrew.cmu.edu/user/mgaynor/) and [Seth Richards-Shubik](http://www.lehigh.edu/~ser315/). 
 NBER Working Paper 27172.  
-**R&R at *American Economic Review*.**
+**Conditionally accepted at the American Economic Review.**
 		
 	<details>
   	<summary>Abstract</summary>  
@@ -30,7 +30,7 @@ NBER Working Paper 27172.
 * [Social Interactions, Mechanisms, and Equilibrium: Evidence from a Model of Study Time and Academic Achievement](/files/research/Conley_Mehta_Stinebrickner_Stinebrickner_friendstudy_2022_07_13.pdf) (07/2022), 
 with [Tim Conley](https://economics.uwo.ca/people/faculty/conley.html), Ralph Stinebrickner, and [Todd Stinebrickner](https://economics.uwo.ca/people/faculty/stinebrickner.html). 
 CESifo Working Paper 6896; NBER Working Paper 21418.  
-**R&R at *Journal of Political Economy*.**
+R&R at **Journal of Political Economy**.
 	
 	<details>
   	<summary>Abstract</summary>  
@@ -46,7 +46,7 @@ CESifo Working Paper 6896; NBER Working Paper 21418.
 ## Working Papers :derelict_house: :arrow_right: :house:
 
 * [A Partial Identification Approach to Identifying the Determinants of Human Capital Accumulation: An Application to Teachers](/files/research/mehta_OJT_LBD_teachers_partial_identification_working_paper.pdf) (8/2022). CESifo Working Paper 9681. Funded by SSHRC IDG Grant 430-2020-01098.   
-**Under review.**
+Under review.
 
 	<details>
   	<summary>Abstract</summary>  

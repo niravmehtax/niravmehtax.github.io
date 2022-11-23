@@ -9,25 +9,26 @@ author_profile: true
 
 For a full list, see [my Google Scholar page](https://scholar.google.com/citations?user=uImv6UsAAAAJ&hl=en).
 
-## Labor, empirical contracting, and education
-
-* Competition in Public School Districts: Charter School Entry, Student Sorting, and School Input Determination. *International Economic Review*, 58(4), 1089-1116. 2017. [pub](https://www.jstor.org/stable/45018807), [wp](/files/research/charter_schools_Mehta_2016_07_06.pdf)
-
-* Ability Tracking, School and Parental Effort, and Student Achievement: A Structural Model and Estimation (with [Chao Fu](http://www.ssc.wisc.edu/~cfu/research.html)). *Journal of Labor Economics*, 36(4), 923-979, 2018. [pub](https://doi.org/10.1086/697559), [wp](/files/research/tracking_paper_Fu_Mehta_2017_03_23.pdf)
-
-* Measuring Quality for Use in Incentive Schemes: The Case of "Shrinkage" Estimators. *Quantitative Economics*, 10(4), 1537-1577, 2019. [pub](https://doi.org/10.3982/QE950), [wp](/files/research/mehta_measuring_quality_for_incentive_schemes_2019_04_02.pdf) 
-
-* The Potential Output Gains from Using Optimal Teacher Incentives: An Illustrative Calibration of a Hidden Action Model. *Economics of Education Review*, 66, 67-72, 2018. [pub](https://doi.org/10.1016/j.econedurev.2018.06.011), [wp](/files/research/mehta_potential_gains_optimal_piece_rate_2018_04.pdf)
+## Main research areas
 
 * An Economic Approach to Generalizing Findings from Regression-Discontinuity Designs. *Journal of Human Resources*, 54(4), 2019. [pub](https://doi.org/10.3368/jhr.54.4.1115.7497R2), [wp](/files/research/research/RD_more_Mehta_2017_12_07.pdf) 
 
+* Measuring Quality for Use in Incentive Schemes: The Case of "Shrinkage" Estimators. *Quantitative Economics*, 10(4), 1537-1577, 2019. [pub](https://doi.org/10.3982/QE950), [wp](/files/research/mehta_measuring_quality_for_incentive_schemes_2019_04_02.pdf) 
+
 * Time-Use and Academic Peer Effects in College (with Ralph Stinebrickner and [Todd Stinebrickner](https://economics.uwo.ca/people/faculty/stinebrickner.html)). *Economic Inquiry*, 57(1), 162-171, 2019. [pub](https://doi.org/10.1111/ecin.12730), [wp](/files/research/MSS_EI_final.pdf)
 
-## Other (health and miscellaneous)
+* The Potential Output Gains from Using Optimal Teacher Incentives: An Illustrative Calibration of a Hidden Action Model. *Economics of Education Review*, 66, 67-72, 2018. [pub](https://doi.org/10.1016/j.econedurev.2018.06.011), [wp](/files/research/mehta_potential_gains_optimal_piece_rate_2018_04.pdf)
 
-* Team-based Primary Care Practice and Physician's Services: Evidence from Family Health Teams in Ontario, Canada (with Nibene Som&egrave;, Rose Anne Devlin, Greg Zaric, and Sisira Sarma). *Social Science and Medicine*, 264 (2020): 113310.
+* Ability Tracking, School and Parental Effort, and Student Achievement: A Structural Model and Estimation (with [Chao Fu](http://www.ssc.wisc.edu/~cfu/research.html)). *Journal of Labor Economics*, 36(4), 923-979, 2018. [pub](https://doi.org/10.1086/697559), [wp](/files/research/tracking_paper_Fu_Mehta_2017_03_23.pdf)
+
+* Competition in Public School Districts: Charter School Entry, Student Sorting, and School Input Determination. *International Economic Review*, 58(4), 1089-1116. 2017. [pub](https://www.jstor.org/stable/45018807), [wp](/files/research/charter_schools_Mehta_2016_07_06.pdf)
+
+
+## Other publications
 
 * The Effect of Expanded Parental Benefits on Union Dissolution (with Rachel Margolis, Youjin Choi, and Anders Holm). *Journal of Marriage and Family*, February 2021, 83(1): 191-208. 
+
+* Team-based Primary Care Practice and Physician's Services: Evidence from Family Health Teams in Ontario, Canada (with Nibene Som&egrave;, Rose Anne Devlin, Greg Zaric, and Sisira Sarma). *Social Science and Medicine*, 264 (2020): 113310.
 
 * Stirring the Pot: Switching from Blended Fee-For-Service to Blended Capitation Models of Physician Remuneration (with Nibene Som&egrave;, Rose Anne Devlin, Greg Zaric, and Sisira Sarma). *Health Economics*, 29(11), 1435-1455.
 
