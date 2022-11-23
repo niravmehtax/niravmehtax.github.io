@@ -9,7 +9,9 @@ author_profile: true
 
 For a full list, see [my Google Scholar page](https://scholar.google.com/citations?user=uImv6UsAAAAJ&hl=en).
 
-## Main research areas
+Note: "pub" and "wp" respectively point to the journal website and most recent working paper.
+
+## Primary Topics/Methods
 
 * An Economic Approach to Generalizing Findings from Regression-Discontinuity Designs. *Journal of Human Resources*, 54(4), 2019. [pub](https://doi.org/10.3368/jhr.54.4.1115.7497R2), [wp](/files/research/research/RD_more_Mehta_2017_12_07.pdf) 
 
@@ -24,7 +26,7 @@ For a full list, see [my Google Scholar page](https://scholar.google.com/citatio
 * Competition in Public School Districts: Charter School Entry, Student Sorting, and School Input Determination. *International Economic Review*, 58(4), 1089-1116. 2017. [pub](https://www.jstor.org/stable/45018807), [wp](/files/research/charter_schools_Mehta_2016_07_06.pdf)
 
 
-## Other publications
+## Other Publications
 
 * The Effect of Expanded Parental Benefits on Union Dissolution (with Rachel Margolis, Youjin Choi, and Anders Holm). *Journal of Marriage and Family*, February 2021, 83(1): 191-208. 
 
