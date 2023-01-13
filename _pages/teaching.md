@@ -5,6 +5,10 @@ permalink: /teaching/
 author_profile: true
 ---
 
+## First-year PhD Infomerical
+
+* Read [this](/files/teaching/infomerical_slides.pdf) if you're a Western PhD student deciding whether you'd like to come talk with me about your research! 
+
 ## Recommendation letters:
 
 * Undergrad students seeking a letter of recommendation: please use [these instructions](/files/teaching/nirav_instructions.pdf) to fill out [this template](/files/teaching/nirav_instructions_template.ods).
