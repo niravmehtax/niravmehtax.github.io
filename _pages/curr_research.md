@@ -78,6 +78,14 @@ These are zombie papers, but instead of regular zombies (which need only brains)
 * The Impact of Primary Health Care Reform on Population Health: Theory and Evidence from Ontario 
 {%comment%} (with Sisira Sarma) {%endcomment%}
 
+## Number of Papers at Each Stage
+
+* This chart summarizes the number of papers at different stages (e.g., "under review" or "accepted"). 
+(Note: the number of working papers ("dev. wp") isn't very accurate for the earlier periods because I hadn't been tracking that. 
+Also, there are some invisible zombies.)
+
+	<iframe width="822" height="458" seamless frameborder="0" scrolling="no" src="https://docs.google.com/spreadsheets/d/e/2PACX-1vRySZ0mOR_bFdP0hcXbWsZw3G27WY0ekWe2Y52MtbLfeoFwUMkpRSguCCnGHZeF-vZoz6YeFOXhyQlX/pubchart?oid=1476996675&amp;format=interactive"></iframe>
+
 ## Research Tools
 
 * Programming, listed in order of decreasing start-up time (for me):
