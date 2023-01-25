@@ -51,11 +51,10 @@ Under review.
 	<details>
   	<summary>Abstract</summary>  
 	<p>
-	This paper views teacher quality through the human capital perspective.
-	Teacher quality exhibits substantial growth over teachers' careers, but why it improves is not well understood.
+	Teacher quality exhibits substantial growth over teachers’ careers, but why it improves is not well understood.
 	I use a human capital production function nesting On-the-Job-Training (OJT) and Learning-by-Doing (LBD) and experimental variation from Glewwe et al. (2010), a teacher incentive pay experiment in Kenya, to discern the presence and relative importance of these forces.
 	The identified set for the OJT and LBD components has a closed-form solution, which depends on experimentally estimated average treatment effects.
-	The results provide evidence of an LBD component and an informative upper bound on the OJT component. 
+	I find that the LBD component is indeed present in the human capital production function, and also estimate an informative upper bound on the OJT component.
 	</p>
 	</details>
 
