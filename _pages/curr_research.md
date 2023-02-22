@@ -30,7 +30,7 @@ NBER Working Paper 27172.
 * [Social Interactions, Mechanisms, and Equilibrium: Evidence from a Model of Study Time and Academic Achievement](/files/research/CMSS_social_interactions_study_wp.pdf) (02/2023), 
 with [Tim Conley](https://economics.uwo.ca/people/faculty/conley.html), Ralph Stinebrickner, and [Todd Stinebrickner](https://economics.uwo.ca/people/faculty/stinebrickner.html). 
 CESifo Working Paper 6896; NBER Working Paper 21418.  
-R&R at **Journal of Political Economy**.
+**Accepted at the Journal of Political Economy**.
 	
 	<details>
   	<summary>Abstract</summary>  
