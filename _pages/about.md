@@ -8,7 +8,7 @@ redirect_from:
   - /about.html
 ---
 
-I am an applied/labor economist at the University of Western Ontario.
+I am an applied/labor economist who makes extensive use of economic theory in my research.
 In my main line of research I develop and estimate models of human behavior to deliver quantitive answers to important public policy questions.
 Some of my [current research](/curr_research) here is about contracting in [health care](/files/research/medicare_screening_2022_09.pdf), the determinants of teacher quality, and [social interactions models](/files/research/CMSS_social_interactions_study_wp.pdf).
 In prior work, I've studied how [charter school policy](https://www.jstor.org/stable/45018807) affects the distribution of student achievement, as well as the determinants and consequences of [ability tracking](https://doi.org/10.1086/697559).

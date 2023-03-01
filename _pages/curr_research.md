@@ -12,7 +12,7 @@ Last updated at {{ "now" | date: "%Y-%m-%d" }}
  * [Optimal Contracting with Altruistic Agents: Medicare Payments for Dialysis Drugs](/files/research/medicare_screening_2022_09.pdf) (9/2022),
 with [Martin Gaynor](https://www.andrew.cmu.edu/user/mgaynor/) and [Seth Richards-Shubik](http://www.lehigh.edu/~ser315/). 
 NBER Working Paper 27172.  
-**Conditionally accepted at the *American Economic Review*.**
+**Accepted at the *American Economic Review*.**
 		
 	<details>
   	<summary>Abstract</summary>  
