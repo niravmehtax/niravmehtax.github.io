@@ -13,21 +13,21 @@ Note: "pub" and "wp" respectively point to the journal website and most recent w
 
 ## Primary Topics/Methods
 
-* Optimal Contracting with Altruistic Agents: Medicare Payments for Dialysis Drugs (with [Martin Gaynor](https://www.andrew.cmu.edu/user/mgaynor/) and [Seth Richards-Shubik](http://www.lehigh.edu/~ser315/)). *American Economic Review*, Forthcoming. [wp](/files/research/medicare_screening_2022_09.pdf)		
+* Optimal Contracting with Altruistic Agents: Medicare Payments for Dialysis Drugs (with [Martin Gaynor](https://www.andrew.cmu.edu/user/mgaynor/) and [Seth Richards-Shubik](http://www.lehigh.edu/~ser315/)). ***American Economic Review***, Forthcoming. [pub](https://www.aeaweb.org/articles?id=10.1257/aer.20210208), [wp](/files/research/medicare_screening_2022_09.pdf)		
 		
-* Social Interactions, Mechanisms, and Equilibrium: Evidence from a Model of Study Time and Academic Achievement (with [Tim Conley](https://economics.uwo.ca/people/faculty/conley.html), Ralph Stinebrickner, and [Todd Stinebrickner](https://economics.uwo.ca/people/faculty/stinebrickner.html)). *Journal of Political Economy*, Accepted. [wp](/files/research/CMSS_social_interactions_study_wp.pdf). 
+* Social Interactions, Mechanisms, and Equilibrium: Evidence from a Model of Study Time and Academic Achievement (with [Tim Conley](https://economics.uwo.ca/people/faculty/conley.html), Ralph Stinebrickner, and [Todd Stinebrickner](https://economics.uwo.ca/people/faculty/stinebrickner.html)). ***Journal of Political Economy***, Accepted. [wp](/files/research/CMSS_social_interactions_study_wp.pdf). 
 
-* An Economic Approach to Generalizing Findings from Regression-Discontinuity Designs. *Journal of Human Resources*, 54(4), 2019. [pub](https://doi.org/10.3368/jhr.54.4.1115.7497R2), [wp](/files/research/research/RD_more_Mehta_2017_12_07.pdf) 
+* An Economic Approach to Generalizing Findings from Regression-Discontinuity Designs. ***Journal of Human Resources***, 54(4), 2019. [pub](https://doi.org/10.3368/jhr.54.4.1115.7497R2), [wp](/files/research/research/RD_more_Mehta_2017_12_07.pdf) 
 
-* Measuring Quality for Use in Incentive Schemes: The Case of "Shrinkage" Estimators. *Quantitative Economics*, 10(4), 1537-1577, 2019. [pub](https://doi.org/10.3982/QE950), [wp](/files/research/mehta_measuring_quality_for_incentive_schemes_2019_04_02.pdf) 
+* Measuring Quality for Use in Incentive Schemes: The Case of "Shrinkage" Estimators. ***Quantitative Economics***, 10(4), 1537-1577, 2019. [pub](https://doi.org/10.3982/QE950), [wp](/files/research/mehta_measuring_quality_for_incentive_schemes_2019_04_02.pdf) 
 
-* Time-Use and Academic Peer Effects in College (with Ralph Stinebrickner and [Todd Stinebrickner](https://economics.uwo.ca/people/faculty/stinebrickner.html)). *Economic Inquiry*, 57(1), 162-171, 2019. [pub](https://doi.org/10.1111/ecin.12730), [wp](/files/research/MSS_EI_final.pdf)
+* Time-Use and Academic Peer Effects in College (with Ralph Stinebrickner and [Todd Stinebrickner](https://economics.uwo.ca/people/faculty/stinebrickner.html)). ***Economic Inquiry***, 57(1), 162-171, 2019. [pub](https://doi.org/10.1111/ecin.12730), [wp](/files/research/MSS_EI_final.pdf)
 
-* The Potential Output Gains from Using Optimal Teacher Incentives: An Illustrative Calibration of a Hidden Action Model. *Economics of Education Review*, 66, 67-72, 2018. [pub](https://doi.org/10.1016/j.econedurev.2018.06.011), [wp](/files/research/mehta_potential_gains_optimal_piece_rate_2018_04.pdf)
+* The Potential Output Gains from Using Optimal Teacher Incentives: An Illustrative Calibration of a Hidden Action Model. ***Economics of Education Review***, 66, 67-72, 2018. [pub](https://doi.org/10.1016/j.econedurev.2018.06.011), [wp](/files/research/mehta_potential_gains_optimal_piece_rate_2018_04.pdf)
 
-* Ability Tracking, School and Parental Effort, and Student Achievement: A Structural Model and Estimation (with [Chao Fu](http://www.ssc.wisc.edu/~cfu/research.html)). *Journal of Labor Economics*, 36(4), 923-979, 2018. [pub](https://doi.org/10.1086/697559), [wp](/files/research/tracking_paper_Fu_Mehta_2017_03_23.pdf)
+* Ability Tracking, School and Parental Effort, and Student Achievement: A Structural Model and Estimation (with [Chao Fu](http://www.ssc.wisc.edu/~cfu/research.html)). ***Journal of Labor Economics***, 36(4), 923-979, 2018. [pub](https://doi.org/10.1086/697559), [wp](/files/research/tracking_paper_Fu_Mehta_2017_03_23.pdf)
 
-* Competition in Public School Districts: Charter School Entry, Student Sorting, and School Input Determination. *International Economic Review*, 58(4), 1089-1116. 2017. [pub](https://www.jstor.org/stable/45018807), [wp](/files/research/charter_schools_Mehta_2016_07_06.pdf)
+* Competition in Public School Districts: Charter School Entry, Student Sorting, and School Input Determination. ***International Economic Review***, 58(4), 1089-1116. 2017. [pub](https://www.jstor.org/stable/45018807), [wp](/files/research/charter_schools_Mehta_2016_07_06.pdf)
 
 
 ## Other Publications
