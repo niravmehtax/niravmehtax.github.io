@@ -9,7 +9,23 @@ Last updated at {{ "now" | date: "%Y-%m-%d" }}
 
 ## Revise and Resubmit :house: :arrow_right: :house_with_garden:
 
- * [Optimal Contracting with Altruistic Agents: Medicare Payments for Dialysis Drugs](/files/research/medicare_screening_2022_09.pdf) (9/2022),
+* [Social Interactions, Mechanisms, and Equilibrium: Evidence from a Model of Study Time and Academic Achievement](/files/research/CMSS_social_interactions_study_wp.pdf) (02/2023), 
+with [Tim Conley](https://economics.uwo.ca/people/faculty/conley.html), Ralph Stinebrickner, and [Todd Stinebrickner](https://economics.uwo.ca/people/faculty/stinebrickner.html). 
+CESifo Working Paper 6896; NBER Working Paper 21418.  
+**Accepted at the *Journal of Political Economy*.**
+	
+	<details>
+  	<summary>Abstract</summary>  
+  	<p>
+  	We develop and estimate a model of student study time on a social network. 
+  	The model is designed to exploit unique data collected in the Berea Panel Study. 
+  	Study time data allow us to quantify an intuitive mechanism for academic social interactions: own study time may depend on friend study time in a heterogeneous manner. 
+  	Social network data allow us to embed study time and resulting academic achievement in an estimable equilibrium framework. 
+  	We develop a specification test that exploits the equilibrium nature of social interactions and use it to show that novel study propensity measures mitigate econometric endogeneity concerns.	
+  	</p>
+	</details>
+
+* [Optimal Contracting with Altruistic Agents: Medicare Payments for Dialysis Drugs](/files/research/medicare_screening_2022_09.pdf) (9/2022),
 with [Martin Gaynor](https://www.andrew.cmu.edu/user/mgaynor/) and [Seth Richards-Shubik](http://www.lehigh.edu/~ser315/). 
 NBER Working Paper 27172.  
 **Accepted at the *American Economic Review*.**
@@ -27,26 +43,10 @@ NBER Working Paper 27172.
 	</p>
 	</details>
 
-* [Social Interactions, Mechanisms, and Equilibrium: Evidence from a Model of Study Time and Academic Achievement](/files/research/CMSS_social_interactions_study_wp.pdf) (02/2023), 
-with [Tim Conley](https://economics.uwo.ca/people/faculty/conley.html), Ralph Stinebrickner, and [Todd Stinebrickner](https://economics.uwo.ca/people/faculty/stinebrickner.html). 
-CESifo Working Paper 6896; NBER Working Paper 21418.  
-**Accepted at the *Journal of Political Economy*.**
-	
-	<details>
-  	<summary>Abstract</summary>  
-  	<p>
-  	We develop and estimate a model of student study time on a social network. 
-  	The model is designed to exploit unique data collected in the Berea Panel Study. 
-  	Study time data allow us to quantify an intuitive mechanism for academic social interactions: own study time may depend on friend study time in a heterogeneous manner. 
-  	Social network data allow us to embed study time and resulting academic achievement in an estimable equilibrium framework. 
-  	We develop a specification test that exploits the equilibrium nature of social interactions and use it to show that novel study propensity measures mitigate econometric endogeneity concerns.	
-  	</p>
-	</details>
-
 ## Working Papers :derelict_house: :arrow_right: :house:
 
 * [A Partial Identification Approach to Identifying the Determinants of Human Capital Accumulation: An Application to Teachers](/files/research/mehta_OJT_LBD_teachers_partial_identification_working_paper.pdf) (1/2023). CESifo Working Paper 9681. Funded by SSHRC IDG Grant 430-2020-01098.  
-Under review.
+<!--Under review.-->
 
 	<details>
   	<summary>Abstract</summary>  
