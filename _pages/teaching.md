@@ -15,10 +15,13 @@ author_profile: true
 
 ## Current courses:
 
-* **Econ 9770/9771/9880/9881: PhD Communication and Professional Development**  
-The focus of these courses is on improving a student’s oral and written communication skills through examining, critically evaluating, and constructively commenting on the presentations and written work of others.
+* **Econ 2222A: Undergraduate Intermediate Econometrics**  
+We cover probability and statistics, some ubiquitous probability distributions, how to make statistical inferences and test hypotheses, and linear regression models.
 
 ## Previously taught courses:
+
+* **Econ 9770/9771/9880/9881: PhD Communication and Professional Development**  
+The focus of these courses is on improving a student’s oral and written communication skills through examining, critically evaluating, and constructively commenting on the presentations and written work of others.
 
 * **Econ 9622B: PhD Topics in Health and Education, and Empirical Contracts**  
 This course examines how to answer public policy questions using empirical research, with a focus on structural microeconometric work. The substantive applications are in health and education. This course also studies empirical contracts (i.e., empirical research about moral hazard and adverse selection models), again with a special application to health and education, as well as insurance markets more generally.
@@ -32,7 +35,7 @@ This course is designed to give Economics Honours Students a deeper understandin
 * **Econ 3328A: Public Economics: Expenditure**  
 We study welfare economics, the provision of public goods, and externalities. We will also study theoretical aspects of and empirical work in education and health economics.
 
-* **Econ 2222A: Undergraduate Econometrics**  
+* **Econ 2222A: Undergraduate Intermediate Econometrics**  
 We cover probability and statistics, some ubiquitous probability distributions, how to make statistical inferences and test hypotheses, and linear regression models.
 
 
