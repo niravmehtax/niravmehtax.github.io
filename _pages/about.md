@@ -25,7 +25,7 @@ Here is my [CV](/files/nirav_mehta_cv.pdf).
 
 Email me at nirav [dot] mehta [at] uwo [dot] ca.
 
-My office is Room 4037, Social Science Centre. 
+My office is Room 4011, Social Science Centre. 
 
 Undergrad students seeking a **letter of recommendation**: Please use [these instructions](/files/teaching/nirav_instructions.pdf) to fill out [this template](/files/teaching/nirav_instructions_template.ods).
 
