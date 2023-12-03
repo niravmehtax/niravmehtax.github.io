@@ -38,6 +38,7 @@ CESifo Working Paper 6896; NBER Working Paper 21418.
   	</p>
 	</details>
 
+<!--
 * [Optimal Contracting with Altruistic Agents: Medicare Payments for Dialysis Drugs](/files/research/medicare_screening_2022_09.pdf) (9/2022),
 with [Martin Gaynor](https://www.andrew.cmu.edu/user/mgaynor/) and [Seth Richards-Shubik](http://www.lehigh.edu/~ser315/). 
 NBER Working Paper 27172.  
@@ -55,6 +56,7 @@ NBER Working Paper 27172.
 
 	</p>
 	</details>
+-->
 
 <!--
 ## Working Papers :derelict_house: :arrow_right: :house:
@@ -107,7 +109,22 @@ Also, there are some invisible zombies.)
 	
 	* [Julia](): Free, rapidly changing (in my view), and can be pretty speedy if you're clever enough to use it correctly.
 	
-	* [FORTRAN](https://fortran-lang.org/en/): Free and non-free, and for when you aren't feeling clever but also are feeling like it's [crunch time](https://stuff.mit.edu/afs/athena/software/g95_v0.94/G95Manual.pdf)! 
+	* [FORTRAN](https://fortran-lang.org/en/): Free and non-free, and for when you don't feel like feeling clever, but also feel like it's [crunch time](https://stuff.mit.edu/afs/athena/software/g95_v0.94/G95Manual.pdf)! 
+	
+	I've compiled a table summarizing which languages I've used in some projects:
+		
+	| Project Name                        | Fortran 95 | R    | Julia |
+	|-------------------------------------|------------|------|-------|
+	| Competition in Public School Districts 														| [x]        | [x]  |       |
+	| Ability Tracking, School and Parental Effort, and Student Achievement   | [x]        | [x]  |       |
+	| Generalizing Findings from Regression-Discontinuity Designs 				| | [x] | |
+	| Measuring Quality for Use in Incentive Schemes 										| | [x] | |
+	| Optimal Contracting with Altruistic Agents                 								|            | [x]  |       |
+	| Social Interactions, Mechanisms, and Equilibrium                  					|            | [x]  |       |
+	| Teacher Quality: Partial Identification of Human Capital Technology        |            | [x]  |       |
+	| Teacher Quality: Dynamic Structural Model           									|            | [x]  | [x]   |
+	| Multidimensional Health              																|            | [x]  |       |
+
 	
 * etc.
 
