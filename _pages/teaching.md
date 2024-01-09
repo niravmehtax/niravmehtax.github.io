@@ -7,7 +7,7 @@ author_profile: true
 
 ## First-year PhD Infomerical
 
-* Read [this](/files/teaching/infomerical_slides.pdf) if you're a Western PhD student deciding whether you'd like to come talk with me about your research! 
+* Read [this](/files/teaching/infomercial_slides.pdf) if you're a Western PhD student deciding whether you'd like to come talk with me about your research! 
 
 ## Recommendation letters:
 
@@ -15,8 +15,8 @@ author_profile: true
 
 ## Current courses:
 
-* **Econ 2222A: Undergraduate Intermediate Econometrics**  
-We cover probability and statistics, some ubiquitous probability distributions, how to make statistical inferences and test hypotheses, and linear regression models.
+* **Econ 9622B: PhD Topics in Health and Education, and Empirical Contracts**  
+This course examines how to answer public policy questions using empirical research, with a focus on structural microeconometric work. The substantive applications are in health and education. This course also studies empirical contracts (i.e., empirical research about moral hazard and adverse selection models), again with a special application to health and education, as well as insurance markets more generally.
 
 ## Previously taught courses:
 
