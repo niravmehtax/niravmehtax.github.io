@@ -13,11 +13,11 @@ Note: "pub" and "wp" respectively point to the journal website and most recent w
 
 ## Primary Topics/Methods
 
-* Social Interactions, Mechanisms, and Equilibrium: Evidence from a Model of Study Time and Academic Achievement (with [Tim Conley](https://economics.uwo.ca/people/faculty/conley.html), Ralph Stinebrickner, and [Todd Stinebrickner](https://economics.uwo.ca/people/faculty/stinebrickner.html)). ***Journal of Political Economy***, 132(3), 824-866, 2024. [wp](/files/research/CMSS_social_interactions_study_wp.pdf). 
+* Social Interactions, Mechanisms, and Equilibrium: Evidence from a Model of Study Time and Academic Achievement (with [Timothy G. Conley](https://economics.uwo.ca/people/faculty/conley.html), Ralph Stinebrickner, and [Todd Stinebrickner](https://economics.uwo.ca/people/faculty/stinebrickner.html)). ***Journal of Political Economy***, 132(3), 824-866, 2024. [pub](https://www.journals.uchicago.edu/doi/10.1086/726902), [wp](/files/research/CMSS_social_interactions_study_wp.pdf). 
 
-* Optimal Contracting with Altruistic Agents: Medicare Payments for Dialysis Drugs (with [Martin Gaynor](https://www.andrew.cmu.edu/user/mgaynor/) and [Seth Richards-Shubik](http://www.lehigh.edu/~ser315/)). ***American Economic Review***, 113(6), 2023. [pub](https://www.aeaweb.org/articles?id=10.1257/aer.20210208), [wp](/files/research/medicare_screening_2022_09.pdf)		
+* Optimal Contracting with Altruistic Agents: Medicare Payments for Dialysis Drugs (with [Martin Gaynor](https://www.andrew.cmu.edu/user/mgaynor/) and [Seth Richards-Shubik](http://www.lehigh.edu/~ser315/)). ***American Economic Review***, 113(6), 1530-1571, 2023. [pub](https://www.aeaweb.org/articles?id=10.1257/aer.20210208), [wp](/files/research/medicare_screening_2022_09.pdf)		
 		
-* An Economic Approach to Generalizing Findings from Regression-Discontinuity Designs. ***Journal of Human Resources***, 54(4), 2019. [pub](https://doi.org/10.3368/jhr.54.4.1115.7497R2), [wp](/files/research/research/RD_more_Mehta_2017_12_07.pdf) 
+* An Economic Approach to Generalizing Findings from Regression-Discontinuity Designs. ***Journal of Human Resources***, 54(4), 953-985, 2019. [pub](https://doi.org/10.3368/jhr.54.4.1115.7497R2), [wp](/files/research/research/RD_more_Mehta_2017_12_07.pdf) 
 
 * Measuring Quality for Use in Incentive Schemes: The Case of "Shrinkage" Estimators. ***Quantitative Economics***, 10(4), 1537-1577, 2019. [pub](https://doi.org/10.3982/QE950), [wp](/files/research/mehta_measuring_quality_for_incentive_schemes_2019_04_02.pdf) 
 
