@@ -56,6 +56,8 @@ We cover probability and statistics, some ubiquitous probability distributions, 
 	
 ### Committee member:
 
+* Tyler Skura: In progress!
+
 * [Bob Millard](https://www.robertgmillard.com): Initial placement: SUNY Stonybrook 
 	
 * [Marco Pariguana](https://www.marcopariguana.com): Initial placement: Post-doc at Tulane 

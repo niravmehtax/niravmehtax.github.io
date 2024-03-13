@@ -13,7 +13,7 @@ Note: "pub" and "wp" respectively point to the journal website and most recent w
 
 ## Primary Topics/Methods
 
-* Social Interactions, Mechanisms, and Equilibrium: Evidence from a Model of Study Time and Academic Achievement (with [Tim Conley](https://economics.uwo.ca/people/faculty/conley.html), Ralph Stinebrickner, and [Todd Stinebrickner](https://economics.uwo.ca/people/faculty/stinebrickner.html)). ***Journal of Political Economy***, Accepted. [wp](/files/research/CMSS_social_interactions_study_wp.pdf). 
+* Social Interactions, Mechanisms, and Equilibrium: Evidence from a Model of Study Time and Academic Achievement (with [Tim Conley](https://economics.uwo.ca/people/faculty/conley.html), Ralph Stinebrickner, and [Todd Stinebrickner](https://economics.uwo.ca/people/faculty/stinebrickner.html)). ***Journal of Political Economy***, 132(3), 824-866, 2024. [wp](/files/research/CMSS_social_interactions_study_wp.pdf). 
 
 * Optimal Contracting with Altruistic Agents: Medicare Payments for Dialysis Drugs (with [Martin Gaynor](https://www.andrew.cmu.edu/user/mgaynor/) and [Seth Richards-Shubik](http://www.lehigh.edu/~ser315/)). ***American Economic Review***, 113(6), 2023. [pub](https://www.aeaweb.org/articles?id=10.1257/aer.20210208), [wp](/files/research/medicare_screening_2022_09.pdf)		
 		
