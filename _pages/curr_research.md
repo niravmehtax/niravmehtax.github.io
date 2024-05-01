@@ -86,7 +86,7 @@ NBER Working Paper 27172.
   	</p>
 	</details>
 
-* Multidimensional Health Capital and the Production of Health (with Tian Liu and [Seth Richards-Shubik](http://www.lehigh.edu/~ser315)).
+* Multidimensional Health Capital and the Production of Health (with Tian Liu and [Seth Richards-Shubik](https://econ.jhu.edu/directory/seth-richards-shubik/)).
 Funded by the UWO Social Science Research Fund.
 
 ## Needing Resurrection :derelict_house:
