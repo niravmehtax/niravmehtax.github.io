@@ -16,7 +16,7 @@ Last updated at {{ "now" | date: "%Y-%m-%d" }}
   	<summary>Abstract</summary>  
 	<p>
 	Teacher quality exhibits substantial growth over teachers’ careers, but why it improves is not well understood.
-	I use a human capital production function nesting On-the-Job-Training (OJT) and Learning-by-Doing (LBD) and experimental variation from Glewwe et al. (2010), a teacher incentive pay experiment in Kenya, to discern the presence and relative importance of these forces.
+	I use a human capital production function nesting On-the-Job-Training (OJT) and Learning-by-Doing (LBD) and experimental variation from Glewwe et al. (2010), a teacher incentive pay experiment in Kenya, to discern the presence and assess the relative importance of these forces.
 	The identified set for the OJT and LBD components has a closed-form solution, which depends on experimentally estimated average treatment effects.
 	I find that the LBD component is indeed present in the human capital production function, and also estimate an informative upper bound on the OJT component.
 	</p>
@@ -119,7 +119,7 @@ Also, there are some invisible zombies.)
 	
 	I've compiled a table summarizing which languages I've used in some projects:
 		
-	| Project Name                        | Fortran 95 | R    | Julia |
+	| Project Name                    																		    | Fortran 95 | R    | Julia |
 	|-------------------------------------|------------|------|-------|
 	| Competition in Public School Districts 														| [x]        | [x]  |       |
 	| Ability Tracking, School and Parental Effort, and Student Achievement   | [x]        | [x]  |       |

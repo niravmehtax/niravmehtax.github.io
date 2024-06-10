@@ -32,6 +32,8 @@ Note: "pub" and "wp" respectively point to the journal website and most recent w
 
 ## Other Publications
 
+* Primary Care Payment Models and Avoidable Hospitalizations: A Multivalued Treatment Effects Analysis (with Nibene Som&egrave;, Rose Anne Devlin, and Sisira Sarma). *Health Economics*, Forthcoming.
+
 * The Effect of Expanded Parental Benefits on Union Dissolution (with Rachel Margolis, Youjin Choi, and Anders Holm). *Journal of Marriage and Family*, February 2021, 83(1): 191-208. 
 
 * Team-based Primary Care Practice and Physician's Services: Evidence from Family Health Teams in Ontario, Canada (with Nibene Som&egrave;, Rose Anne Devlin, Greg Zaric, and Sisira Sarma). *Social Science and Medicine*, 264 (2020): 113310.
