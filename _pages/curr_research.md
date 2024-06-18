@@ -135,3 +135,5 @@ Also, there are some invisible zombies.)
 * etc.
 
 	* DNS: To remotely access my office machine (to check programs I'm running), I use [Free DNS](https://freedns.afraid.org/), which makes it very easy to ssh into my office machine via a memorable name (which then points to the machine's IP address). 
+
+	* It can be hard to keep track of all the tasks involved with revising a paper (or even undertaking a project). I sometimes use [taskwarrior](https://taskwarrior.org/) to track my tasks and [task2dot](https://pypi.org/project/task2dot/), which takes task output from taskwarrior and generates a graph using (graphviz)[https://www.graphviz.org/], to figure out how to prioritize my next steps. For example, if many tasks depend on task A it might make the most sense to complete A first; less obvious dependency structures might be easier to understand with the visualization provided by task2dot.
