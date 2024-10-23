@@ -47,7 +47,7 @@ We cover probability and statistics, some ubiquitous probability distributions, 
 
 ### Advisor/Co-advisor
 
-* Tian Liu: In progress!
+* [Tian Liu](https://sites.google.com/view/tian-liu): **On the 2024-2025 Job Market!**
 	
 * [Martin Luccioni](https://sites.google.com/view/martinluccioni): Initial placement: Post-doc at Olin Business School, Washington University, St. Louis 
 	
