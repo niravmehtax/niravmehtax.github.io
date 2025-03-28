@@ -9,7 +9,7 @@ Last updated at {{ "now" | date: "%Y-%m-%d" }}
 
 ## Revise and Resubmit :house: :arrow_right: :house_with_garden:
 
-* [A Partial Identification Approach to Identifying the Determinants of Human Capital Accumulation: An Application to Teachers](/files/research/mehta_OJT_LBD_teachers_partial_identification_working_paper.pdf) (11/2024). CESifo Working Paper 9681. Funded by SSHRC IDG Grant 430-2020-01098.  
+* [A Partial Identification Approach to Identifying the Determinants of Human Capital Accumulation: An Application to Teachers](/files/research/mehta_OJT_LBD_teachers_partial_identification_working_paper.pdf) (3/2025). CESifo Working Paper 9681. Funded by SSHRC IDG Grant 430-2020-01098.  
 **(Provisionally) Accepted at the *Journal of Applied Econometrics*.**
 
 	<details>
