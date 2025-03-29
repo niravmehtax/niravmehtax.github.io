@@ -88,7 +88,7 @@ NBER Working Paper 27172.
   	</p>
 	</details>
 
-* Multidimensional Health Capital and the Production of Health (with Tian Liu and [Seth Richards-Shubik](https://econ.jhu.edu/directory/seth-richards-shubik/)).
+* Multidimensional Health Capital and the Production of Health (with [Tian Liu](https://sites.google.com/view/tian-liu) and [Seth Richards-Shubik](https://econ.jhu.edu/directory/seth-richards-shubik/)).
 Funded by the UWO Social Science Research Fund.
 
 ## Needing Resurrection :derelict_house:
@@ -131,7 +131,7 @@ Also, there are some invisible zombies.)
 	| Social Interactions, Mechanisms, and Equilibrium                  					|            | [x]  |       |
 	| Teacher Quality: Partial Identification of Human Capital Technology        |            | [x]  |       |
 	| Teacher Quality: Dynamic Structural Model           									|            | [x]  | [x]   |
-	| Multidimensional Health              																|            | [x]  |       |
+	| Multidimensional Health Production     														|            | [x]  |       |
 
 	
 * etc.
