@@ -14,7 +14,7 @@ Note: "pub" and "wp" respectively point to the journal website and most recent w
 ## Primary Topics/Methods
 
 * A Partial Identification Approach to Identifying the Determinants of Human Capital Accumulation: An Application to Teachers. 
-**(Provisionally) Accepted at the *Journal of Applied Econometrics*.** [wp](/files/research/mehta_OJT_LBD_teachers_partial_identification_working_paper.pdf)
+**Accepted at the *Journal of Applied Econometrics*.** [wp](/files/research/mehta_OJT_LBD_teachers_partial_identification_working_paper.pdf)
 
 * Social Interactions, Mechanisms, and Equilibrium: Evidence from a Model of Study Time and Academic Achievement (with [Timothy G. Conley](https://economics.uwo.ca/people/faculty/conley.html), Ralph Stinebrickner, and [Todd Stinebrickner](https://economics.uwo.ca/people/faculty/stinebrickner.html)). ***Journal of Political Economy***, 132(3), 824-866, 2024. [pub](https://www.journals.uchicago.edu/doi/10.1086/726902), [wp](/files/research/CMSS_social_interactions_study_wp.pdf). 
 

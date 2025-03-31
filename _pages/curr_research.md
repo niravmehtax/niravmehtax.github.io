@@ -7,10 +7,11 @@ author_profile: true
 
 Last updated at {{ "now" | date: "%Y-%m-%d" }}
 
+<!--
 ## Revise and Resubmit :house: :arrow_right: :house_with_garden:
 
 * [A Partial Identification Approach to Identifying the Determinants of Human Capital Accumulation: An Application to Teachers](/files/research/mehta_OJT_LBD_teachers_partial_identification_working_paper.pdf) (3/2025). CESifo Working Paper 9681. Funded by SSHRC IDG Grant 430-2020-01098.  
-**(Provisionally) Accepted at the *Journal of Applied Econometrics*.**
+**Accepted at the *Journal of Applied Econometrics*.**
 
 	<details>
   	<summary>Abstract</summary>  
@@ -23,6 +24,7 @@ Last updated at {{ "now" | date: "%Y-%m-%d" }}
 	This suggests that dynamic multitasking, while theoretically relevant, may have limited practical significance, at least in this context.	
 	</p>
 	</details>
+-->
 
 <!--
 * [Social Interactions, Mechanisms, and Equilibrium: Evidence from a Model of Study Time and Academic Achievement](/files/research/CMSS_social_interactions_study_wp.pdf) (02/2023), 
@@ -61,24 +63,12 @@ NBER Working Paper 27172.
 	</details>
 -->
 
-<!--
+
 ## Working Papers :derelict_house: :arrow_right: :house:
 
-* [A Partial Identification Approach to Identifying the Determinants of Human Capital Accumulation: An Application to Teachers](/files/research/mehta_OJT_LBD_teachers_partial_identification_working_paper.pdf) (6/2023). CESifo Working Paper 9681. Funded by SSHRC IDG Grant 430-2020-01098.  
-**Revise and resubmit at the *Journal of Applied Econometrics*.**
-
-	<details>
-  	<summary>Abstract</summary>  
-	<p>
-	Teacher quality exhibits substantial growth over teachers’ careers, but why it improves is not well understood.
-	I use a human capital production function nesting On-the-Job-Training (OJT) and Learning-by-Doing (LBD) and experimental variation from Glewwe et al. (2010), a teacher incentive pay experiment in Kenya, to discern the presence and relative importance of these forces.
-	The identified set for the OJT and LBD components has a closed-form solution, which depends on experimentally estimated average treatment effects.
-	I find that the LBD component is indeed present in the human capital production function, and also estimate an informative upper bound on the OJT component.
-	</p>
-	</details>
--->
-
+<!--
 ## In Progress :building_construction:
+-->
 
 * A Quantitative Theory of Teacher Quality: Evidence from a Dynamic Structural Model Estimated using an Incentive Pay Experiment. Funded by SSHRC IDG Grant 430-2020-01098.
 	<details>
