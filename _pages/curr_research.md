@@ -81,15 +81,17 @@ NBER Working Paper 27172.
 * Multidimensional Health Capital and the Production of Health (with [Tian Liu](https://sites.google.com/view/tian-liu) and [Seth Richards-Shubik](https://econ.jhu.edu/directory/seth-richards-shubik/)).
 Funded by the UWO Social Science Research Fund.
 
+* Optimal Contracting with Multitasking Agents (with [Seth Richards-Shubik](https://econ.jhu.edu/directory/seth-richards-shubik/)).
+Funded by the SSHRC Insight Development Grant program. 
+
 ## Needing Resurrection :derelict_house:
 
 These are zombie papers, but instead of regular zombies (which need only brains), these need time from me and/or someone else (you?!)...
 
+* The Impact of Primary Health Care Reform on Population Health: Theory and Evidence from Ontario (with [Sisira Sarma](https://publish.uwo.ca/~ssarma2/)) 
+
 * Supply, Demand, and Social Learning: An Application to Learning About Charter School Quality 
 {%comment%} (with Matt Chingos) {%endcomment%}
-
-* The Impact of Primary Health Care Reform on Population Health: Theory and Evidence from Ontario 
-{%comment%} (with Sisira Sarma) {%endcomment%}
 
 ## Number of Papers at Each Stage
 
