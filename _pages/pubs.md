@@ -14,7 +14,7 @@ Note: "pub" and "wp" respectively point to the journal website and most recent w
 ## Primary Topics/Methods
 
 * A Partial Identification Approach to Identifying the Determinants of Human Capital Accumulation: An Application to Teachers. 
-***Journal of Applied Econometrics***, 2025. [pub (preprint)](http://doi.org/10.1002/jae.3131), [wp](/files/research/mehta_OJT_LBD_teachers_partial_identification_working_paper.pdf)
+***Journal of Applied Econometrics***, 40(6), 639-654, 2025. [pub (open access!)](http://doi.org/10.1002/jae.3131), [wp](/files/research/mehta_OJT_LBD_teachers_partial_identification_working_paper.pdf)
 
 * Social Interactions, Mechanisms, and Equilibrium: Evidence from a Model of Study Time and Academic Achievement (with [Timothy G. Conley](https://economics.uwo.ca/people/faculty/conley.html), Ralph Stinebrickner, and [Todd Stinebrickner](https://economics.uwo.ca/people/faculty/stinebrickner.html)). ***Journal of Political Economy***, 132(3), 824-866, 2024. [pub](https://www.journals.uchicago.edu/doi/10.1086/726902), [wp](/files/research/CMSS_social_interactions_study_wp.pdf). 
 
@@ -22,7 +22,7 @@ Note: "pub" and "wp" respectively point to the journal website and most recent w
 		
 * An Economic Approach to Generalizing Findings from Regression-Discontinuity Designs. ***Journal of Human Resources***, 54(4), 953-985, 2019. [pub](https://doi.org/10.3368/jhr.54.4.1115.7497R2), [wp](/files/research/research/RD_more_Mehta_2017_12_07.pdf) 
 
-* Measuring Quality for Use in Incentive Schemes: The Case of "Shrinkage" Estimators. ***Quantitative Economics***, 10(4), 1537-1577, 2019. [pub](https://doi.org/10.3982/QE950), [wp](/files/research/mehta_measuring_quality_for_incentive_schemes_2019_04_02.pdf) 
+* Measuring Quality for Use in Incentive Schemes: The Case of "Shrinkage" Estimators. ***Quantitative Economics***, 10(4), 1537-1577, 2019. [pub (open access!)](https://doi.org/10.3982/QE950), [wp](/files/research/mehta_measuring_quality_for_incentive_schemes_2019_04_02.pdf) 
 
 * Time-Use and Academic Peer Effects in College (with Ralph Stinebrickner and [Todd Stinebrickner](https://economics.uwo.ca/people/faculty/stinebrickner.html)). ***Economic Inquiry***, 57(1), 162-171, 2019. [pub](https://doi.org/10.1111/ecin.12730), [wp](/files/research/MSS_EI_final.pdf)
 
@@ -35,7 +35,7 @@ Note: "pub" and "wp" respectively point to the journal website and most recent w
 
 ## Other Publications
 
-* Primary Care Payment Models and Avoidable Hospitalizations: A Multivalued Treatment Effects Analysis (with Nibene Som&egrave;, Rose Anne Devlin, and Sisira Sarma). *Health Economics*, Forthcoming.
+* Primary Care Payment Models and Avoidable Hospitalizations: A Multivalued Treatment Effects Analysis (with Nibene Som&egrave;, Rose Anne Devlin, and Sisira Sarma). *Health Economics*, October 2024, 33(10), 2288-2305..
 
 * The Effect of Expanded Parental Benefits on Union Dissolution (with Rachel Margolis, Youjin Choi, and Anders Holm). *Journal of Marriage and Family*, February 2021, 83(1): 191-208. 
 
