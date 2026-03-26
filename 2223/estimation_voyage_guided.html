@@ -204,6 +204,9 @@
   .plot-grid-4 { display: grid; grid-template-columns: 1fr 1fr 1fr 1fr; gap: 12px; margin: 14px 0; }
   @media (max-width: 900px) { .plot-grid-4 { grid-template-columns: 1fr 1fr; } }
   @media (max-width: 700px) { .plot-grid-4 { grid-template-columns: 1fr; } }
+  .plot-grid-5 { display: grid; grid-template-columns: repeat(5, 1fr); gap: 12px; margin: 14px 0; }
+  @media (max-width: 1000px) { .plot-grid-5 { grid-template-columns: 1fr 1fr 1fr; } }
+  @media (max-width: 700px) { .plot-grid-5 { grid-template-columns: 1fr 1fr; } }
   .plot-container {
     border: 1px solid var(--border);
     border-radius: 6px;
@@ -322,6 +325,7 @@
   .check-result { font-size: 0.88em; font-weight: bold; margin-left: 4px; }
   .check-result.correct { color: #27ae60; }
   .check-result.wrong { color: #e74c3c; }
+  .calc-ratio { font-family: 'Courier New', monospace; font-size: 0.95em; margin: 4px 0 8px 8px; min-height: 1.2em; }
 
   /* Stage complete banner */
   .stage-complete-banner {
@@ -692,12 +696,18 @@ function generateGuidedData(useA, useH, abilityShare, gamma3, ivStrength) {
   var corDistGPA     = cor(dist_arr, gpa_arr);
   var corDistStudy   = cor(dist_arr, study_arr);
 
+  // IV second stage: fitted values from first stage (study on dist)
+  var varDist = variance(dist_arr);
+  var fsSlope = varDist > 0 ? covDistStudy / varDist : 0;
+  var meanDist = mean(dist_arr), meanStudy = mean(study_arr);
+  var studyHat_arr = dist_arr.map(function(v) { return meanStudy + fsSlope * (v - meanDist); });
+
   return {
     n: n, T: T, beta1: beta1,
     useA: useA, useH: useH,
     abilityShare: abilityShare, gamma3: gamma3, ivStrength: ivStrength,
     students: students, flat: flat, fd: fd, dm: dm,
-    study: study_arr, gpa: gpa_arr, dist: dist_arr,
+    study: study_arr, gpa: gpa_arr, dist: dist_arr, studyHat: studyHat_arr,
     a: a_arr, h: h_arr, u: u_arr, u_total: u_total_arr,
     dStudy: dStudy_arr, dGPA: dGPA_arr, dU: dU_arr,
     studyDM: studyDM_arr, gpaDM: gpaDM_arr, uDM: uDM_arr,
@@ -746,7 +756,7 @@ function thinPoints(xs, ys, maxPts) {
   return { x: rx, y: ry };
 }
 
-function renderScatter(svgId, xs, ys, slopeEst, slopeTrue, xLabel, yLabel, estColor, estName) {
+function renderScatter(svgId, xs, ys, slopeEst, slopeTrue, xLabel, yLabel, estColor, estName, showLine) {
   var svg = document.getElementById(svgId);
   if (!svg) return;
   var W = 300, H = 250;
@@ -796,19 +806,25 @@ function renderScatter(svgId, xs, ys, slopeEst, slopeTrue, xLabel, yLabel, estCo
     var ty2 = my + slopeTrue * (xmax - mx);
     html += '<line x1="' + sx(xmin) + '" y1="' + sy(ty1) + '" x2="' + sx(xmax) + '" y2="' + sy(ty2) + '" stroke="#999" stroke-width="1.5" stroke-dasharray="5,3"/>';
   }
-  if (!isNaN(slopeEst) && isFinite(slopeEst)) {
+  if (showLine && !isNaN(slopeEst) && isFinite(slopeEst)) {
     var ey1 = my + slopeEst * (xmin - mx);
     var ey2 = my + slopeEst * (xmax - mx);
     html += '<line x1="' + sx(xmin) + '" y1="' + sy(ey1) + '" x2="' + sx(xmax) + '" y2="' + sy(ey2) + '" stroke="' + estColor + '" stroke-width="2"/>';
   }
 
-  var legW = 105, legH = slopeTrue !== null ? 32 : 18;
-  html += '<rect x="' + (margin.left + pw - legW - 4) + '" y="' + (margin.top + 2) + '" width="' + legW + '" height="' + legH + '" fill="white" stroke="#ccc" rx="3" opacity="0.9"/>';
-  html += '<line x1="' + (margin.left + pw - legW + 2) + '" y1="' + (margin.top + 12) + '" x2="' + (margin.left + pw - legW + 18) + '" y2="' + (margin.top + 12) + '" stroke="' + estColor + '" stroke-width="2"/>';
-  html += '<text x="' + (margin.left + pw - legW + 22) + '" y="' + (margin.top + 15) + '" font-size="8" fill="#333" font-family="Georgia,serif">' + estName + ' = ' + fmt3(slopeEst) + '</text>';
-  if (slopeTrue !== null) {
-    html += '<line x1="' + (margin.left + pw - legW + 2) + '" y1="' + (margin.top + 26) + '" x2="' + (margin.left + pw - legW + 18) + '" y2="' + (margin.top + 26) + '" stroke="#999" stroke-width="1.5" stroke-dasharray="5,3"/>';
-    html += '<text x="' + (margin.left + pw - legW + 22) + '" y="' + (margin.top + 29) + '" font-size="8" fill="#999" font-family="Georgia,serif">True = 0.30</text>';
+  if (showLine) {
+    var legW = 105, legH = slopeTrue !== null ? 32 : 18;
+    html += '<rect x="' + (margin.left + pw - legW - 4) + '" y="' + (margin.top + 2) + '" width="' + legW + '" height="' + legH + '" fill="white" stroke="#ccc" rx="3" opacity="0.9"/>';
+    html += '<line x1="' + (margin.left + pw - legW + 2) + '" y1="' + (margin.top + 12) + '" x2="' + (margin.left + pw - legW + 18) + '" y2="' + (margin.top + 12) + '" stroke="' + estColor + '" stroke-width="2"/>';
+    html += '<text x="' + (margin.left + pw - legW + 22) + '" y="' + (margin.top + 15) + '" font-size="8" fill="#333" font-family="Georgia,serif">' + estName + ' = ' + fmt3(slopeEst) + '</text>';
+    if (slopeTrue !== null) {
+      html += '<line x1="' + (margin.left + pw - legW + 2) + '" y1="' + (margin.top + 26) + '" x2="' + (margin.left + pw - legW + 18) + '" y2="' + (margin.top + 26) + '" stroke="#999" stroke-width="1.5" stroke-dasharray="5,3"/>';
+      html += '<text x="' + (margin.left + pw - legW + 22) + '" y="' + (margin.top + 29) + '" font-size="8" fill="#999" font-family="Georgia,serif">True = 0.30</text>';
+    }
+  } else if (slopeTrue !== null) {
+    html += '<rect x="' + (margin.left + pw - 95) + '" y="' + (margin.top + 2) + '" width="91" height="16" fill="white" stroke="#ccc" rx="3" opacity="0.9"/>';
+    html += '<line x1="' + (margin.left + pw - 91) + '" y1="' + (margin.top + 12) + '" x2="' + (margin.left + pw - 75) + '" y2="' + (margin.top + 12) + '" stroke="#999" stroke-width="1.5" stroke-dasharray="5,3"/>';
+    html += '<text x="' + (margin.left + pw - 71) + '" y="' + (margin.top + 15) + '" font-size="8" fill="#999" font-family="Georgia,serif">True = 0.30</text>';
   }
   svg.innerHTML = html;
 }
@@ -870,7 +886,7 @@ function renderEndogScatter(svgId, xs, ys, xLabel, yLabel) {
   svg.innerHTML = html;
 }
 
-function renderFirstStagePlot(svgId, dist_arr, study_arr) {
+function renderFirstStagePlot(svgId, dist_arr, study_arr, showLine) {
   var svg = document.getElementById(svgId);
   if (!svg) return;
   var xs = dist_arr, ys = study_arr;
@@ -915,28 +931,58 @@ function renderFirstStagePlot(svgId, dist_arr, study_arr) {
       html += '<circle cx="' + px.toFixed(1) + '" cy="' + py.toFixed(1) + '" r="2.2" fill="#e67e22" opacity="0.45"/>';
   }
 
-  var varDist = variance(xs), covDS = cov(xs, ys);
-  var fsSlope = varDist > 0 ? covDS / varDist : 0;
-  var mx = mean(xs), my = mean(ys);
-  var ey1 = my + fsSlope * (xmin - mx);
-  var ey2 = my + fsSlope * (xmax - mx);
-  html += '<line x1="' + sx(xmin) + '" y1="' + sy(ey1) + '" x2="' + sx(xmax) + '" y2="' + sy(ey2) + '" stroke="#e67e22" stroke-width="2"/>';
-
-  var r = cor(xs, ys);
-  html += '<rect x="' + (margin.left + 4) + '" y="' + (margin.top + 2) + '" width="115" height="16" fill="white" stroke="#ccc" rx="3" opacity="0.9"/>';
-  html += '<text x="' + (margin.left + 8) + '" y="' + (margin.top + 14) + '" font-size="8" fill="#e67e22" font-family="Georgia,serif">Cor(study, dist) = ' + fmt3(r) + '</text>';
+  if (showLine) {
+    var varDist = variance(xs), covDS = cov(xs, ys);
+    var fsSlope = varDist > 0 ? covDS / varDist : 0;
+    var mx = mean(xs), my = mean(ys);
+    var ey1 = my + fsSlope * (xmin - mx);
+    var ey2 = my + fsSlope * (xmax - mx);
+    html += '<line x1="' + sx(xmin) + '" y1="' + sy(ey1) + '" x2="' + sx(xmax) + '" y2="' + sy(ey2) + '" stroke="#e67e22" stroke-width="2"/>';
+    var r = cor(xs, ys);
+    html += '<rect x="' + (margin.left + 4) + '" y="' + (margin.top + 2) + '" width="115" height="16" fill="white" stroke="#ccc" rx="3" opacity="0.9"/>';
+    html += '<text x="' + (margin.left + 8) + '" y="' + (margin.top + 14) + '" font-size="8" fill="#e67e22" font-family="Georgia,serif">Cor(study, dist) = ' + fmt3(r) + '</text>';
+  }
   svg.innerHTML = html;
 }
 
-function renderAllPlotsForStage(d, sfx) {
-  renderScatter('plotOLS_' + sfx, d.study, d.gpa, d.betaOLS, d.beta1, 'study (hrs)', 'GPA', '#333', '\u03B2\u0302_OLS');
-  renderScatter('plotFD_' + sfx, d.dStudy, d.dGPA, d.betaFD, d.beta1, '\u0394study', '\u0394GPA', '#7d3c98', '\u03B2\u0302_FD');
-  renderScatter('plotFE_' + sfx, d.studyDM, d.gpaDM, d.betaFE, d.beta1, 'study (dm)', 'GPA (dm)', '#7d3c98', '\u03B2\u0302_FE');
-  renderFirstStagePlot('plotFS_' + sfx, d.dist, d.study);
+function renderAllPlotsForStage(d, sfx, showLine) {
+  renderScatter('plotOLS_' + sfx, d.study, d.gpa, d.betaOLS, d.beta1, 'study (hrs)', 'GPA', '#333', '\u03B2\u0302_OLS', showLine);
+  renderScatter('plotFD_' + sfx, d.dStudy, d.dGPA, d.betaFD, d.beta1, '\u0394study', '\u0394GPA', '#7d3c98', '\u03B2\u0302_FD', showLine);
+  renderScatter('plotFE_' + sfx, d.studyDM, d.gpaDM, d.betaFE, d.beta1, 'study (dm)', 'GPA (dm)', '#7d3c98', '\u03B2\u0302_FE', showLine);
+  renderFirstStagePlot('plotFS_' + sfx, d.dist, d.study, showLine);
+  renderScatter('plotSS_' + sfx, d.studyHat, d.gpa, d.betaIV, d.beta1, 'study\u0302 (fitted)', 'GPA', '#e67e22', '\u03B2\u0302_IV', showLine);
   renderEndogScatter('plotELev_' + sfx, d.study, d.u_total, 'study', 'u (total)');
   renderEndogScatter('plotEFD_' + sfx, d.dStudy, d.dU, '\u0394study', '\u0394u');
   renderEndogScatter('plotEFE_' + sfx, d.studyDM, d.uDM, 'study (dm)', 'u (dm)');
   renderEndogScatter('plotEIV_' + sfx, d.dist, d.u, 'dist', 'u (tv)');
+}
+
+function revealSlopePlots(sfx, d) {
+  // Reveal lines on the original plots above
+  renderScatter('plotOLS_' + sfx, d.study, d.gpa, d.betaOLS, d.beta1, 'study (hrs)', 'GPA', '#333', '\u03B2\u0302_OLS', true);
+  renderScatter('plotFD_' + sfx, d.dStudy, d.dGPA, d.betaFD, d.beta1, '\u0394study', '\u0394GPA', '#7d3c98', '\u03B2\u0302_FD', true);
+  renderScatter('plotFE_' + sfx, d.studyDM, d.gpaDM, d.betaFE, d.beta1, 'study (dm)', 'GPA (dm)', '#7d3c98', '\u03B2\u0302_FE', true);
+  renderFirstStagePlot('plotFS_' + sfx, d.dist, d.study, true);
+  renderScatter('plotSS_' + sfx, d.studyHat, d.gpa, d.betaIV, d.beta1, 'study\u0302 (fitted)', 'GPA', '#e67e22', '\u03B2\u0302_IV', true);
+
+  // Build duplicate plots below the answers
+  var grid = document.getElementById('revealPlotGrid_' + sfx);
+  if (grid) {
+    var r = 'r_' + sfx;
+    grid.innerHTML =
+      '<div class="plot-container"><div class="plot-title" style="color:var(--ols-color);">OLS: GPA vs study</div><svg id="plotOLS_' + r + '" viewBox="0 0 300 250"></svg></div>'
+    + '<div class="plot-container"><div class="plot-title" style="color:var(--fd-color);">FD: \u0394GPA vs \u0394study</div><svg id="plotFD_' + r + '" viewBox="0 0 300 250"></svg></div>'
+    + '<div class="plot-container"><div class="plot-title" style="color:var(--fe-color);">FE: GPA<sup>dm</sup> vs study<sup>dm</sup></div><svg id="plotFE_' + r + '" viewBox="0 0 300 250"></svg></div>'
+    + '<div class="plot-container"><div class="plot-title" style="color:var(--iv-color);">IV 1st stage: study vs dist</div><svg id="plotFS_' + r + '" viewBox="0 0 300 250"></svg></div>'
+    + '<div class="plot-container"><div class="plot-title" style="color:var(--iv-color);">IV 2nd stage: GPA vs study&#770;</div><svg id="plotSS_' + r + '" viewBox="0 0 300 250"></svg></div>';
+    renderScatter('plotOLS_' + r, d.study, d.gpa, d.betaOLS, d.beta1, 'study (hrs)', 'GPA', '#333', '\u03B2\u0302_OLS', true);
+    renderScatter('plotFD_' + r, d.dStudy, d.dGPA, d.betaFD, d.beta1, '\u0394study', '\u0394GPA', '#7d3c98', '\u03B2\u0302_FD', true);
+    renderScatter('plotFE_' + r, d.studyDM, d.gpaDM, d.betaFE, d.beta1, 'study (dm)', 'GPA (dm)', '#7d3c98', '\u03B2\u0302_FE', true);
+    renderFirstStagePlot('plotFS_' + r, d.dist, d.study, true);
+    renderScatter('plotSS_' + r, d.studyHat, d.gpa, d.betaIV, d.beta1, 'study\u0302 (fitted)', 'GPA', '#e67e22', '\u03B2\u0302_IV', true);
+  }
+  var reveal = document.getElementById('revealPlots_' + sfx);
+  if (reveal) reveal.style.display = 'block';
 }
 
 // ============================================================
@@ -1038,19 +1084,15 @@ function renderMomentDashboard(d, sfx, showA, showH) {
   var html = '<thead><tr><th style="text-align:left;">Quantity</th><th>Cov</th><th>Cor</th></tr></thead><tbody>';
   html += covRowFeasible('C&#770;ov(study, GPA)', d.covStudyGPA, d.corStudyGPA);
   html += covRowFeasible('V&#770;ar(study)', d.varStudy, null);
-  html += covRowResult(bhat('OLS'), d.betaOLS, 'var(--ols-color)');
   html += '<tr><td colspan="3" style="border:none;height:4px;"></td></tr>';
   html += covRowFeasible('C&#770;ov(&Delta;study, &Delta;GPA)', d.covDStudyDGPA, d.corDStudyDGPA);
   html += covRowFeasible('V&#770;ar(&Delta;study)', d.varDStudy, null);
-  html += covRowResult(bhat('FD'), d.betaFD, 'var(--fd-color)');
   html += '<tr><td colspan="3" style="border:none;height:4px;"></td></tr>';
   html += covRowFeasible('C&#770;ov(study<sup>dm</sup>, GPA<sup>dm</sup>)', d.covDMStudyDMGPA, d.corDMStudyDMGPA);
   html += covRowFeasible('V&#770;ar(study<sup>dm</sup>)', d.varDMStudy, null);
-  html += covRowResult(bhat('FE'), d.betaFE, 'var(--fe-color)');
   html += '<tr><td colspan="3" style="border:none;height:4px;"></td></tr>';
   html += covRowFeasible('C&#770;ov(dist, GPA)', d.covDistGPA, d.corDistGPA);
   html += covRowFeasible('C&#770;ov(dist, study)', d.covDistStudy, d.corDistStudy);
-  html += covRowResult(bhat('IV'), d.betaIV, 'var(--iv-color)');
   html += '</tbody>';
   document.getElementById(fId).innerHTML = html;
 
@@ -1095,11 +1137,12 @@ function scatterBlockHTML(sfx) {
     + '<div class="plot-container" style="border-color:#ccc;"><div class="plot-title" style="color:var(--unobs);">IV: u<sub>it</sub> vs dist<sub>i</sub></div><svg id="plotEIV_' + sfx + '" viewBox="0 0 300 250"></svg></div>'
     + '</div>'
     + '<h3>Feasible: GPA vs Study</h3>'
-    + '<div class="plot-grid-4">'
+    + '<div class="plot-grid-5">'
     + '<div class="plot-container"><div class="plot-title" style="color:var(--ols-color);">OLS: GPA vs study</div><svg id="plotOLS_' + sfx + '" viewBox="0 0 300 250"></svg></div>'
     + '<div class="plot-container"><div class="plot-title" style="color:var(--fd-color);">FD: &Delta;GPA vs &Delta;study</div><svg id="plotFD_' + sfx + '" viewBox="0 0 300 250"></svg></div>'
     + '<div class="plot-container"><div class="plot-title" style="color:var(--fe-color);">FE: GPA<sup>dm</sup> vs study<sup>dm</sup></div><svg id="plotFE_' + sfx + '" viewBox="0 0 300 250"></svg></div>'
-    + '<div class="plot-container"><div class="plot-title" style="color:var(--iv-color);">First Stage: study vs dist</div><svg id="plotFS_' + sfx + '" viewBox="0 0 300 250"></svg></div>'
+    + '<div class="plot-container"><div class="plot-title" style="color:var(--iv-color);">IV 1st stage: study vs dist</div><svg id="plotFS_' + sfx + '" viewBox="0 0 300 250"></svg></div>'
+    + '<div class="plot-container"><div class="plot-title" style="color:var(--iv-color);">IV 2nd stage: GPA vs study&#770;</div><svg id="plotSS_' + sfx + '" viewBox="0 0 300 250"></svg></div>'
     + '</div>';
 }
 
@@ -1113,30 +1156,40 @@ function calcBlockHTML(sfx) {
     + '<div id="calcEstimators_' + sfx + '"></div>'
     + '<button class="btn-check" onclick="checkAnswers(\'' + sfx + '\')">Check All Answers</button>'
     + '<div id="calcFeedback_' + sfx + '" style="margin-top:12px;"></div>'
+    + '<div id="revealPlots_' + sfx + '" style="display:none;margin-top:18px;">'
+    + '<h3 style="border-top:1px solid var(--border);padding-top:14px;">Your Results</h3>'
+    + '<div class="plot-grid-5" id="revealPlotGrid_' + sfx + '"></div>'
+    + '</div>'
     + '</div>';
 }
+
+var NUM_TOL = 0.001;
 
 function renderCalcEstimators(d, sfx) {
   var ests = [
     {
       id: 'ols', name: 'OLS', color: 'var(--ols-color)',
       formula: bhat('OLS') + ' = ' + fracHTML('C&#770;ov(study, GPA)', 'V&#770;ar(study)'),
-      correct: d.betaOLS
+      numLabel: 'C&#770;ov(study, GPA)', denLabel: 'V&#770;ar(study)',
+      correctNum: d.covStudyGPA, correctDen: d.varStudy, correct: d.betaOLS
     },
     {
       id: 'fd', name: 'FD', color: 'var(--fd-color)',
       formula: bhat('FD') + ' = ' + fracHTML('C&#770;ov(&Delta;study, &Delta;GPA)', 'V&#770;ar(&Delta;study)'),
-      correct: d.betaFD
+      numLabel: 'C&#770;ov(&Delta;study, &Delta;GPA)', denLabel: 'V&#770;ar(&Delta;study)',
+      correctNum: d.covDStudyDGPA, correctDen: d.varDStudy, correct: d.betaFD
     },
     {
       id: 'fe', name: 'FE', color: 'var(--fe-color)',
       formula: bhat('FE') + ' = ' + fracHTML('C&#770;ov(study<sup>dm</sup>, GPA<sup>dm</sup>)', 'V&#770;ar(study<sup>dm</sup>)'),
-      correct: d.betaFE
+      numLabel: 'C&#770;ov(study<sup>dm</sup>, GPA<sup>dm</sup>)', denLabel: 'V&#770;ar(study<sup>dm</sup>)',
+      correctNum: d.covDMStudyDMGPA, correctDen: d.varDMStudy, correct: d.betaFE
     },
     {
       id: 'iv', name: 'IV', color: 'var(--iv-color)',
       formula: bhat('IV') + ' = ' + fracHTML('C&#770;ov(dist, GPA)', 'C&#770;ov(dist, study)'),
-      correct: d.betaIV
+      numLabel: 'C&#770;ov(dist, GPA)', denLabel: 'C&#770;ov(dist, study)',
+      correctNum: d.covDistGPA, correctDen: d.covDistStudy, correct: d.betaIV
     }
   ];
 
@@ -1146,70 +1199,94 @@ function renderCalcEstimators(d, sfx) {
     html += '<div class="calc-estimator-block">';
     html += '<div class="calc-estimator-title" style="color:' + e.color + ';">' + e.name + '</div>';
     html += '<div class="calc-formula">' + e.formula + '</div>';
-    html += '<div class="calc-row">';
-    html += '<label>Your answer:</label>';
-    html += '<input type="text" class="calc-input" id="inp_' + sfx + '_' + e.id + '" placeholder="e.g. 0.300" oninput="clearFeedback(\'' + sfx + '\',\'' + e.id + '\')">';
-    html += '<span class="check-result" id="res_' + sfx + '_' + e.id + '"></span>';
-    html += '</div>';
+    html += '<div class="calc-row"><label>Numerator &mdash; ' + e.numLabel + ':</label>';
+    html += '<input type="text" class="calc-input" id="num_' + sfx + '_' + e.id + '" placeholder="from table" oninput="clearEstFeedback(\'' + sfx + '\',\'' + e.id + '\')">';
+    html += '<span class="check-result" id="numRes_' + sfx + '_' + e.id + '"></span></div>';
+    html += '<div class="calc-row"><label>Denominator &mdash; ' + e.denLabel + ':</label>';
+    html += '<input type="text" class="calc-input" id="den_' + sfx + '_' + e.id + '" placeholder="from table" oninput="clearEstFeedback(\'' + sfx + '\',\'' + e.id + '\')">';
+    html += '<span class="check-result" id="denRes_' + sfx + '_' + e.id + '"></span></div>';
+    html += '<div class="calc-ratio" id="ratio_' + sfx + '_' + e.id + '"></div>';
     html += '</div>';
   }
   document.getElementById('calcEstimators_' + sfx).innerHTML = html;
 }
 
-function clearFeedback(sfx, estId) {
-  var resEl = document.getElementById('res_' + sfx + '_' + estId);
-  var inpEl = document.getElementById('inp_' + sfx + '_' + estId);
-  if (resEl) resEl.textContent = '';
-  if (inpEl) { inpEl.classList.remove('correct-input', 'wrong-input'); }
-  // Hide overall feedback and hide complete banner when user edits
+function clearEstFeedback(sfx, estId) {
+  ['num','den'].forEach(function(part) {
+    var res = document.getElementById(part + 'Res_' + sfx + '_' + estId);
+    var inp = document.getElementById(part + '_' + sfx + '_' + estId);
+    if (res) { res.textContent = ''; res.className = 'check-result'; }
+    if (inp) inp.classList.remove('correct-input', 'wrong-input');
+  });
+  var ratio = document.getElementById('ratio_' + sfx + '_' + estId);
+  if (ratio) ratio.innerHTML = '';
+  // Hide overall feedback when user edits
   var fb = document.getElementById('calcFeedback_' + sfx);
   if (fb) fb.innerHTML = '';
 }
 
-var TOLERANCE = 0.003;
-
 function checkAnswers(sfx) {
-  // find which stage this suffix maps to (s1->1, s2->2, s3->3, s4->4, s5->5)
   var stageIdx = parseInt(sfx.replace('s', '')) - 1;
   var d = (sfx === 's5') ? stageData[4] : stageData[stageIdx];
   if (!d) return;
 
   var ests = [
-    { id: 'ols', correct: d.betaOLS },
-    { id: 'fd',  correct: d.betaFD  },
-    { id: 'fe',  correct: d.betaFE  },
-    { id: 'iv',  correct: d.betaIV  }
+    { id: 'ols', correctNum: d.covStudyGPA,    correctDen: d.varStudy,      correct: d.betaOLS },
+    { id: 'fd',  correctNum: d.covDStudyDGPA,  correctDen: d.varDStudy,     correct: d.betaFD  },
+    { id: 'fe',  correctNum: d.covDMStudyDMGPA, correctDen: d.varDMStudy,   correct: d.betaFE  },
+    { id: 'iv',  correctNum: d.covDistGPA,      correctDen: d.covDistStudy, correct: d.betaIV  }
   ];
+
   var allCorrect = true;
   for (var i = 0; i < ests.length; i++) {
     var e = ests[i];
-    var inpEl = document.getElementById('inp_' + sfx + '_' + e.id);
-    var resEl = document.getElementById('res_' + sfx + '_' + e.id);
-    if (!inpEl) continue;
-    var val = parseFloat(inpEl.value);
-    if (isNaN(val)) {
-      resEl.textContent = '(enter a number)';
-      resEl.className = 'check-result wrong';
-      inpEl.className = 'calc-input wrong-input';
-      allCorrect = false;
-    } else if (Math.abs(val - e.correct) < TOLERANCE) {
-      resEl.textContent = '\u2713 Correct!';
-      resEl.className = 'check-result correct';
-      inpEl.className = 'calc-input correct-input';
+    var numEl  = document.getElementById('num_'    + sfx + '_' + e.id);
+    var denEl  = document.getElementById('den_'    + sfx + '_' + e.id);
+    var numRes = document.getElementById('numRes_' + sfx + '_' + e.id);
+    var denRes = document.getElementById('denRes_' + sfx + '_' + e.id);
+    var ratioEl = document.getElementById('ratio_' + sfx + '_' + e.id);
+    if (!numEl || !denEl) continue;
+
+    var numVal = parseFloat(numEl.value);
+    var denVal = parseFloat(denEl.value);
+    var numOk = !isNaN(numVal) && Math.abs(numVal - e.correctNum) < NUM_TOL;
+    var denOk = !isNaN(denVal) && Math.abs(denVal - e.correctDen) < NUM_TOL;
+
+    if (isNaN(numVal)) {
+      numRes.textContent = '(enter a number)'; numRes.className = 'check-result wrong';
+      numEl.className = 'calc-input wrong-input'; allCorrect = false;
+    } else if (numOk) {
+      numRes.textContent = '\u2713'; numRes.className = 'check-result correct';
+      numEl.className = 'calc-input correct-input';
     } else {
-      resEl.innerHTML = '\u2717 Answer: ' + fmt3(e.correct);
-      resEl.className = 'check-result wrong';
-      inpEl.className = 'calc-input wrong-input';
-      allCorrect = false;
+      numRes.innerHTML = '\u2717 ' + fmt4(e.correctNum); numRes.className = 'check-result wrong';
+      numEl.className = 'calc-input wrong-input'; allCorrect = false;
+    }
+
+    if (isNaN(denVal)) {
+      denRes.textContent = '(enter a number)'; denRes.className = 'check-result wrong';
+      denEl.className = 'calc-input wrong-input'; allCorrect = false;
+    } else if (denOk) {
+      denRes.textContent = '\u2713'; denRes.className = 'check-result correct';
+      denEl.className = 'calc-input correct-input';
+    } else {
+      denRes.innerHTML = '\u2717 ' + fmt4(e.correctDen); denRes.className = 'check-result wrong';
+      denEl.className = 'calc-input wrong-input'; allCorrect = false;
+    }
+
+    if (numOk && denOk && ratioEl) {
+      var computed = numVal / denVal;
+      ratioEl.innerHTML = '&nbsp;&nbsp;&rarr;&nbsp; <strong style="color:' + ['var(--ols-color)','var(--fd-color)','var(--fe-color)','var(--iv-color)'][i] + ';">' + fmt4(computed) + '</strong>';
     }
   }
 
   var fbEl = document.getElementById('calcFeedback_' + sfx);
   if (allCorrect) {
     stageComplete[stageIdx] = true;
-    var nextStage = stageIdx + 2; // stageIdx is 0-based, next stage is stageIdx+2 (1-based)
+    var nextStage = stageIdx + 2;
     fbEl.innerHTML = renderCompleteBanner(stageIdx + 1, nextStage);
     renderProgressBar();
+    revealSlopePlots(sfx, d);
   } else {
     fbEl.innerHTML = '<div style="color:#c0392b;font-size:0.9em;font-weight:bold;margin-top:6px;">Some answers need correction. Check the values above and try again.</div>';
   }
@@ -1475,13 +1552,16 @@ function updateStage5() {
   var sfx = 's5';
   var ids = ['ols', 'fd', 'fe', 'iv'];
   for (var i = 0; i < ids.length; i++) {
-    var inp = document.getElementById('inp_' + sfx + '_' + ids[i]);
-    var res = document.getElementById('res_' + sfx + '_' + ids[i]);
-    if (inp) { inp.value = ''; inp.className = 'calc-input'; }
-    if (res) { res.textContent = ''; res.className = 'check-result'; }
+    clearEstFeedback(sfx, ids[i]);
+    ['num','den'].forEach(function(part) {
+      var inp = document.getElementById(part + '_' + sfx + '_' + ids[i]);
+      if (inp) inp.value = '';
+    });
   }
   var fb = document.getElementById('calcFeedback_' + sfx);
   if (fb) fb.innerHTML = '';
+  var reveal = document.getElementById('revealPlots_' + sfx);
+  if (reveal) reveal.style.display = 'none';
 
   renderStage5Dynamic(stageData[4]);
 
