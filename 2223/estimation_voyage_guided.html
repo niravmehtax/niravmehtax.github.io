@@ -756,7 +756,7 @@ function thinPoints(xs, ys, maxPts) {
   return { x: rx, y: ry };
 }
 
-function renderScatter(svgId, xs, ys, slopeEst, slopeTrue, xLabel, yLabel, estColor, estName, showLine) {
+function renderScatter(svgId, xs, ys, slopeEst, slopeTrue, xLabel, yLabel, estColor, estName, showLine, xLim, yLim) {
   var svg = document.getElementById(svgId);
   if (!svg) return;
   var W = 300, H = 250;
@@ -767,11 +767,19 @@ function renderScatter(svgId, xs, ys, slopeEst, slopeTrue, xLabel, yLabel, estCo
   var thinned = thinPoints(xs, ys, 200);
   var tx = thinned.x, ty = thinned.y;
 
-  var xmin = Math.min.apply(null, xs), xmax = Math.max.apply(null, xs);
-  var ymin = Math.min.apply(null, ys), ymax = Math.max.apply(null, ys);
-  var xpad = (xmax - xmin) * 0.08 || 1;
-  var ypad = (ymax - ymin) * 0.08 || 1;
-  xmin -= xpad; xmax += xpad; ymin -= ypad; ymax += ypad;
+  var xmin, xmax, ymin, ymax;
+  if (xLim) { xmin = xLim[0]; xmax = xLim[1]; }
+  else {
+    xmin = Math.min.apply(null, xs); xmax = Math.max.apply(null, xs);
+    var xpad = (xmax - xmin) * 0.08 || 1;
+    xmin -= xpad; xmax += xpad;
+  }
+  if (yLim) { ymin = yLim[0]; ymax = yLim[1]; }
+  else {
+    ymin = Math.min.apply(null, ys); ymax = Math.max.apply(null, ys);
+    var ypad = (ymax - ymin) * 0.08 || 1;
+    ymin -= ypad; ymax += ypad;
+  }
 
   function sx(v) { return margin.left + (v - xmin) / (xmax - xmin) * pw; }
   function sy(v) { return margin.top + ph - (v - ymin) / (ymax - ymin) * ph; }
@@ -945,12 +953,19 @@ function renderFirstStagePlot(svgId, dist_arr, study_arr, showLine) {
   svg.innerHTML = html;
 }
 
+function paddedLim(arr, pad) {
+  var lo = Math.min.apply(null, arr), hi = Math.max.apply(null, arr);
+  var p = (hi - lo) * (pad || 0.08) || 1;
+  return [lo - p, hi + p];
+}
+
 function renderAllPlotsForStage(d, sfx, showLine) {
+  var xLimStudy = paddedLim(d.study), yLimGPA = paddedLim(d.gpa);
   renderScatter('plotOLS_' + sfx, d.study, d.gpa, d.betaOLS, d.beta1, 'study (hrs)', 'GPA', '#333', '\u03B2\u0302_OLS', showLine);
   renderScatter('plotFD_' + sfx, d.dStudy, d.dGPA, d.betaFD, d.beta1, '\u0394study', '\u0394GPA', '#7d3c98', '\u03B2\u0302_FD', showLine);
   renderScatter('plotFE_' + sfx, d.studyDM, d.gpaDM, d.betaFE, d.beta1, 'study (dm)', 'GPA (dm)', '#7d3c98', '\u03B2\u0302_FE', showLine);
   renderFirstStagePlot('plotFS_' + sfx, d.dist, d.study, showLine);
-  renderScatter('plotSS_' + sfx, d.studyHat, d.gpa, d.betaIV, d.beta1, 'study\u0302 (fitted)', 'GPA', '#e67e22', '\u03B2\u0302_IV', showLine);
+  renderScatter('plotSS_' + sfx, d.studyHat, d.gpa, d.betaIV, d.beta1, 'study\u0302 (fitted)', 'GPA', '#e67e22', '\u03B2\u0302_IV', showLine, xLimStudy, yLimGPA);
   renderEndogScatter('plotELev_' + sfx, d.study, d.u_total, 'study', 'u (total)');
   renderEndogScatter('plotEFD_' + sfx, d.dStudy, d.dU, '\u0394study', '\u0394u');
   renderEndogScatter('plotEFE_' + sfx, d.studyDM, d.uDM, 'study (dm)', 'u (dm)');
@@ -958,12 +973,13 @@ function renderAllPlotsForStage(d, sfx, showLine) {
 }
 
 function revealSlopePlots(sfx, d) {
+  var xLimStudy = paddedLim(d.study), yLimGPA = paddedLim(d.gpa);
   // Reveal lines on the original plots above
   renderScatter('plotOLS_' + sfx, d.study, d.gpa, d.betaOLS, d.beta1, 'study (hrs)', 'GPA', '#333', '\u03B2\u0302_OLS', true);
   renderScatter('plotFD_' + sfx, d.dStudy, d.dGPA, d.betaFD, d.beta1, '\u0394study', '\u0394GPA', '#7d3c98', '\u03B2\u0302_FD', true);
   renderScatter('plotFE_' + sfx, d.studyDM, d.gpaDM, d.betaFE, d.beta1, 'study (dm)', 'GPA (dm)', '#7d3c98', '\u03B2\u0302_FE', true);
   renderFirstStagePlot('plotFS_' + sfx, d.dist, d.study, true);
-  renderScatter('plotSS_' + sfx, d.studyHat, d.gpa, d.betaIV, d.beta1, 'study\u0302 (fitted)', 'GPA', '#e67e22', '\u03B2\u0302_IV', true);
+  renderScatter('plotSS_' + sfx, d.studyHat, d.gpa, d.betaIV, d.beta1, 'study\u0302 (fitted)', 'GPA', '#e67e22', '\u03B2\u0302_IV', true, xLimStudy, yLimGPA);
 
   // Build duplicate plots below the answers
   var grid = document.getElementById('revealPlotGrid_' + sfx);
@@ -979,7 +995,7 @@ function revealSlopePlots(sfx, d) {
     renderScatter('plotFD_' + r, d.dStudy, d.dGPA, d.betaFD, d.beta1, '\u0394study', '\u0394GPA', '#7d3c98', '\u03B2\u0302_FD', true);
     renderScatter('plotFE_' + r, d.studyDM, d.gpaDM, d.betaFE, d.beta1, 'study (dm)', 'GPA (dm)', '#7d3c98', '\u03B2\u0302_FE', true);
     renderFirstStagePlot('plotFS_' + r, d.dist, d.study, true);
-    renderScatter('plotSS_' + r, d.studyHat, d.gpa, d.betaIV, d.beta1, 'study\u0302 (fitted)', 'GPA', '#e67e22', '\u03B2\u0302_IV', true);
+    renderScatter('plotSS_' + r, d.studyHat, d.gpa, d.betaIV, d.beta1, 'study\u0302 (fitted)', 'GPA', '#e67e22', '\u03B2\u0302_IV', true, xLimStudy, yLimGPA);
   }
   var reveal = document.getElementById('revealPlots_' + sfx);
   if (reveal) reveal.style.display = 'block';
