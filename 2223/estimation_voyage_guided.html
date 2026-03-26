@@ -1,0 +1,1640 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Estimation Voyage: Guided Edition — ECON 2223B</title>
+<style>
+  :root {
+    --blue: #1a5276;
+    --light-blue: #d4e6f1;
+    --gray: #f8f9fa;
+    --border: #dee2e6;
+    --orange-est: #e67e22;
+    --light-orange-est: #fdebd0;
+    --purple: #7d3c98;
+    --light-purple: #e8daef;
+    --ols-color: #333;
+    --ols-bg: #e0e0e0;
+    --fd-color: #7d3c98;
+    --fd-bg: #e8daef;
+    --fe-color: #7d3c98;
+    --fe-bg: #e8daef;
+    --iv-color: #e67e22;
+    --iv-bg: #fdebd0;
+    --unobs: #999;
+  }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body {
+    font-family: 'Georgia', serif;
+    max-width: 1020px;
+    margin: 0 auto;
+    padding: 20px;
+    line-height: 1.6;
+    color: #333;
+    background: #fff;
+  }
+  h1 { color: var(--blue); font-size: 1.5em; margin-bottom: 4px; }
+  h2 { color: var(--blue); font-size: 1.2em; margin: 28px 0 10px; border-bottom: 2px solid var(--light-blue); padding-bottom: 5px; }
+  h3 { font-size: 1.05em; margin: 14px 0 8px; color: #444; }
+  .subtitle { color: #666; font-size: 0.9em; margin-bottom: 18px; }
+
+  .math { font-family: 'Cambria Math', 'Latin Modern Math', 'STIX Two Math', Georgia, serif; }
+  .frac { display: inline-block; text-align: center; vertical-align: middle; }
+  .frac-num { display: block; border-bottom: 1px solid #555; padding: 0 5px 2px; }
+  .frac-den { display: block; padding: 2px 5px 0; }
+
+  .intro-box {
+    background: #f9f9f9;
+    border: 1px solid var(--border);
+    border-radius: 6px;
+    padding: 14px 18px;
+    margin: 12px 0 18px;
+    font-size: 0.93em;
+    line-height: 1.7;
+  }
+
+  /* Stage Progress Bar */
+  .stage-progress {
+    display: flex;
+    align-items: center;
+    margin: 18px 0 24px;
+    padding: 14px 16px;
+    background: var(--gray);
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    overflow-x: auto;
+  }
+  .stage-dots-row {
+    display: flex;
+    align-items: center;
+    gap: 0;
+    flex: 1;
+    min-width: 0;
+  }
+  .stage-dot {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 4px;
+    flex: 1;
+    min-width: 60px;
+  }
+  .stage-dot-circle {
+    width: 36px;
+    height: 36px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: bold;
+    font-size: 1em;
+    border: 2px solid #ccc;
+    background: #ddd;
+    color: #aaa;
+    transition: all 0.2s;
+    cursor: default;
+    user-select: none;
+  }
+  .stage-dot-label {
+    font-size: 0.72em;
+    color: #aaa;
+    text-align: center;
+    white-space: nowrap;
+  }
+  .stage-connector {
+    flex: 1;
+    height: 2px;
+    background: #ccc;
+    min-width: 16px;
+    max-width: 40px;
+    margin-bottom: 20px;
+  }
+  .stage-dot.unlocked .stage-dot-circle {
+    background: var(--light-blue);
+    border-color: var(--blue);
+    color: var(--blue);
+    cursor: pointer;
+  }
+  .stage-dot.unlocked .stage-dot-label { color: var(--blue); }
+  .stage-dot.unlocked .stage-dot-circle:hover {
+    background: var(--blue);
+    color: white;
+  }
+  .stage-dot.current .stage-dot-circle {
+    background: var(--blue);
+    border-color: var(--blue);
+    color: white;
+    box-shadow: 0 0 0 3px rgba(26,82,118,0.25);
+  }
+  .stage-dot.current .stage-dot-label { color: var(--blue); font-weight: bold; }
+  .stage-dot.complete .stage-dot-circle {
+    background: #27ae60;
+    border-color: #1e8449;
+    color: white;
+    cursor: pointer;
+  }
+  .stage-dot.complete .stage-dot-label { color: #1e8449; }
+  .stage-connector.done { background: var(--blue); }
+
+  /* Stage content */
+  .stage-content { display: none; }
+  .stage-content.active { display: block; }
+
+  /* Stage header */
+  .stage-header-box {
+    background: linear-gradient(135deg, var(--blue) 0%, #2471a3 100%);
+    color: white;
+    border-radius: 8px;
+    padding: 16px 20px;
+    margin-bottom: 16px;
+  }
+  .stage-header-box h2 {
+    color: white;
+    border-bottom: 1px solid rgba(255,255,255,0.3);
+    padding-bottom: 6px;
+    margin-bottom: 8px;
+    font-size: 1.15em;
+    margin-top: 0;
+  }
+  .stage-header-box p { font-size: 0.93em; opacity: 0.92; line-height: 1.6; }
+
+  /* Model boxes (from original) */
+  .econ-box {
+    background: var(--light-orange-est);
+    border: 2px solid var(--orange-est);
+    border-radius: 6px;
+    padding: 14px 18px;
+    margin: 12px 0;
+  }
+  .econ-box .box-label { font-weight: bold; color: var(--orange-est); font-size: 0.85em; display: block; margin-bottom: 4px; }
+  .stat-box {
+    background: var(--light-blue);
+    border: 2px solid var(--blue);
+    border-radius: 6px;
+    padding: 14px 18px;
+    margin: 12px 0;
+  }
+  .stat-box .box-label { font-weight: bold; color: var(--blue); font-size: 0.85em; display: block; margin-bottom: 4px; }
+  .model-eq {
+    font-family: 'Cambria Math', 'Latin Modern Math', 'STIX Two Math', Georgia, serif;
+    font-size: 1.0em;
+    text-align: center;
+    margin: 6px 0;
+  }
+  .model-note { font-size: 0.88em; color: #555; margin-top: 6px; line-height: 1.5; }
+
+  /* Moment dashboard */
+  .cov-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; margin: 14px 0; }
+  @media (max-width: 700px) { .cov-grid { grid-template-columns: 1fr; } }
+  .cov-panel {
+    border: 1px solid var(--border);
+    border-radius: 6px;
+    padding: 14px;
+    background: white;
+  }
+  .cov-panel h3 { margin-top: 0; }
+  .cov-table { width: 100%; font-size: 0.85em; }
+  .cov-table td { text-align: right; padding: 4px 8px; }
+  .cov-table td:first-child { text-align: left; font-family: 'Courier New', monospace; font-size: 0.9em; }
+  .cov-blank td { color: #bbb; font-style: italic; }
+  .cov-blank td:first-child { color: #bbb; }
+
+  /* Scatter plots */
+  .plot-grid-4 { display: grid; grid-template-columns: 1fr 1fr 1fr 1fr; gap: 12px; margin: 14px 0; }
+  @media (max-width: 900px) { .plot-grid-4 { grid-template-columns: 1fr 1fr; } }
+  @media (max-width: 700px) { .plot-grid-4 { grid-template-columns: 1fr; } }
+  .plot-container {
+    border: 1px solid var(--border);
+    border-radius: 6px;
+    background: white;
+    padding: 8px;
+  }
+  .plot-title { text-align: center; font-weight: bold; font-size: 0.85em; color: var(--blue); margin-bottom: 4px; }
+  svg { width: 100%; height: auto; display: block; }
+
+  /* Sliders */
+  .slider-panel {
+    background: var(--gray);
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    padding: 18px 22px;
+    margin: 16px 0;
+  }
+  .slider-row {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    margin: 10px 0;
+    flex-wrap: wrap;
+  }
+  .slider-row label { font-weight: bold; min-width: 260px; font-size: 0.92em; }
+  input[type="range"] { width: 200px; accent-color: var(--blue); }
+  .slider-value { font-family: 'Courier New', monospace; font-weight: bold; min-width: 55px; color: var(--blue); }
+  .slider-hint { font-size: 0.8em; color: #888; }
+
+  /* Tables */
+  table { border-collapse: collapse; margin: 12px 0; }
+  table.full-width { width: 100%; }
+  th, td { border: 1px solid var(--border); padding: 6px 10px; text-align: center; font-size: 0.88em; }
+  th { background: var(--light-blue); color: var(--blue); font-weight: bold; white-space: nowrap; }
+
+  /* Buttons */
+  button {
+    padding: 7px 16px;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    font-size: 0.88em;
+    font-family: 'Georgia', serif;
+    transition: background 0.15s;
+  }
+  .btn-check {
+    background: var(--blue);
+    color: white;
+    padding: 9px 22px;
+    font-size: 0.95em;
+    border-radius: 5px;
+    margin-top: 10px;
+  }
+  .btn-check:hover { background: #154360; }
+  .btn-check:disabled { background: #aaa; cursor: default; }
+  .btn-unlock {
+    background: #27ae60;
+    color: white;
+    padding: 10px 24px;
+    font-size: 1em;
+    border-radius: 5px;
+    margin-top: 12px;
+    display: inline-block;
+  }
+  .btn-unlock:hover { background: #1e8449; }
+  .btn-toggle { background: #7f8c8d; color: white; }
+  .btn-toggle:hover { background: #5f6a6a; }
+  .btn-toggle.active { background: var(--purple); }
+  .btn-small { background: #95a5a6; color: white; font-size: 0.82em; padding: 4px 10px; }
+  .btn-small:hover { background: #7f8c8d; }
+
+  /* Student calculation section */
+  .student-calc-box {
+    background: #fef9e7;
+    border: 2px solid #f0ca4d;
+    border-radius: 8px;
+    padding: 18px 22px;
+    margin: 20px 0;
+  }
+  .student-calc-box h3 { color: #9a7d0a; margin-top: 0; font-size: 1.05em; }
+  .calc-intro { font-size: 0.92em; color: #666; margin-bottom: 14px; line-height: 1.6; }
+  .calc-estimator-block {
+    border: 1px solid #e8d08a;
+    border-radius: 6px;
+    padding: 14px 16px;
+    margin: 12px 0;
+    background: white;
+  }
+  .calc-estimator-title {
+    font-weight: bold;
+    font-size: 0.95em;
+    margin-bottom: 8px;
+  }
+  .calc-formula { font-family: 'Cambria Math', 'Latin Modern Math', Georgia, serif; font-size: 0.95em; margin-bottom: 4px; }
+  .calc-numbers { font-family: 'Courier New', monospace; font-size: 0.9em; color: #555; margin-bottom: 8px; }
+  .calc-row {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    margin-top: 6px;
+    flex-wrap: wrap;
+  }
+  .calc-row label { font-size: 0.9em; font-weight: bold; color: #555; }
+  .calc-input {
+    width: 100px;
+    padding: 5px 8px;
+    font-family: 'Courier New', monospace;
+    font-size: 0.95em;
+    border: 2px solid #ddd;
+    border-radius: 4px;
+    transition: border-color 0.2s;
+  }
+  .calc-input:focus { outline: none; border-color: var(--blue); }
+  .calc-input.correct-input { border-color: #27ae60; background: #eafaf1; }
+  .calc-input.wrong-input { border-color: #e74c3c; background: #fdedec; }
+  .check-result { font-size: 0.88em; font-weight: bold; margin-left: 4px; }
+  .check-result.correct { color: #27ae60; }
+  .check-result.wrong { color: #e74c3c; }
+
+  /* Stage complete banner */
+  .stage-complete-banner {
+    background: #eafaf1;
+    border: 2px solid #27ae60;
+    border-radius: 8px;
+    padding: 14px 18px;
+    margin-top: 16px;
+    display: flex;
+    align-items: center;
+    gap: 14px;
+    flex-wrap: wrap;
+  }
+  .stage-complete-banner .banner-text { font-weight: bold; color: #1e8449; font-size: 1.0em; }
+  .stage-complete-banner .banner-note { font-size: 0.88em; color: #555; }
+
+  /* Comparison table (Stage 6) */
+  .compare-table { width: 100%; margin: 12px 0; font-size: 0.9em; border-collapse: collapse; }
+  .compare-table th { background: var(--light-blue); color: var(--blue); padding: 7px 10px; border: 1px solid var(--border); }
+  .compare-table td { padding: 6px 10px; text-align: center; border: 1px solid var(--border); font-family: 'Courier New', monospace; }
+  .compare-table td:first-child { text-align: left; font-family: Georgia, serif; font-weight: bold; }
+  .compare-table .true-col { background: #f0faf4; color: #1e8449; font-weight: bold; }
+
+  /* Bar chart */
+  .bar-chart { margin: 14px 0; }
+  .bar-row { display: flex; align-items: center; margin: 5px 0; }
+  .bar-label { min-width: 130px; font-size: 0.85em; font-weight: bold; text-align: right; padding-right: 10px; }
+  .bar-track { flex: 1; height: 22px; background: #eee; border-radius: 4px; position: relative; overflow: visible; }
+
+  /* Expandable sections */
+  .expandable { margin: 10px 0; }
+  .expand-header {
+    background: var(--gray);
+    border: 1px solid var(--border);
+    border-radius: 6px;
+    padding: 10px 16px;
+    cursor: pointer;
+    font-weight: bold;
+    color: var(--blue);
+    font-size: 0.95em;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    transition: background 0.15s;
+  }
+  .expand-header:hover { background: var(--light-blue); }
+  .expand-arrow { font-size: 0.8em; transition: transform 0.2s; }
+  .expand-header.open .expand-arrow { transform: rotate(90deg); }
+  .expand-body {
+    display: none;
+    border: 1px solid var(--border);
+    border-top: none;
+    border-radius: 0 0 6px 6px;
+    padding: 14px 18px;
+    background: white;
+    font-size: 0.92em;
+    line-height: 1.7;
+  }
+  .expand-body.open { display: block; }
+  .expand-body p { margin: 8px 0; }
+
+  .formula-block {
+    font-family: 'Cambria Math', 'Latin Modern Math', 'STIX Two Math', Georgia, serif;
+    background: #f7f7f7;
+    border: 1px solid var(--border);
+    border-radius: 4px;
+    padding: 10px 16px;
+    margin: 8px 0;
+    text-align: center;
+    font-size: 0.95em;
+    line-height: 2;
+  }
+  .formula-inline { font-family: 'Courier New', monospace; background: #f0f0f0; padding: 2px 6px; border-radius: 3px; font-size: 0.92em; }
+  .note { font-size: 0.85em; color: #777; font-style: italic; margin: 6px 0; }
+  hr { border: none; border-top: 1px solid var(--border); margin: 18px 0; }
+
+  /* Collapsible data table */
+  .collapsible-section { margin: 14px 0; }
+  .collapsible-btn {
+    background: var(--gray);
+    border: 1px solid var(--border);
+    border-radius: 5px;
+    padding: 7px 14px;
+    cursor: pointer;
+    font-size: 0.88em;
+    font-family: 'Georgia', serif;
+    color: #555;
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+  }
+  .collapsible-btn:hover { background: var(--light-blue); }
+  .collapsible-body { display: none; margin-top: 8px; }
+  .collapsible-body.open { display: block; }
+
+  /* Row alternating */
+  .row-student-even { background: #fff; }
+  .row-student-odd { background: #f0f4f8; }
+  .col-unobs { background: #eee; color: var(--unobs); font-style: italic; }
+  .col-unobs-hdr { background: #ddd; color: #888; font-style: italic; }
+
+  /* Slider note */
+  .slider-note {
+    background: #fef9e7;
+    border-left: 4px solid var(--orange-est);
+    padding: 10px 16px;
+    margin: 12px 0;
+    border-radius: 0 6px 6px 0;
+    font-size: 0.9em;
+  }
+
+  /* Re-lock notice */
+  .relock-notice {
+    background: #fdf2e9;
+    border: 1px solid #f0b27a;
+    border-radius: 5px;
+    padding: 8px 14px;
+    font-size: 0.87em;
+    color: #784212;
+    margin-top: 8px;
+    display: none;
+  }
+</style>
+</head>
+<body>
+
+<h1>The Estimation Voyage <span style="font-size:0.7em;color:#666;">— Guided Edition</span></h1>
+<p class="subtitle">ECON 2223B &mdash; OLS, First-Differencing, Fixed Effects, and IV in One Example</p>
+
+<div class="intro-box">
+  <strong>This is the guided version of the Estimation Voyage. Complete each stage in order.</strong><br>
+  We want to estimate the <strong>causal effect of average weekly study hours on GPA</strong> for a panel of <em>n</em> = 10,000 students, each observed over <em>T</em> = 4 semesters.
+  But study time may be driven by factors we can&rsquo;t observe &mdash; in particular, persistent student ability <em>a</em><sub><em>i</em></sub> (students who are more able may study differently <em>and</em> earn higher GPAs) and time-varying hard-course shocks <em>h</em><sub><em>it</em></sub> (a hard semester may push a student to study more while directly lowering their GPA).
+  The university assigns students to dormitory rooms at random; some dorms are closer to the library than others.
+  Work through 6 stages: each stage introduces a new complication, and you must compute the slope estimates yourself before unlocking the next.
+</div>
+
+<!-- ============ STAGE PROGRESS BAR ============ -->
+<div class="stage-progress">
+  <div class="stage-dots-row" id="stageDots"></div>
+</div>
+
+<!-- ============ STAGE CONTENTS ============ -->
+<div id="stage1" class="stage-content active"></div>
+<div id="stage2" class="stage-content"></div>
+<div id="stage3" class="stage-content"></div>
+<div id="stage4" class="stage-content"></div>
+<div id="stage5" class="stage-content"></div>
+<div id="stage6" class="stage-content"></div>
+
+<hr>
+<p class="note">ECON 2223B &mdash; Intermediate Econometrics II, Winter 2026. This is a teaching tool; the DGP is simplified for illustration.</p>
+
+<script>
+// ============================================================
+//  SEEDED PRNG (mulberry32) — copied from estimation_voyage
+// ============================================================
+function mulberry32(seed) {
+  return function() {
+    seed |= 0; seed = seed + 0x6D2B79F5 | 0;
+    var t = Math.imul(seed ^ seed >>> 15, 1 | seed);
+    t = t + Math.imul(t ^ t >>> 7, 61 | t) ^ t;
+    return ((t ^ t >>> 14) >>> 0) / 4294967296;
+  };
+}
+function normalPair(rng) {
+  var u1 = rng(), u2 = rng();
+  while (u1 === 0) u1 = rng();
+  var r = Math.sqrt(-2 * Math.log(u1));
+  return [r * Math.cos(2 * Math.PI * u2), r * Math.sin(2 * Math.PI * u2)];
+}
+function normalArray(rng, n) {
+  var arr = [];
+  for (var i = 0; i < n; i += 2) {
+    var p = normalPair(rng);
+    arr.push(p[0]);
+    if (i + 1 < n) arr.push(p[1]);
+  }
+  return arr;
+}
+function uniformArray(rng, n, a, b) {
+  var arr = [];
+  for (var i = 0; i < n; i++) arr.push(a + (b - a) * rng());
+  return arr;
+}
+
+// ============================================================
+//  STATISTICS HELPERS — copied from estimation_voyage
+// ============================================================
+function mean(arr) { var s = 0; for (var i = 0; i < arr.length; i++) s += arr[i]; return s / arr.length; }
+function cov(x, y) {
+  var mx = mean(x), my = mean(y), s = 0, n = x.length;
+  for (var i = 0; i < n; i++) s += (x[i] - mx) * (y[i] - my);
+  return s / (n - 1);
+}
+function variance(x) { return cov(x, x); }
+function cor(x, y) { var v1 = variance(x), v2 = variance(y); return (v1 > 0 && v2 > 0) ? cov(x, y) / Math.sqrt(v1 * v2) : 0; }
+
+// ============================================================
+//  GLOBAL STATE
+// ============================================================
+var T = 4;
+var BASE_SEED = 2223;
+var MAX_N = 10000;
+var predraws = null;
+
+var stageUnlocked = [true, false, false, false, false, false]; // stages 1-6
+var stageComplete = [false, false, false, false, false, false];
+var currentStage = 1; // 1-indexed
+var stageData = [null, null, null, null, null]; // stages 1-5, index 0-4
+
+// ============================================================
+//  PREDRAWS (same seed as estimation_voyage for consistency)
+// ============================================================
+function generatePredraws() {
+  var rng = mulberry32(BASE_SEED);
+  predraws = {
+    a_raw:   normalArray(rng, MAX_N),
+    dist_raw: uniformArray(rng, MAX_N, 0.5, 5.0),
+    h_raw:   normalArray(rng, MAX_N * T),
+    v_raw:   normalArray(rng, MAX_N * T),
+    e_raw:   normalArray(rng, MAX_N * T),
+  };
+}
+
+// ============================================================
+//  DATA GENERATION
+// ============================================================
+function generateGuidedData(useA, useH, abilityShare, gamma3, ivStrength) {
+  if (!predraws) generatePredraws();
+  var n = MAX_N;
+
+  var beta0 = 2.0, beta1 = 0.3;
+  var gamma0 = 5.0;
+  var sd_a = 1.0, sd_h = 0.5, sd_v = 0.1, sd_e = 0.8;
+
+  var var_dist = Math.pow(5.0 - 0.5, 2) / 12;
+  var var_a = sd_a * sd_a;
+  var var_h = sd_h * sd_h;
+  var var_e = sd_e * sd_e;
+
+  // When useA=false, ability share is effectively 0 in calibration
+  var effectiveAbility = useA ? abilityShare : 0;
+  // When useH=false, gamma3 is effectively 0 in calibration
+  var effectiveGamma3 = useH ? gamma3 : 0;
+
+  var V_other = effectiveGamma3 * effectiveGamma3 * var_h + var_e;
+  var r = ivStrength * ivStrength;
+  var s = effectiveAbility;
+  var denom = 1 - r - s;
+  if (denom < 0.05) denom = 0.05;
+
+  var B = r * V_other / denom;
+  var A = (s > 0.001) ? s * (B + V_other) / (1 - s) : 0;
+
+  var gamma1 = (A > 0) ? Math.sqrt(A / var_a) : 0;
+  var gamma2 = (B > 0) ? -Math.sqrt(B / var_dist) : 0;
+
+  var students = [];
+  for (var i = 0; i < n; i++) {
+    // Draw a_i: if useA=false, set to 0 (still consume from predraws for consistency)
+    var a_raw_val = predraws.a_raw[i] * sd_a;
+    var a_i = useA ? a_raw_val : 0;
+    var dist_i = predraws.dist_raw[i];
+    var obs = [];
+    for (var t = 0; t < T; t++) {
+      var idx = i * T + t;
+      // h_it: if useH=false, set to 0; otherwise use DGP with a_i correlation
+      var h_it_raw = predraws.h_raw[idx] * sd_h + 0.3 * a_raw_val; // use raw a for h correlation
+      var h_it = useH ? h_it_raw : 0;
+      var v_it = predraws.v_raw[idx] * sd_v;
+      var e_it = predraws.e_raw[idx] * sd_e;
+      var study_it = gamma0 + gamma1 * a_i + gamma2 * dist_i + effectiveGamma3 * h_it + e_it;
+      var gpa_it = beta0 + beta1 * study_it + a_i - h_it + v_it;
+      obs.push({
+        i: i + 1, t: t + 1,
+        gpa: gpa_it, study: study_it, dist: dist_i,
+        a: a_i, h: h_it, v: v_it,
+        u_total: a_i - h_it + v_it,
+        u: -h_it + v_it
+      });
+    }
+    students.push({ i: i + 1, a_i: a_i, dist_i: dist_i, obs: obs });
+  }
+
+  var flat = [];
+  for (var i = 0; i < students.length; i++)
+    for (var t = 0; t < T; t++)
+      flat.push(students[i].obs[t]);
+
+  var fd = [];
+  for (var i = 0; i < students.length; i++)
+    for (var t = 1; t < T; t++) {
+      var curr = students[i].obs[t], prev = students[i].obs[t - 1];
+      fd.push({
+        i: curr.i,
+        dStudy: curr.study - prev.study, dGPA: curr.gpa - prev.gpa,
+        dU: curr.u - prev.u
+      });
+    }
+
+  var dm = [];
+  for (var i = 0; i < students.length; i++) {
+    var mGPA = 0, mStudy = 0, mU = 0;
+    for (var t = 0; t < T; t++) {
+      mGPA += students[i].obs[t].gpa;
+      mStudy += students[i].obs[t].study;
+      mU += students[i].obs[t].u;
+    }
+    mGPA /= T; mStudy /= T; mU /= T;
+    for (var t = 0; t < T; t++) {
+      var o = students[i].obs[t];
+      dm.push({ i: o.i, studyDM: o.study - mStudy, gpaDM: o.gpa - mGPA, uDM: o.u - mU });
+    }
+  }
+
+  var study_arr   = flat.map(function(d){return d.study;});
+  var gpa_arr     = flat.map(function(d){return d.gpa;});
+  var a_arr       = flat.map(function(d){return d.a;});
+  var h_arr       = flat.map(function(d){return d.h;});
+  var u_arr       = flat.map(function(d){return d.u;});
+  var u_total_arr = flat.map(function(d){return d.u_total;});
+  var dist_arr    = flat.map(function(d){return d.dist;});
+
+  var dStudy_arr  = fd.map(function(d){return d.dStudy;});
+  var dGPA_arr    = fd.map(function(d){return d.dGPA;});
+  var dU_arr      = fd.map(function(d){return d.dU;});
+
+  var studyDM_arr = dm.map(function(d){return d.studyDM;});
+  var gpaDM_arr   = dm.map(function(d){return d.gpaDM;});
+  var uDM_arr     = dm.map(function(d){return d.uDM;});
+
+  var covStudyGPA    = cov(study_arr, gpa_arr);
+  var varStudy       = variance(study_arr);
+  var betaOLS        = varStudy > 0 ? covStudyGPA / varStudy : NaN;
+
+  var covDStudyDGPA  = cov(dStudy_arr, dGPA_arr);
+  var varDStudy      = variance(dStudy_arr);
+  var betaFD         = varDStudy > 0 ? covDStudyDGPA / varDStudy : NaN;
+
+  var covDMStudyDMGPA = cov(studyDM_arr, gpaDM_arr);
+  var varDMStudy      = variance(studyDM_arr);
+  var betaFE          = varDMStudy > 0 ? covDMStudyDMGPA / varDMStudy : NaN;
+
+  var covDistGPA    = cov(dist_arr, gpa_arr);
+  var covDistStudy  = cov(dist_arr, study_arr);
+  var betaIV        = Math.abs(covDistStudy) > 1e-10 ? covDistGPA / covDistStudy : NaN;
+
+  var covStudyA    = cov(study_arr, a_arr);
+  var corStudyA    = cor(study_arr, a_arr);
+  var negH         = h_arr.map(function(v){return -v;});
+  var covStudyNegH = cov(study_arr, negH);
+  var corStudyNegH = cor(study_arr, negH);
+  var covStudyAU   = cov(study_arr, u_total_arr);
+  var corStudyAU   = cor(study_arr, u_total_arr);
+  var covDStudyDU  = cov(dStudy_arr, dU_arr);
+  var corDStudyDU  = cor(dStudy_arr, dU_arr);
+  var covDMStudyDMU = cov(studyDM_arr, uDM_arr);
+  var corDMStudyDMU = cor(studyDM_arr, uDM_arr);
+  var covDistU     = cov(dist_arr, u_arr);
+  var corDistU     = cor(dist_arr, u_arr);
+  var covDistA     = cov(dist_arr, a_arr);
+  var corDistA     = cor(dist_arr, a_arr);
+
+  var corStudyGPA    = cor(study_arr, gpa_arr);
+  var corDStudyDGPA  = cor(dStudy_arr, dGPA_arr);
+  var corDMStudyDMGPA = cor(studyDM_arr, gpaDM_arr);
+  var corDistGPA     = cor(dist_arr, gpa_arr);
+  var corDistStudy   = cor(dist_arr, study_arr);
+
+  return {
+    n: n, T: T, beta1: beta1,
+    useA: useA, useH: useH,
+    abilityShare: abilityShare, gamma3: gamma3, ivStrength: ivStrength,
+    students: students, flat: flat, fd: fd, dm: dm,
+    study: study_arr, gpa: gpa_arr, dist: dist_arr,
+    a: a_arr, h: h_arr, u: u_arr, u_total: u_total_arr,
+    dStudy: dStudy_arr, dGPA: dGPA_arr, dU: dU_arr,
+    studyDM: studyDM_arr, gpaDM: gpaDM_arr, uDM: uDM_arr,
+    covStudyGPA: covStudyGPA, varStudy: varStudy, betaOLS: betaOLS,
+    covDStudyDGPA: covDStudyDGPA, varDStudy: varDStudy, betaFD: betaFD,
+    covDMStudyDMGPA: covDMStudyDMGPA, varDMStudy: varDMStudy, betaFE: betaFE,
+    covDistGPA: covDistGPA, covDistStudy: covDistStudy, betaIV: betaIV,
+    covStudyA: covStudyA, corStudyA: corStudyA,
+    covStudyNegH: covStudyNegH, corStudyNegH: corStudyNegH,
+    covStudyAU: covStudyAU, corStudyAU: corStudyAU,
+    covDStudyDU: covDStudyDU, corDStudyDU: corDStudyDU,
+    covDMStudyDMU: covDMStudyDMU, corDMStudyDMU: corDMStudyDMU,
+    covDistU: covDistU, corDistU: corDistU,
+    covDistA: covDistA, corDistA: corDistA,
+    corStudyGPA: corStudyGPA, corDStudyDGPA: corDStudyDGPA,
+    corDMStudyDMGPA: corDMStudyDMGPA,
+    corDistGPA: corDistGPA, corDistStudy: corDistStudy
+  };
+}
+
+// ============================================================
+//  FORMATTING HELPERS
+// ============================================================
+function fmt(v, d) {
+  if (v === null || v === undefined || isNaN(v) || !isFinite(v)) return '---';
+  return v.toFixed(d || 4);
+}
+function fmt4(v) { return fmt(v, 4); }
+function fmt3(v) { return fmt(v, 3); }
+
+function bhat(sub) {
+  return '<span style="position:relative;display:inline-block;"><span class="math">\u03B2</span><span style="position:absolute;top:-0.55em;left:0.05em;font-size:0.7em;">^</span></span><sub>' + sub + '</sub>';
+}
+function fracHTML(num, den) {
+  return '<span class="frac"><span class="frac-num">' + num + '</span><span class="frac-den">' + den + '</span></span>';
+}
+
+// ============================================================
+//  SVG SCATTER PLOTS — copied & adapted from estimation_voyage
+// ============================================================
+function thinPoints(xs, ys, maxPts) {
+  if (xs.length <= maxPts) return { x: xs.slice(), y: ys.slice() };
+  var step = xs.length / maxPts;
+  var rx = [], ry = [];
+  for (var i = 0; i < maxPts; i++) { var idx = Math.floor(i * step); rx.push(xs[idx]); ry.push(ys[idx]); }
+  return { x: rx, y: ry };
+}
+
+function renderScatter(svgId, xs, ys, slopeEst, slopeTrue, xLabel, yLabel, estColor, estName) {
+  var svg = document.getElementById(svgId);
+  if (!svg) return;
+  var W = 300, H = 250;
+  var margin = { top: 18, right: 25, bottom: 32, left: 45 };
+  var pw = W - margin.left - margin.right;
+  var ph = H - margin.top - margin.bottom;
+
+  var thinned = thinPoints(xs, ys, 200);
+  var tx = thinned.x, ty = thinned.y;
+
+  var xmin = Math.min.apply(null, xs), xmax = Math.max.apply(null, xs);
+  var ymin = Math.min.apply(null, ys), ymax = Math.max.apply(null, ys);
+  var xpad = (xmax - xmin) * 0.08 || 1;
+  var ypad = (ymax - ymin) * 0.08 || 1;
+  xmin -= xpad; xmax += xpad; ymin -= ypad; ymax += ypad;
+
+  function sx(v) { return margin.left + (v - xmin) / (xmax - xmin) * pw; }
+  function sy(v) { return margin.top + ph - (v - ymin) / (ymax - ymin) * ph; }
+
+  var html = '';
+  html += '<line x1="' + margin.left + '" y1="' + (margin.top + ph) + '" x2="' + (margin.left + pw) + '" y2="' + (margin.top + ph) + '" stroke="#999" stroke-width="1"/>';
+  html += '<line x1="' + margin.left + '" y1="' + margin.top + '" x2="' + margin.left + '" y2="' + (margin.top + ph) + '" stroke="#999" stroke-width="1"/>';
+  html += '<text x="' + (margin.left + pw / 2) + '" y="' + (H - 3) + '" text-anchor="middle" font-size="9" fill="#555" font-family="Georgia,serif">' + xLabel + '</text>';
+  html += '<text x="12" y="' + (margin.top + ph / 2) + '" text-anchor="middle" font-size="9" fill="#555" font-family="Georgia,serif" transform="rotate(-90,12,' + (margin.top + ph / 2) + ')">' + yLabel + '</text>';
+
+  for (var i = 0; i <= 3; i++) {
+    var xv = xmin + i * (xmax - xmin) / 3;
+    var yv = ymin + i * (ymax - ymin) / 3;
+    html += '<text x="' + sx(xv) + '" y="' + (margin.top + ph + 12) + '" text-anchor="middle" font-size="8" fill="#888">' + xv.toFixed(1) + '</text>';
+    html += '<text x="' + (margin.left - 4) + '" y="' + (sy(yv) + 3) + '" text-anchor="end" font-size="8" fill="#888">' + yv.toFixed(1) + '</text>';
+  }
+
+  var jitterSeed = 12345;
+  for (var i = 0; i < tx.length; i++) {
+    jitterSeed = (jitterSeed * 1103515245 + 12345) & 0x7fffffff;
+    var jx = ((jitterSeed % 100) / 100 - 0.5) * 0.004 * (xmax - xmin);
+    jitterSeed = (jitterSeed * 1103515245 + 12345) & 0x7fffffff;
+    var jy = ((jitterSeed % 100) / 100 - 0.5) * 0.004 * (ymax - ymin);
+    var px = sx(tx[i] + jx), py = sy(ty[i] + jy);
+    if (px >= margin.left && px <= margin.left + pw && py >= margin.top && py <= margin.top + ph)
+      html += '<circle cx="' + px.toFixed(1) + '" cy="' + py.toFixed(1) + '" r="2.2" fill="' + estColor + '" opacity="0.45"/>';
+  }
+
+  var mx = mean(xs), my = mean(ys);
+  if (slopeTrue !== null && slopeTrue !== undefined) {
+    var ty1 = my + slopeTrue * (xmin - mx);
+    var ty2 = my + slopeTrue * (xmax - mx);
+    html += '<line x1="' + sx(xmin) + '" y1="' + sy(ty1) + '" x2="' + sx(xmax) + '" y2="' + sy(ty2) + '" stroke="#999" stroke-width="1.5" stroke-dasharray="5,3"/>';
+  }
+  if (!isNaN(slopeEst) && isFinite(slopeEst)) {
+    var ey1 = my + slopeEst * (xmin - mx);
+    var ey2 = my + slopeEst * (xmax - mx);
+    html += '<line x1="' + sx(xmin) + '" y1="' + sy(ey1) + '" x2="' + sx(xmax) + '" y2="' + sy(ey2) + '" stroke="' + estColor + '" stroke-width="2"/>';
+  }
+
+  var legW = 105, legH = slopeTrue !== null ? 32 : 18;
+  html += '<rect x="' + (margin.left + pw - legW - 4) + '" y="' + (margin.top + 2) + '" width="' + legW + '" height="' + legH + '" fill="white" stroke="#ccc" rx="3" opacity="0.9"/>';
+  html += '<line x1="' + (margin.left + pw - legW + 2) + '" y1="' + (margin.top + 12) + '" x2="' + (margin.left + pw - legW + 18) + '" y2="' + (margin.top + 12) + '" stroke="' + estColor + '" stroke-width="2"/>';
+  html += '<text x="' + (margin.left + pw - legW + 22) + '" y="' + (margin.top + 15) + '" font-size="8" fill="#333" font-family="Georgia,serif">' + estName + ' = ' + fmt3(slopeEst) + '</text>';
+  if (slopeTrue !== null) {
+    html += '<line x1="' + (margin.left + pw - legW + 2) + '" y1="' + (margin.top + 26) + '" x2="' + (margin.left + pw - legW + 18) + '" y2="' + (margin.top + 26) + '" stroke="#999" stroke-width="1.5" stroke-dasharray="5,3"/>';
+    html += '<text x="' + (margin.left + pw - legW + 22) + '" y="' + (margin.top + 29) + '" font-size="8" fill="#999" font-family="Georgia,serif">True = 0.30</text>';
+  }
+  svg.innerHTML = html;
+}
+
+function renderEndogScatter(svgId, xs, ys, xLabel, yLabel) {
+  var svg = document.getElementById(svgId);
+  if (!svg) return;
+  var W = 300, H = 250;
+  var margin = { top: 18, right: 25, bottom: 32, left: 45 };
+  var pw = W - margin.left - margin.right;
+  var ph = H - margin.top - margin.bottom;
+
+  var thinned = thinPoints(xs, ys, 200);
+  var tx = thinned.x, ty = thinned.y;
+
+  var xmin = Math.min.apply(null, xs), xmax = Math.max.apply(null, xs);
+  var ymin = Math.min.apply(null, ys), ymax = Math.max.apply(null, ys);
+  var xpad = (xmax - xmin) * 0.08 || 1;
+  var ypad = (ymax - ymin) * 0.08 || 1;
+  xmin -= xpad; xmax += xpad; ymin -= ypad; ymax += ypad;
+
+  function sx(v) { return margin.left + (v - xmin) / (xmax - xmin) * pw; }
+  function sy(v) { return margin.top + ph - (v - ymin) / (ymax - ymin) * ph; }
+
+  var html = '';
+  html += '<line x1="' + margin.left + '" y1="' + (margin.top + ph) + '" x2="' + (margin.left + pw) + '" y2="' + (margin.top + ph) + '" stroke="#999" stroke-width="1"/>';
+  html += '<line x1="' + margin.left + '" y1="' + margin.top + '" x2="' + margin.left + '" y2="' + (margin.top + ph) + '" stroke="#999" stroke-width="1"/>';
+  html += '<text x="' + (margin.left + pw / 2) + '" y="' + (H - 3) + '" text-anchor="middle" font-size="9" fill="#999" font-family="Georgia,serif">' + xLabel + '</text>';
+  html += '<text x="12" y="' + (margin.top + ph / 2) + '" text-anchor="middle" font-size="9" fill="#999" font-family="Georgia,serif" transform="rotate(-90,12,' + (margin.top + ph / 2) + ')">' + yLabel + '</text>';
+
+  for (var i = 0; i <= 3; i++) {
+    var xv = xmin + i * (xmax - xmin) / 3;
+    var yv = ymin + i * (ymax - ymin) / 3;
+    html += '<text x="' + sx(xv) + '" y="' + (margin.top + ph + 12) + '" text-anchor="middle" font-size="8" fill="#bbb">' + xv.toFixed(1) + '</text>';
+    html += '<text x="' + (margin.left - 4) + '" y="' + (sy(yv) + 3) + '" text-anchor="end" font-size="8" fill="#bbb">' + yv.toFixed(1) + '</text>';
+  }
+
+  var jitterSeed = 99999;
+  for (var i = 0; i < tx.length; i++) {
+    jitterSeed = (jitterSeed * 1103515245 + 12345) & 0x7fffffff;
+    var jx = ((jitterSeed % 100) / 100 - 0.5) * 0.004 * (xmax - xmin);
+    jitterSeed = (jitterSeed * 1103515245 + 12345) & 0x7fffffff;
+    var jy = ((jitterSeed % 100) / 100 - 0.5) * 0.004 * (ymax - ymin);
+    var px = sx(tx[i] + jx), py = sy(ty[i] + jy);
+    if (px >= margin.left && px <= margin.left + pw && py >= margin.top && py <= margin.top + ph)
+      html += '<circle cx="' + px.toFixed(1) + '" cy="' + py.toFixed(1) + '" r="2.2" fill="#999" opacity="0.4"/>';
+  }
+
+  var varX = variance(xs), covXY = cov(xs, ys);
+  var slope = varX > 0 ? covXY / varX : 0;
+  var mx = mean(xs), my = mean(ys);
+  var ey1 = my + slope * (xmin - mx);
+  var ey2 = my + slope * (xmax - mx);
+  html += '<line x1="' + sx(xmin) + '" y1="' + sy(ey1) + '" x2="' + sx(xmax) + '" y2="' + sy(ey2) + '" stroke="#999" stroke-width="1.5" stroke-dasharray="5,3"/>';
+
+  var r = cor(xs, ys);
+  html += '<rect x="' + (margin.left + 4) + '" y="' + (margin.top + 2) + '" width="95" height="16" fill="white" stroke="#ccc" rx="3" opacity="0.9"/>';
+  html += '<text x="' + (margin.left + 8) + '" y="' + (margin.top + 14) + '" font-size="8" fill="#999" font-family="Georgia,serif">Cor = ' + fmt3(r) + '</text>';
+  svg.innerHTML = html;
+}
+
+function renderFirstStagePlot(svgId, dist_arr, study_arr) {
+  var svg = document.getElementById(svgId);
+  if (!svg) return;
+  var xs = dist_arr, ys = study_arr;
+  var W = 300, H = 250;
+  var margin = { top: 18, right: 25, bottom: 32, left: 45 };
+  var pw = W - margin.left - margin.right;
+  var ph = H - margin.top - margin.bottom;
+
+  var thinned = thinPoints(xs, ys, 200);
+  var tx = thinned.x, ty = thinned.y;
+
+  var xmin = Math.min.apply(null, xs), xmax = Math.max.apply(null, xs);
+  var ymin = Math.min.apply(null, ys), ymax = Math.max.apply(null, ys);
+  var xpad = (xmax - xmin) * 0.08 || 1;
+  var ypad = (ymax - ymin) * 0.08 || 1;
+  xmin -= xpad; xmax += xpad; ymin -= ypad; ymax += ypad;
+
+  function sx(v) { return margin.left + (v - xmin) / (xmax - xmin) * pw; }
+  function sy(v) { return margin.top + ph - (v - ymin) / (ymax - ymin) * ph; }
+
+  var html = '';
+  html += '<line x1="' + margin.left + '" y1="' + (margin.top + ph) + '" x2="' + (margin.left + pw) + '" y2="' + (margin.top + ph) + '" stroke="#999" stroke-width="1"/>';
+  html += '<line x1="' + margin.left + '" y1="' + margin.top + '" x2="' + margin.left + '" y2="' + (margin.top + ph) + '" stroke="#999" stroke-width="1"/>';
+  html += '<text x="' + (margin.left + pw / 2) + '" y="' + (H - 3) + '" text-anchor="middle" font-size="9" fill="#555" font-family="Georgia,serif">dist (km)</text>';
+  html += '<text x="12" y="' + (margin.top + ph / 2) + '" text-anchor="middle" font-size="9" fill="#555" font-family="Georgia,serif" transform="rotate(-90,12,' + (margin.top + ph / 2) + ')">study (hrs)</text>';
+
+  for (var i = 0; i <= 3; i++) {
+    var xv = xmin + i * (xmax - xmin) / 3;
+    var yv = ymin + i * (ymax - ymin) / 3;
+    html += '<text x="' + sx(xv) + '" y="' + (margin.top + ph + 12) + '" text-anchor="middle" font-size="8" fill="#888">' + xv.toFixed(1) + '</text>';
+    html += '<text x="' + (margin.left - 4) + '" y="' + (sy(yv) + 3) + '" text-anchor="end" font-size="8" fill="#888">' + yv.toFixed(1) + '</text>';
+  }
+
+  var jitterSeed = 54321;
+  for (var i = 0; i < tx.length; i++) {
+    jitterSeed = (jitterSeed * 1103515245 + 12345) & 0x7fffffff;
+    var jx = ((jitterSeed % 100) / 100 - 0.5) * 0.004 * (xmax - xmin);
+    jitterSeed = (jitterSeed * 1103515245 + 12345) & 0x7fffffff;
+    var jy = ((jitterSeed % 100) / 100 - 0.5) * 0.004 * (ymax - ymin);
+    var px = sx(tx[i] + jx), py = sy(ty[i] + jy);
+    if (px >= margin.left && px <= margin.left + pw && py >= margin.top && py <= margin.top + ph)
+      html += '<circle cx="' + px.toFixed(1) + '" cy="' + py.toFixed(1) + '" r="2.2" fill="#e67e22" opacity="0.45"/>';
+  }
+
+  var varDist = variance(xs), covDS = cov(xs, ys);
+  var fsSlope = varDist > 0 ? covDS / varDist : 0;
+  var mx = mean(xs), my = mean(ys);
+  var ey1 = my + fsSlope * (xmin - mx);
+  var ey2 = my + fsSlope * (xmax - mx);
+  html += '<line x1="' + sx(xmin) + '" y1="' + sy(ey1) + '" x2="' + sx(xmax) + '" y2="' + sy(ey2) + '" stroke="#e67e22" stroke-width="2"/>';
+
+  var r = cor(xs, ys);
+  html += '<rect x="' + (margin.left + 4) + '" y="' + (margin.top + 2) + '" width="115" height="16" fill="white" stroke="#ccc" rx="3" opacity="0.9"/>';
+  html += '<text x="' + (margin.left + 8) + '" y="' + (margin.top + 14) + '" font-size="8" fill="#e67e22" font-family="Georgia,serif">Cor(study, dist) = ' + fmt3(r) + '</text>';
+  svg.innerHTML = html;
+}
+
+function renderAllPlotsForStage(d, sfx) {
+  renderScatter('plotOLS_' + sfx, d.study, d.gpa, d.betaOLS, d.beta1, 'study (hrs)', 'GPA', '#333', '\u03B2\u0302_OLS');
+  renderScatter('plotFD_' + sfx, d.dStudy, d.dGPA, d.betaFD, d.beta1, '\u0394study', '\u0394GPA', '#7d3c98', '\u03B2\u0302_FD');
+  renderScatter('plotFE_' + sfx, d.studyDM, d.gpaDM, d.betaFE, d.beta1, 'study (dm)', 'GPA (dm)', '#7d3c98', '\u03B2\u0302_FE');
+  renderFirstStagePlot('plotFS_' + sfx, d.dist, d.study);
+  renderEndogScatter('plotELev_' + sfx, d.study, d.u_total, 'study', 'u (total)');
+  renderEndogScatter('plotEFD_' + sfx, d.dStudy, d.dU, '\u0394study', '\u0394u');
+  renderEndogScatter('plotEFE_' + sfx, d.studyDM, d.uDM, 'study (dm)', 'u (dm)');
+  renderEndogScatter('plotEIV_' + sfx, d.dist, d.u, 'dist', 'u (tv)');
+}
+
+// ============================================================
+//  EXPANDABLE SECTIONS
+// ============================================================
+function toggleExpand(header) {
+  header.classList.toggle('open');
+  header.nextElementSibling.classList.toggle('open');
+}
+function toggleCollapsible(btn) {
+  btn.classList.toggle('open');
+  btn.nextElementSibling.classList.toggle('open');
+  btn.textContent = btn.classList.contains('open') ? '▲ Hide data table' : '▶ Show data table (first 3 students)';
+}
+
+// ============================================================
+//  STAGE PROGRESS BAR
+// ============================================================
+var stageLabels = ['Clean OLS', '+Ability Bias', '+Hard-Course', 'Both Biases', 'Explore', 'Compare'];
+
+function renderProgressBar() {
+  var dotsEl = document.getElementById('stageDots');
+  var html = '';
+  for (var s = 1; s <= 6; s++) {
+    var isUnlocked = stageUnlocked[s - 1];
+    var isCurrent  = (s === currentStage);
+    var isComplete = stageComplete[s - 1];
+    var cls = 'stage-dot';
+    if (isComplete && !isCurrent) cls += ' complete';
+    else if (isCurrent) cls += ' current';
+    else if (isUnlocked) cls += ' unlocked';
+
+    var connCls = 'stage-connector' + (s > 1 && stageComplete[s - 2] ? ' done' : '');
+    if (s > 1) html += '<div class="' + connCls + '"></div>';
+
+    var clickAttr = isUnlocked ? ' onclick="switchStage(' + s + ')"' : '';
+    html += '<div class="' + cls + '">';
+    html += '<div class="stage-dot-circle"' + clickAttr + '>';
+    html += isComplete && !isCurrent ? '&#10003;' : s;
+    html += '</div>';
+    html += '<div class="stage-dot-label">' + stageLabels[s - 1] + '</div>';
+    html += '</div>';
+  }
+  dotsEl.innerHTML = html;
+}
+
+// ============================================================
+//  STAGE SWITCHING
+// ============================================================
+function switchStage(n) {
+  if (!stageUnlocked[n - 1]) return;
+  currentStage = n;
+  for (var s = 1; s <= 6; s++) {
+    var el = document.getElementById('stage' + s);
+    if (el) el.classList.toggle('active', s === n);
+  }
+  renderProgressBar();
+  window.scrollTo({ top: 0, behavior: 'smooth' });
+}
+
+function unlockStage(n) {
+  stageUnlocked[n - 1] = true;
+  renderProgressBar();
+}
+
+// ============================================================
+//  MOMENT DASHBOARD
+//  showA: whether Cov(study,a) is relevant (not BLANK)
+//  showH: whether Cov(study,-h) is relevant (not BLANK)
+// ============================================================
+function covBlankRow(label) {
+  return '<tr class="cov-blank"><td style="text-align:left;">' + label + '</td>'
+       + '<td style="color:#ccc;">&#8212; (not present)</td>'
+       + '<td style="color:#ccc;">&#8212; (not present)</td></tr>';
+}
+function covRowFeasible(label, covVal, corVal, bold) {
+  var style = bold ? ' style="font-weight:bold;"' : '';
+  return '<tr' + style + '><td style="text-align:left;">' + label + '</td>'
+       + '<td>' + fmt4(covVal) + '</td>'
+       + '<td>' + (corVal !== null && corVal !== undefined ? fmt4(corVal) : '&mdash;') + '</td></tr>';
+}
+function covRowResult(label, val, color) {
+  return '<tr style="font-weight:bold;border-top:2px solid ' + color + ';">'
+       + '<td style="text-align:left;color:' + color + ';">' + label + ' = <strong>' + fmt4(val) + '</strong></td>'
+       + '<td colspan="2" style="color:' + color + ';font-size:1.05em;">' + fmt4(val) + '</td></tr>';
+}
+function covRowInf(label, covVal, corVal, note) {
+  return '<tr><td style="text-align:left;color:var(--unobs);font-style:italic;">' + label
+       + ' <span style="font-size:0.78em;">(' + note + ')</span></td>'
+       + '<td style="color:var(--unobs);font-style:italic;">' + fmt4(covVal) + '</td>'
+       + '<td style="color:var(--unobs);font-style:italic;">' + fmt4(corVal) + '</td></tr>';
+}
+
+function renderMomentDashboard(d, sfx, showA, showH) {
+  var fId = 'covFeas_' + sfx;
+  var iId = 'covInf_' + sfx;
+
+  // Feasible
+  var html = '<thead><tr><th style="text-align:left;">Quantity</th><th>Cov</th><th>Cor</th></tr></thead><tbody>';
+  html += covRowFeasible('C&#770;ov(study, GPA)', d.covStudyGPA, d.corStudyGPA);
+  html += covRowFeasible('V&#770;ar(study)', d.varStudy, null);
+  html += covRowResult(bhat('OLS'), d.betaOLS, 'var(--ols-color)');
+  html += '<tr><td colspan="3" style="border:none;height:4px;"></td></tr>';
+  html += covRowFeasible('C&#770;ov(&Delta;study, &Delta;GPA)', d.covDStudyDGPA, d.corDStudyDGPA);
+  html += covRowFeasible('V&#770;ar(&Delta;study)', d.varDStudy, null);
+  html += covRowResult(bhat('FD'), d.betaFD, 'var(--fd-color)');
+  html += '<tr><td colspan="3" style="border:none;height:4px;"></td></tr>';
+  html += covRowFeasible('C&#770;ov(study<sup>dm</sup>, GPA<sup>dm</sup>)', d.covDMStudyDMGPA, d.corDMStudyDMGPA);
+  html += covRowFeasible('V&#770;ar(study<sup>dm</sup>)', d.varDMStudy, null);
+  html += covRowResult(bhat('FE'), d.betaFE, 'var(--fe-color)');
+  html += '<tr><td colspan="3" style="border:none;height:4px;"></td></tr>';
+  html += covRowFeasible('C&#770;ov(dist, GPA)', d.covDistGPA, d.corDistGPA);
+  html += covRowFeasible('C&#770;ov(dist, study)', d.covDistStudy, d.corDistStudy);
+  html += covRowResult(bhat('IV'), d.betaIV, 'var(--iv-color)');
+  html += '</tbody>';
+  document.getElementById(fId).innerHTML = html;
+
+  // Infeasible
+  html = '<thead><tr><th style="text-align:left;">Quantity</th><th>Cov</th><th>Cor</th></tr></thead><tbody>';
+  if (showA) {
+    html += covRowInf('Cov(study, a<sub>i</sub>)', d.covStudyA, d.corStudyA, 'ability bias');
+  } else {
+    html += covBlankRow('Cov(study, a<sub>i</sub>)');
+  }
+  if (showH) {
+    html += covRowInf('Cov(study, &minus;h<sub>it</sub>)', d.covStudyNegH, d.corStudyNegH, 'hard-course bias');
+  } else {
+    html += covBlankRow('Cov(study, &minus;h<sub>it</sub>)');
+  }
+  html += covRowInf('Cov(study, u)', d.covStudyAU, d.corStudyAU, 'total OLS endog.');
+  html += '<tr><td colspan="3" style="border:none;height:4px;"></td></tr>';
+  html += covRowInf('Cov(&Delta;study, &Delta;u)', d.covDStudyDU, d.corDStudyDU, 'FD endog.');
+  html += covRowInf('Cov(study<sup>dm</sup>, u<sup>dm</sup>)', d.covDMStudyDMU, d.corDMStudyDMU, 'FE endog.');
+  html += '<tr><td colspan="3" style="border:none;height:4px;"></td></tr>';
+  html += covRowInf('Cov(dist, u<sub>it</sub>)', d.covDistU, d.corDistU, 'should be &asymp; 0');
+  if (showA) {
+    html += covRowInf('Cov(dist, a<sub>i</sub>)', d.covDistA, d.corDistA, 'should be &asymp; 0');
+  } else {
+    html += covBlankRow('Cov(dist, a<sub>i</sub>)');
+  }
+  html += '</tbody>';
+  document.getElementById(iId).innerHTML = html;
+}
+
+// ============================================================
+//  SCATTER PLOT HTML BLOCK (generates SVG tags for a stage)
+// ============================================================
+function scatterBlockHTML(sfx) {
+  return '<h2>Scatter Plots</h2>'
+    + '<h3 style="color:var(--unobs);font-style:italic;">Infeasible: Endogeneity Visualization</h3>'
+    + '<p class="note" style="color:#999;">[The DGP lets us peek behind the curtain &#8212; an econometrician cannot plot these]</p>'
+    + '<div class="plot-grid-4">'
+    + '<div class="plot-container" style="border-color:#ccc;"><div class="plot-title" style="color:var(--unobs);">Levels: u<sub>it</sub> vs study<sub>it</sub></div><svg id="plotELev_' + sfx + '" viewBox="0 0 300 250"></svg></div>'
+    + '<div class="plot-container" style="border-color:#ccc;"><div class="plot-title" style="color:var(--unobs);">FD: &Delta;u vs &Delta;study</div><svg id="plotEFD_' + sfx + '" viewBox="0 0 300 250"></svg></div>'
+    + '<div class="plot-container" style="border-color:#ccc;"><div class="plot-title" style="color:var(--unobs);">FE: u<sup>dm</sup> vs study<sup>dm</sup></div><svg id="plotEFE_' + sfx + '" viewBox="0 0 300 250"></svg></div>'
+    + '<div class="plot-container" style="border-color:#ccc;"><div class="plot-title" style="color:var(--unobs);">IV: u<sub>it</sub> vs dist<sub>i</sub></div><svg id="plotEIV_' + sfx + '" viewBox="0 0 300 250"></svg></div>'
+    + '</div>'
+    + '<h3>Feasible: GPA vs Study</h3>'
+    + '<div class="plot-grid-4">'
+    + '<div class="plot-container"><div class="plot-title" style="color:var(--ols-color);">OLS: GPA vs study</div><svg id="plotOLS_' + sfx + '" viewBox="0 0 300 250"></svg></div>'
+    + '<div class="plot-container"><div class="plot-title" style="color:var(--fd-color);">FD: &Delta;GPA vs &Delta;study</div><svg id="plotFD_' + sfx + '" viewBox="0 0 300 250"></svg></div>'
+    + '<div class="plot-container"><div class="plot-title" style="color:var(--fe-color);">FE: GPA<sup>dm</sup> vs study<sup>dm</sup></div><svg id="plotFE_' + sfx + '" viewBox="0 0 300 250"></svg></div>'
+    + '<div class="plot-container"><div class="plot-title" style="color:var(--iv-color);">First Stage: study vs dist</div><svg id="plotFS_' + sfx + '" viewBox="0 0 300 250"></svg></div>'
+    + '</div>';
+}
+
+// ============================================================
+//  STUDENT CALCULATION SECTION
+// ============================================================
+function calcBlockHTML(sfx) {
+  return '<div class="student-calc-box" id="calcBox_' + sfx + '">'
+    + '<h3>&#x1F4D0; Your Turn: Compute the Slope Coefficients</h3>'
+    + '<p class="calc-intro">Using the moments from the Feasible panel above, compute each estimator. Enter your answer to <strong>3 decimal places</strong>. All the numbers you need are in the table above &#8212; just divide the covariance by the variance (or by another covariance for IV).</p>'
+    + '<div id="calcEstimators_' + sfx + '"></div>'
+    + '<button class="btn-check" onclick="checkAnswers(\'' + sfx + '\')">Check All Answers</button>'
+    + '<div id="calcFeedback_' + sfx + '" style="margin-top:12px;"></div>'
+    + '</div>';
+}
+
+function renderCalcEstimators(d, sfx) {
+  var ests = [
+    {
+      id: 'ols', name: 'OLS', color: 'var(--ols-color)',
+      formula: bhat('OLS') + ' = ' + fracHTML('C&#770;ov(study, GPA)', 'V&#770;ar(study)'),
+      correct: d.betaOLS
+    },
+    {
+      id: 'fd', name: 'FD', color: 'var(--fd-color)',
+      formula: bhat('FD') + ' = ' + fracHTML('C&#770;ov(&Delta;study, &Delta;GPA)', 'V&#770;ar(&Delta;study)'),
+      correct: d.betaFD
+    },
+    {
+      id: 'fe', name: 'FE', color: 'var(--fe-color)',
+      formula: bhat('FE') + ' = ' + fracHTML('C&#770;ov(study<sup>dm</sup>, GPA<sup>dm</sup>)', 'V&#770;ar(study<sup>dm</sup>)'),
+      correct: d.betaFE
+    },
+    {
+      id: 'iv', name: 'IV', color: 'var(--iv-color)',
+      formula: bhat('IV') + ' = ' + fracHTML('C&#770;ov(dist, GPA)', 'C&#770;ov(dist, study)'),
+      correct: d.betaIV
+    }
+  ];
+
+  var html = '';
+  for (var i = 0; i < ests.length; i++) {
+    var e = ests[i];
+    html += '<div class="calc-estimator-block">';
+    html += '<div class="calc-estimator-title" style="color:' + e.color + ';">' + e.name + '</div>';
+    html += '<div class="calc-formula">' + e.formula + '</div>';
+    html += '<div class="calc-row">';
+    html += '<label>Your answer:</label>';
+    html += '<input type="text" class="calc-input" id="inp_' + sfx + '_' + e.id + '" placeholder="e.g. 0.300" oninput="clearFeedback(\'' + sfx + '\',\'' + e.id + '\')">';
+    html += '<span class="check-result" id="res_' + sfx + '_' + e.id + '"></span>';
+    html += '</div>';
+    html += '</div>';
+  }
+  document.getElementById('calcEstimators_' + sfx).innerHTML = html;
+}
+
+function clearFeedback(sfx, estId) {
+  var resEl = document.getElementById('res_' + sfx + '_' + estId);
+  var inpEl = document.getElementById('inp_' + sfx + '_' + estId);
+  if (resEl) resEl.textContent = '';
+  if (inpEl) { inpEl.classList.remove('correct-input', 'wrong-input'); }
+  // Hide overall feedback and hide complete banner when user edits
+  var fb = document.getElementById('calcFeedback_' + sfx);
+  if (fb) fb.innerHTML = '';
+}
+
+var TOLERANCE = 0.003;
+
+function checkAnswers(sfx) {
+  // find which stage this suffix maps to (s1->1, s2->2, s3->3, s4->4, s5->5)
+  var stageIdx = parseInt(sfx.replace('s', '')) - 1;
+  var d = (sfx === 's5') ? stageData[4] : stageData[stageIdx];
+  if (!d) return;
+
+  var ests = [
+    { id: 'ols', correct: d.betaOLS },
+    { id: 'fd',  correct: d.betaFD  },
+    { id: 'fe',  correct: d.betaFE  },
+    { id: 'iv',  correct: d.betaIV  }
+  ];
+  var allCorrect = true;
+  for (var i = 0; i < ests.length; i++) {
+    var e = ests[i];
+    var inpEl = document.getElementById('inp_' + sfx + '_' + e.id);
+    var resEl = document.getElementById('res_' + sfx + '_' + e.id);
+    if (!inpEl) continue;
+    var val = parseFloat(inpEl.value);
+    if (isNaN(val)) {
+      resEl.textContent = '(enter a number)';
+      resEl.className = 'check-result wrong';
+      inpEl.className = 'calc-input wrong-input';
+      allCorrect = false;
+    } else if (Math.abs(val - e.correct) < TOLERANCE) {
+      resEl.textContent = '\u2713 Correct!';
+      resEl.className = 'check-result correct';
+      inpEl.className = 'calc-input correct-input';
+    } else {
+      resEl.innerHTML = '\u2717 Answer: ' + fmt3(e.correct);
+      resEl.className = 'check-result wrong';
+      inpEl.className = 'calc-input wrong-input';
+      allCorrect = false;
+    }
+  }
+
+  var fbEl = document.getElementById('calcFeedback_' + sfx);
+  if (allCorrect) {
+    stageComplete[stageIdx] = true;
+    var nextStage = stageIdx + 2; // stageIdx is 0-based, next stage is stageIdx+2 (1-based)
+    fbEl.innerHTML = renderCompleteBanner(stageIdx + 1, nextStage);
+    renderProgressBar();
+  } else {
+    fbEl.innerHTML = '<div style="color:#c0392b;font-size:0.9em;font-weight:bold;margin-top:6px;">Some answers need correction. Check the values above and try again.</div>';
+  }
+}
+
+function renderCompleteBanner(stageNum, nextStageNum) {
+  var html = '<div class="stage-complete-banner">';
+  html += '<div class="banner-text">&#10003; Stage ' + stageNum + ' complete!</div>';
+  if (nextStageNum <= 6) {
+    html += '<div class="banner-note">Stage ' + nextStageNum + ' is now unlocked.</div>';
+    html += '<button class="btn-unlock" onclick="unlockAndGo(' + nextStageNum + ')">Proceed to Stage ' + nextStageNum + ' &rarr;</button>';
+  } else {
+    html += '<div class="banner-note">You have completed all stages! Review the comparison in Stage 6.</div>';
+  }
+  html += '</div>';
+  return html;
+}
+
+function unlockAndGo(n) {
+  unlockStage(n);
+  if (n === 6) renderStage6();
+  switchStage(n);
+  // For stage 6 re-render
+}
+
+// ============================================================
+//  DATA TABLE (collapsible, showing first 3 students)
+// ============================================================
+function dataTableHTML(d, sfx) {
+  var showN = Math.min(3, d.n);
+  var rows = '';
+  rows += '<thead><tr>';
+  rows += '<th>Stud (<em>i</em>)</th><th>Per (<em>t</em>)</th>';
+  rows += '<th>GPA<sub>it</sub></th><th>study<sub>it</sub></th><th>dist<sub>i</sub></th>';
+  rows += '<th>&Delta;GPA</th><th>&Delta;study</th>';
+  rows += '<th>GPA<sub>dm</sub></th><th>study<sub>dm</sub></th>';
+  if (d.useA) rows += '<th class="col-unobs-hdr">a<sub>i</sub></th>';
+  if (d.useH) rows += '<th class="col-unobs-hdr">h<sub>it</sub></th>';
+  rows += '</tr></thead><tbody>';
+
+  for (var si = 0; si < showN; si++) {
+    var st = d.students[si];
+    var rowBg = (si % 2 === 0) ? 'row-student-even' : 'row-student-odd';
+    var mGPA = 0, mStudy = 0;
+    for (var tt = 0; tt < T; tt++) { mGPA += st.obs[tt].gpa; mStudy += st.obs[tt].study; }
+    mGPA /= T; mStudy /= T;
+    for (var t = 0; t < T; t++) {
+      var o = st.obs[t];
+      var dgpa   = (t > 0) ? (o.gpa - st.obs[t-1].gpa).toFixed(2) : '&mdash;';
+      var dstudy = (t > 0) ? (o.study - st.obs[t-1].study).toFixed(2) : '&mdash;';
+      rows += '<tr class="' + rowBg + '">';
+      rows += '<td>' + o.i + '</td><td>' + o.t + '</td>';
+      rows += '<td>' + o.gpa.toFixed(2) + '</td><td>' + o.study.toFixed(2) + '</td><td>' + o.dist.toFixed(2) + '</td>';
+      rows += '<td>' + dgpa + '</td><td>' + dstudy + '</td>';
+      rows += '<td>' + (o.gpa - mGPA).toFixed(2) + '</td><td>' + (o.study - mStudy).toFixed(2) + '</td>';
+      if (d.useA) rows += '<td class="col-unobs">' + o.a.toFixed(2) + '</td>';
+      if (d.useH) rows += '<td class="col-unobs">' + o.h.toFixed(2) + '</td>';
+      rows += '</tr>';
+    }
+  }
+  rows += '</tbody>';
+
+  return '<div class="collapsible-section">'
+    + '<button class="collapsible-btn" onclick="toggleCollapsible(this)">&#9658; Show data table (first 3 students)</button>'
+    + '<div class="collapsible-body">'
+    + '<table class="full-width" style="font-size:0.83em;margin-top:8px;">' + rows + '</table>'
+    + '<p class="note">Showing ' + showN + ' of ' + d.n + ' students. &Delta;GPA, &Delta;study = first-differenced. GPA<sub>dm</sub>, study<sub>dm</sub> = within-student demeaned.</p>'
+    + '</div></div>';
+}
+
+// ============================================================
+//  DGP DESCRIPTION BOX (stage-specific)
+// ============================================================
+function dgpBoxHTML(stageNum, d) {
+  var uDesc, studyDesc, activeNote;
+  if (stageNum === 1) {
+    uDesc = 'u<sub>it</sub> = v<sub>it</sub> &nbsp;(pure noise &#8212; no a<sub>i</sub>, no h<sub>it</sub>)';
+    studyDesc = 'study<sub>it</sub> = &gamma;<sub>0</sub> + &gamma;<sub>2</sub>&thinsp;dist<sub>i</sub> + e<sub>it</sub> &nbsp;(no ability term, no hard-course term)';
+    activeNote = 'In this clean world, study time is only influenced by library distance and noise. No endogeneity!';
+  } else if (stageNum === 2) {
+    uDesc = 'u<sub>it</sub> = a<sub>i</sub> + v<sub>it</sub> &nbsp;(ability added; h<sub>it</sub> still absent)';
+    studyDesc = 'study<sub>it</sub> = &gamma;<sub>0</sub> + &gamma;<sub>1</sub>&thinsp;a<sub>i</sub> + &gamma;<sub>2</sub>&thinsp;dist<sub>i</sub> + e<sub>it</sub> &nbsp;(ability affects study; no hard-course term)';
+    activeNote = 'Ability a<sub>i</sub> is time-constant. It affects both study time and GPA &rarr; OLS is biased. FD and FE remove it. IV is unaffected.';
+  } else if (stageNum === 3) {
+    uDesc = 'u<sub>it</sub> = &minus;h<sub>it</sub> + v<sub>it</sub> &nbsp;(hard-course added; a<sub>i</sub> still absent)';
+    studyDesc = 'study<sub>it</sub> = &gamma;<sub>0</sub> + &gamma;<sub>2</sub>&thinsp;dist<sub>i</sub> + &gamma;<sub>3</sub>&thinsp;h<sub>it</sub> + e<sub>it</sub> &nbsp;(hard courses increase study; no ability term)';
+    activeNote = 'Hard-course shock h<sub>it</sub> is time-varying. It increases study time and decreases GPA. FD and FE do NOT eliminate it. IV is still consistent.';
+  } else {
+    uDesc = 'u<sub>it</sub> = a<sub>i</sub> &minus; h<sub>it</sub> + v<sub>it</sub> &nbsp;(full DGP: both a<sub>i</sub> and h<sub>it</sub>)';
+    studyDesc = 'study<sub>it</sub> = &gamma;<sub>0</sub> + &gamma;<sub>1</sub>&thinsp;a<sub>i</sub> + &gamma;<sub>2</sub>&thinsp;dist<sub>i</sub> + &gamma;<sub>3</sub>&thinsp;h<sub>it</sub> + e<sub>it</sub>';
+    activeNote = 'Both confounders are active. OLS is biased by both. FD/FE remove a<sub>i</sub> but not h<sub>it</sub>. Only IV achieves consistency.';
+  }
+
+  var html = '<div class="stat-box" style="margin:12px 0;">';
+  html += '<span class="box-label">Data Generating Process (DGP) &#8212; active components this stage</span>';
+  html += '<div class="model-eq">GPA<sub>it</sub> = 2.0 + 0.30&thinsp;&middot;&thinsp;study<sub>it</sub> + u<sub>it</sub> &nbsp; where &nbsp; ' + uDesc + '</div>';
+  html += '<hr style="margin:8px 0;border-color:#b0c4de;">';
+  html += '<div class="model-eq">' + studyDesc + '</div>';
+  if (stageNum <= 4) {
+    html += '<div class="model-note" style="margin-top:8px;">';
+    html += '<strong>a<sub>i</sub></strong> ~ N(0,1), &nbsp;<strong>h<sub>it</sub></strong> ~ N(0,0.5), &nbsp;<strong>v<sub>it</sub></strong> ~ N(0,0.1), &nbsp;<strong>dist<sub>i</sub></strong> ~ U(0.5,5) &nbsp; | &nbsp;';
+    html += '<strong>n = 10,000</strong>, <strong>T = 4</strong><br>';
+    html += '<span style="background:#fff3cd;padding:2px 6px;border-radius:3px;display:inline-block;margin-top:4px;">' + activeNote + '</span>';
+    html += '</div>';
+  }
+  html += '</div>';
+  return html;
+}
+
+// ============================================================
+//  MOMENT DASHBOARD HTML BLOCK
+// ============================================================
+function momentDashboardBlockHTML(sfx) {
+  return '<h2>Moment Dashboard</h2>'
+    + '<div class="cov-grid">'
+    + '<div class="cov-panel">'
+    + '<h3 style="color:var(--blue);margin-top:0;">Feasible (Observable)</h3>'
+    + '<p class="note">These can be computed from the data you actually observe.</p>'
+    + '<table class="cov-table full-width" id="covFeas_' + sfx + '"></table>'
+    + '</div>'
+    + '<div class="cov-panel" style="background:#f5f5f5;">'
+    + '<h3 style="color:var(--unobs);margin-top:0;font-style:italic;">Infeasible (Unobservable)</h3>'
+    + '<p class="note">Requires knowing a<sub>i</sub> and h<sub>it</sub>. Greyed rows: component not present in this scenario.</p>'
+    + '<table class="cov-table full-width" id="covInf_' + sfx + '"></table>'
+    + '</div>'
+    + '</div>';
+}
+
+// ============================================================
+//  BUILD STAGE 1-4 HTML
+// ============================================================
+var stageHeaders = [
+  { title: 'Stage 1: Clean OLS World (no endogeneity)', desc: 'In this baseline, there is no ability effect and no hard-course effect. Study time is driven only by library distance and pure noise. All four estimators should recover the true causal effect &beta;<sub>1</sub> = 0.30.' },
+  { title: 'Stage 2: Ability Bias (time-constant confounder)', desc: 'We introduce student ability a<sub>i</sub>. Smarter students both study more and earn higher GPAs &#8212; a classic omitted variable. This is a <em>time-constant</em> confounder: the same a<sub>i</sub> for all four periods. Watch what happens to OLS, and whether FD/FE fix it.' },
+  { title: 'Stage 3: Hard-Course Bias (time-varying confounder)', desc: 'Now there is no ability effect, but hard semesters h<sub>it</sub> increase study time while directly lowering GPA. Unlike ability, h<sub>it</sub> changes each period. This is a <em>time-varying</em> confounder &#8212; a harder problem.' },
+  { title: 'Stage 4: Both Biases (the full DGP)', desc: 'Both a<sub>i</sub> (ability) and h<sub>it</sub> (hard course) are active. This is the real-world scenario where multiple sources of endogeneity coexist. See which estimators survive and which do not.' }
+];
+
+function buildStage(stageNum) {
+  var sfx = 's' + stageNum;
+  var hdr = stageHeaders[stageNum - 1];
+  var d = stageData[stageNum - 1];
+  var showA = (stageNum === 2 || stageNum === 4);
+  var showH = (stageNum === 3 || stageNum === 4);
+
+  var html = '';
+  // Stage header
+  html += '<div class="stage-header-box"><h2>' + hdr.title + '</h2><p>' + hdr.desc + '</p></div>';
+  // Economic model (always same)
+  html += '<div class="econ-box"><span class="box-label">Economic Model</span>';
+  html += '<div class="model-eq">GPA = <span class="math">&beta;&#771;</span><sub>0</sub> + <span class="math">&beta;&#771;</span><sub>1</sub>&thinsp;study + &epsilon;</div>';
+  html += '<div class="model-note">We want <span style="font-family:Courier New,monospace;">&beta;&#771;<sub>1</sub></span>: the <em>causal</em> effect of an additional hour of study on GPA. True value: <strong>&beta;<sub>1</sub> = 0.30</strong>.</div>';
+  html += '</div>';
+  // DGP box
+  html += dgpBoxHTML(stageNum, d);
+  // Data table (collapsible)
+  html += dataTableHTML(d, sfx);
+  // Scatter plots
+  html += scatterBlockHTML(sfx);
+  // Moment dashboard
+  html += momentDashboardBlockHTML(sfx);
+  // Student calc
+  html += calcBlockHTML(sfx);
+
+  document.getElementById('stage' + stageNum).innerHTML = html;
+
+  // Now render dynamic content
+  renderMomentDashboard(d, sfx, showA, showH);
+  renderAllPlotsForStage(d, sfx);
+  renderCalcEstimators(d, sfx);
+}
+
+// ============================================================
+//  BUILD STAGE 5 (slider version)
+// ============================================================
+function buildStage5() {
+  var sfx = 's5';
+  var d = stageData[4];
+
+  var html = '';
+  html += '<div class="stage-header-box"><h2>Stage 5: Explore with Sliders</h2>';
+  html += '<p>Now you control the DGP. Adjust the sliders to explore how each estimator responds to different levels of ability bias, hard-course intensity, and instrument strength. The correct answers change each time the sliders move &#8212; you must re-compute after each adjustment.</p></div>';
+
+  // Economic model
+  html += '<div class="econ-box"><span class="box-label">Economic Model</span>';
+  html += '<div class="model-eq">GPA = <span class="math">&beta;&#771;</span><sub>0</sub> + <span class="math">&beta;&#771;</span><sub>1</sub>&thinsp;study + &epsilon;</div>';
+  html += '<div class="model-note">True value: <strong>&beta;<sub>1</sub> = 0.30</strong>. Both a<sub>i</sub> and h<sub>it</sub> are active (as in Stage 4), but you control their intensity.</div>';
+  html += '</div>';
+
+  // Sliders
+  html += '<div class="slider-panel">';
+  html += '<h3 style="margin-top:0;">Control Parameters</h3>';
+  html += '<div class="slider-row"><label>Share of Var(study) from a<sub>i</sub> (ability):</label>';
+  html += '<input type="range" id="s5_ability" min="0" max="80" value="40" step="5" oninput="updateStage5()">';
+  html += '<span class="slider-value" id="s5_abilityVal">40%</span></div>';
+  html += '<div class="slider-row"><label>Hard-course intensity (&gamma;<sub>3</sub>):</label>';
+  html += '<input type="range" id="s5_hard" min="0" max="2.0" value="0.5" step="0.1" oninput="updateStage5()">';
+  html += '<span class="slider-value" id="s5_hardVal">0.50</span></div>';
+  html += '<div class="slider-row"><label>Instrument strength |Cor(study, dist)|:</label>';
+  html += '<input type="range" id="s5_iv" min="0.0" max="0.8" value="0.5" step="0.05" oninput="updateStage5()">';
+  html += '<span class="slider-value" id="s5_ivVal">0.50</span></div>';
+  html += '</div>';
+
+  // DGP note area
+  html += '<div id="s5_dgpNote"></div>';
+
+  // Data table, plots, moments, calc
+  html += dataTableHTML(d, sfx);
+  html += scatterBlockHTML(sfx);
+  html += momentDashboardBlockHTML(sfx);
+  html += '<div id="s5_relockNotice" class="relock-notice">Sliders changed &#8212; re-compute the answers below using the updated moments above.</div>';
+  html += calcBlockHTML(sfx);
+
+  document.getElementById('stage5').innerHTML = html;
+
+  renderStage5Dynamic(d);
+}
+
+function renderStage5DGPNote(abilityShare, gamma3, ivStrength) {
+  var el = document.getElementById('s5_dgpNote');
+  if (!el) return;
+  var html = '<div class="stat-box" style="margin:12px 0;">';
+  html += '<span class="box-label">Data Generating Process (DGP) &#8212; current slider values</span>';
+  html += '<div class="model-eq">GPA<sub>it</sub> = 2.0 + 0.30&thinsp;&middot;&thinsp;study<sub>it</sub> + u<sub>it</sub> &nbsp; where &nbsp; u<sub>it</sub> = a<sub>i</sub> &minus; h<sub>it</sub> + v<sub>it</sub></div>';
+  html += '<hr style="margin:8px 0;border-color:#b0c4de;">';
+  html += '<div class="model-eq">study<sub>it</sub> = &gamma;<sub>0</sub> + &gamma;<sub>1</sub>&thinsp;a<sub>i</sub> + &gamma;<sub>2</sub>&thinsp;dist<sub>i</sub> + &gamma;<sub>3</sub>&thinsp;h<sub>it</sub> + e<sub>it</sub></div>';
+  html += '<div class="model-note">';
+  html += '<strong>&gamma;<sub>1</sub></strong> calibrated so ability share = <strong>' + Math.round(abilityShare * 100) + '%</strong> &nbsp;|&nbsp; ';
+  html += '<strong>&gamma;<sub>2</sub></strong> calibrated so |Cor(study, dist)| = <strong>' + ivStrength.toFixed(2) + '</strong> &nbsp;|&nbsp; ';
+  html += '<strong>&gamma;<sub>3</sub> = ' + gamma3.toFixed(1) + '</strong>';
+  html += '</div></div>';
+  el.innerHTML = html;
+}
+
+function renderStage5Dynamic(d) {
+  var sfx = 's5';
+  renderStage5DGPNote(d.abilityShare, d.gamma3, d.ivStrength);
+  renderMomentDashboard(d, sfx, true, true);
+  renderAllPlotsForStage(d, sfx);
+  renderCalcEstimators(d, sfx);
+}
+
+function updateStage5() {
+  var abilityShare = parseInt(document.getElementById('s5_ability').value) / 100;
+  var gamma3 = parseFloat(document.getElementById('s5_hard').value);
+  var ivStrength = parseFloat(document.getElementById('s5_iv').value);
+
+  document.getElementById('s5_abilityVal').textContent = Math.round(abilityShare * 100) + '%';
+  document.getElementById('s5_hardVal').textContent = gamma3.toFixed(2);
+  document.getElementById('s5_ivVal').textContent = ivStrength.toFixed(2);
+
+  stageData[4] = generateGuidedData(true, true, abilityShare, gamma3, ivStrength);
+
+  // Show re-lock notice
+  var notice = document.getElementById('s5_relockNotice');
+  if (notice) notice.style.display = 'block';
+
+  // Clear completion state for stage 5 (student must re-answer)
+  stageComplete[4] = false;
+  renderProgressBar();
+
+  // Clear all input fields and results
+  var sfx = 's5';
+  var ids = ['ols', 'fd', 'fe', 'iv'];
+  for (var i = 0; i < ids.length; i++) {
+    var inp = document.getElementById('inp_' + sfx + '_' + ids[i]);
+    var res = document.getElementById('res_' + sfx + '_' + ids[i]);
+    if (inp) { inp.value = ''; inp.className = 'calc-input'; }
+    if (res) { res.textContent = ''; res.className = 'check-result'; }
+  }
+  var fb = document.getElementById('calcFeedback_' + sfx);
+  if (fb) fb.innerHTML = '';
+
+  renderStage5Dynamic(stageData[4]);
+
+  // Also update stage 6 if it's been shown
+  if (stageUnlocked[5]) renderStage6();
+}
+
+// ============================================================
+//  BUILD STAGE 6 (comparison)
+// ============================================================
+function renderStage6() {
+  var el = document.getElementById('stage6');
+  if (!el) return;
+
+  var stageNames = ['Stage 1<br><small>(clean)</small>', 'Stage 2<br><small>(+ability)</small>', 'Stage 3<br><small>(+hard)</small>', 'Stage 4<br><small>(both)</small>', 'Stage 5<br><small>(sliders)</small>'];
+  var estNames   = ['OLS', 'FD', 'FE', 'IV'];
+  var estColors  = ['var(--ols-color)', 'var(--fd-color)', 'var(--fe-color)', 'var(--iv-color)'];
+
+  var getEsts = function(d) {
+    return d ? [d.betaOLS, d.betaFD, d.betaFE, d.betaIV] : [NaN, NaN, NaN, NaN];
+  };
+
+  var html = '';
+  html += '<div class="stage-header-box"><h2>Stage 6: The Full Picture</h2>';
+  html += '<p>Compare estimates across all five scenarios side by side. Watch how each estimator responds as the DGP becomes more complex. The true causal effect is always &beta;<sub>1</sub> = 0.30.</p></div>';
+
+  // Summary table
+  html += '<h2>Estimates Across Scenarios</h2>';
+  html += '<p class="note" style="font-style:normal;">With n = 10,000 we are in &ldquo;asymptopia&rdquo; &#8212; sample moments closely approximate population moments, so bias patterns are clearly visible.</p>';
+  html += '<table class="compare-table full-width"><thead><tr>';
+  html += '<th style="text-align:left;">Estimator</th>';
+  for (var s = 0; s < 5; s++) html += '<th>' + stageNames[s] + '</th>';
+  html += '<th class="true-col">True &beta;<sub>1</sub></th>';
+  html += '</tr></thead><tbody>';
+
+  for (var e = 0; e < 4; e++) {
+    html += '<tr><td style="color:' + estColors[e] + ';">' + estNames[e] + '</td>';
+    for (var s = 0; s < 5; s++) {
+      var d = stageData[s];
+      var val = d ? getEsts(d)[e] : NaN;
+      var isClose = !isNaN(val) && Math.abs(val - 0.3) < 0.03;
+      var cellStyle = isClose ? ' style="color:#27ae60;font-weight:bold;"' : ' style="color:#c0392b;"';
+      html += '<td' + cellStyle + '>' + fmt4(val) + '</td>';
+    }
+    html += '<td class="true-col">0.3000</td></tr>';
+  }
+  html += '</tbody></table>';
+
+  // Bar charts: one per estimator
+  html += '<h2>Visual Comparison (Bars = Bias from True 0.30)</h2>';
+  var allVals = [];
+  for (var s = 0; s < 5; s++) {
+    var d = stageData[s];
+    if (d) allVals = allVals.concat([d.betaOLS, d.betaFD, d.betaFE, d.betaIV]);
+  }
+  allVals = allVals.filter(function(v){ return !isNaN(v) && isFinite(v); });
+  allVals.push(0.3);
+  var lo = Math.min.apply(null, allVals);
+  var hi = Math.max.apply(null, allVals);
+  var pad = (hi - lo) * 0.15 || 0.1;
+  lo = Math.min(lo - pad, 0.1);
+  hi = hi + pad;
+  var range = hi - lo;
+  var truePct = (0.3 - lo) / range * 100;
+  var s5Labels = ['Stage 1', 'Stage 2', 'Stage 3', 'Stage 4', 'Stage 5'];
+
+  for (var e = 0; e < 4; e++) {
+    html += '<div style="margin:14px 0;padding:12px;border:1px solid var(--border);border-radius:6px;">';
+    html += '<div style="font-weight:bold;color:' + estColors[e] + ';margin-bottom:8px;">' + estNames[e] + ' across scenarios:</div>';
+    html += '<div style="text-align:center;font-size:0.82em;color:#888;margin-bottom:6px;">True &beta;<sub>1</sub> = 0.30 (dashed)</div>';
+    html += '<div style="position:relative;" id="compBar_' + e + '">';
+    for (var s = 0; s < 5; s++) {
+      var d = stageData[s];
+      var v = d ? getEsts(d)[e] : NaN;
+      if (isNaN(v) || !isFinite(v)) continue;
+      var pct = (v - lo) / range * 100;
+      html += '<div class="bar-row">';
+      html += '<div class="bar-label" style="color:' + estColors[e] + ';min-width:80px;">' + s5Labels[s] + '</div>';
+      html += '<div class="bar-track">';
+      var barLeft = Math.min(pct, truePct);
+      var barWidth = Math.abs(pct - truePct);
+      html += '<div style="position:absolute;left:' + barLeft.toFixed(1) + '%;width:' + barWidth.toFixed(1) + '%;height:100%;background:' + estColors[e].replace('var(--ols-color)', '#333').replace('var(--fd-color)', '#7d3c98').replace('var(--fe-color)', '#7d3c98').replace('var(--iv-color)', '#e67e22') + ';opacity:0.2;border-radius:3px;"></div>';
+      html += '<div style="position:absolute;left:' + pct.toFixed(1) + '%;top:-2px;width:3px;height:26px;background:' + estColors[e].replace('var(--ols-color)', '#333').replace('var(--fd-color)', '#7d3c98').replace('var(--fe-color)', '#7d3c98').replace('var(--iv-color)', '#e67e22') + ';border-radius:2px;"></div>';
+      html += '<div style="position:absolute;left:' + truePct.toFixed(1) + '%;top:-2px;width:2px;height:26px;border-left:2px dashed #999;"></div>';
+      html += '<span style="position:absolute;left:' + (pct + 1).toFixed(1) + '%;top:2px;font-size:0.78em;font-family:Courier New,monospace;font-weight:bold;white-space:nowrap;">' + fmt3(v) + '</span>';
+      html += '</div></div>';
+    }
+    html += '</div></div>';
+  }
+
+  // Expandable discussion sections
+  html += '<h2>Discussion</h2>';
+
+  html += '<div class="expandable"><div class="expand-header" onclick="toggleExpand(this)"><span class="expand-arrow">&#9654;</span> Why is OLS biased when a<sub>i</sub> or h<sub>it</sub> are present?</div><div class="expand-body">';
+  html += '<p>OLS probability limit: ' + bhat('OLS') + ' &rarr;<sub>p</sub> &beta;<sub>1</sub> + ' + fracHTML('Cov(study, u)', 'Var(study)') + '. When u contains a<sub>i</sub> (ability) and/or &minus;h<sub>it</sub> (hard course), Cov(study, u) &ne; 0.</p>';
+  html += '<p><strong>Stage 2</strong> (ability only): Cov(study, a<sub>i</sub>) &gt; 0 &rarr; OLS biased <em>up</em>.</p>';
+  html += '<p><strong>Stage 3</strong> (hard course only): Cov(study, &minus;h<sub>it</sub>) &lt; 0 because harder courses increase study but reduce GPA &rarr; OLS biased <em>down</em>.</p>';
+  html += '<p><strong>Stage 4</strong> (both): Net bias depends on which channel dominates.</p>';
+  html += '</div></div>';
+
+  html += '<div class="expandable"><div class="expand-header" onclick="toggleExpand(this)"><span class="expand-arrow">&#9654;</span> Why do FD and FE succeed in Stage 2 but not Stage 3?</div><div class="expand-body">';
+  html += '<p>FD eliminates anything that does not change over time. Since a<sub>i</sub> is the same in all 4 periods, &Delta;a<sub>i</sub> = 0 &rarr; ability drops out of the differenced equation.</p>';
+  html += '<p>But h<sub>it</sub> is <em>different each period</em>, so &Delta;h<sub>it</sub> &ne; 0. FD eliminates a<sub>i</sub> but leaves the h<sub>it</sub> channel intact.</p>';
+  html += '<p>Fixed Effects works the same way: demeaning removes the individual-mean a<sub>i</sub> (constant within student), but (h<sub>it</sub> &minus; h&#772;<sub>i</sub>) &ne; 0.</p>';
+  html += '<p><strong>Key takeaway:</strong> FD/FE are powerful for time-constant confounders, but helpless against time-varying ones that are correlated with the regressor.</p>';
+  html += '</div></div>';
+
+  html += '<div class="expandable"><div class="expand-header" onclick="toggleExpand(this)"><span class="expand-arrow">&#9654;</span> Why does IV work in every stage?</div><div class="expand-body">';
+  html += '<p>Library distance dist<sub>i</sub> is randomly assigned, so it is uncorrelated with ability a<sub>i</sub> (check: Cov(dist, a<sub>i</sub>) &asymp; 0 in all stages) and with any hard-course shock.</p>';
+  html += '<div class="formula-block">' + bhat('IV') + ' = ' + fracHTML('Cov(dist, GPA)', 'Cov(dist, study)') + ' &rarr;<sub>p</sub> &beta;<sub>1</sub> (regardless of endogeneity structure)</div>';
+  html += '<p>IV works by isolating only the variation in study time that comes from library distance &#8212; a "clean" source of variation that bypasses the confounders.</p>';
+  html += '<p><strong>Trade-off:</strong> IV precision depends on instrument strength. Weak instruments (low |Cor(study, dist)|) lead to noisy estimates. Try setting IV strength near 0 in Stage 5.</p>';
+  html += '</div></div>';
+
+  html += '<div class="expandable"><div class="expand-header" onclick="toggleExpand(this)"><span class="expand-arrow">&#9654;</span> When can FD/FE perform worse than OLS?</div><div class="expand-body">';
+  html += '<p>FD/FE reduce the variance of the regressor (because differencing or demeaning removes the between-student variation). If the remaining bias is large relative to the reduced variance, the bias-to-variance ratio can be <em>larger</em> after FD/FE than for OLS.</p>';
+  html += '<p>This is most visible when: (1) ability share is low (little benefit from removing a<sub>i</sub>), and (2) hard-course intensity &gamma;<sub>3</sub> is high (large time-varying bias).</p>';
+  html += '<p>Try in Stage 5: set ability share = 0%, &gamma;<sub>3</sub> = 1.5. OLS is unaffected by ability (none present), but FD/FE are hurt by the hard-course channel.</p>';
+  html += '</div></div>';
+
+  el.innerHTML = html;
+}
+
+// ============================================================
+//  INITIALIZATION
+// ============================================================
+function init() {
+  generatePredraws();
+
+  // Generate data for stages 1-4
+  stageData[0] = generateGuidedData(false, false, 0,    0,    0.5);
+  stageData[1] = generateGuidedData(true,  false, 0.40, 0,    0.5);
+  stageData[2] = generateGuidedData(false, true,  0,    0.50, 0.5);
+  stageData[3] = generateGuidedData(true,  true,  0.40, 0.50, 0.5);
+  stageData[4] = generateGuidedData(true,  true,  0.40, 0.50, 0.5); // Stage 5 default
+
+  // Build stages 1-4
+  buildStage(1);
+  buildStage(2);
+  buildStage(3);
+  buildStage(4);
+  buildStage5();
+
+  // Stage 6 is unlocked only when stage 5 is complete
+  // But we still build the initial empty placeholder
+  document.getElementById('stage6').innerHTML =
+    '<div class="stage-header-box"><h2>Stage 6: The Full Picture</h2><p>Complete Stage 5 to unlock this comparison view.</p></div>';
+
+  renderProgressBar();
+  switchStage(1);
+}
+
+init();
+</script>
+</body>
+</html>
