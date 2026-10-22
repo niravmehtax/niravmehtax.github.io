@@ -1,0 +1,214 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<!-- MOCK-UP (2026-10-21, not adopted): course map leading with wages only; incentive example as a Nov 5 signpost. -->
+<style>body{margin:0}</style>
+<title>Course Map (draft)</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Libre+Franklin:wght@500;650;750&family=Source+Serif+4:ital,opsz,wght@0,8..60,400;0,8..60,600;1,8..60,400&family=IBM+Plex+Mono:wght@400;500&display=swap">
+<script>
+  window.MathJax = { tex: { inlineMath: [['\\(','\\)']], displayMath: [['\\[','\\]']], processEscapes: false }, chtml: { scale: 1.0 } };
+</script>
+<script defer src="https://cdn.jsdelivr.net/npm/mathjax@3.2.2/es5/tex-mml-chtml.js"></script>
+<style>
+/* Layout: one reading column (about 65 characters); figures sit in tinted panels inside it. */
+:root {
+  --bg: #f7f8fa;          /* paper, faint blue-grey bias */
+  --panel: #eceff4;       /* figure ground */
+  --fg: #1d2330;          /* ink */
+  --muted: #5a6273;       /* captions */
+  --rule: #c9ced8;
+  --truth: #2f4f8f;       /* population / probability blue (the deck's Boadilla blue) */
+  --infer: #a83232;       /* inference red (the deck's dashed arrow) */
+  --truth-soft: #c4d0ea;
+  --font-display: "Libre Franklin", "Helvetica Neue", Arial, sans-serif;
+  --font-body: "Source Serif 4", Georgia, "Times New Roman", serif;
+  --font-data: "IBM Plex Mono", ui-monospace, Menlo, Consolas, monospace;
+  --base: 17px;
+}
+@media (prefers-color-scheme: dark) { :root:not([data-theme="light"]) {
+  --bg: #151922; --panel: #1f2430; --fg: #e4e7ee; --muted: #9aa2b3; --rule: #394052;
+  --truth: #8fb0ee; --infer: #ef8a8a; --truth-soft: #33476f; color-scheme: dark; } }
+:root[data-theme="dark"] {
+  --bg: #151922; --panel: #1f2430; --fg: #e4e7ee; --muted: #9aa2b3; --rule: #394052;
+  --truth: #8fb0ee; --infer: #ef8a8a; --truth-soft: #33476f; color-scheme: dark; }
+:root.big { --base: 24px; }
+
+html { font-size: var(--base); }
+body { background: var(--bg); color: var(--fg); font-family: var(--font-body); line-height: 1.55; font-size: 1rem; }
+.wrap { max-width: 42rem; margin: 0 auto; padding-inline: 16px; padding-block: 1.5rem 4rem; }
+header { display: grid; gap: .4rem; padding-bottom: 1rem; border-bottom: 1px solid var(--rule); }
+.eyebrow { font-family: var(--font-display); font-weight: 650; font-size: .78rem; letter-spacing: .08em; text-transform: uppercase; color: var(--muted); }
+h1 { font-family: var(--font-display); font-weight: 750; font-size: 2.2rem; line-height: 1.1; margin: 0; text-wrap: balance; }
+.lede { margin: 0; color: var(--muted); }
+h2 { font-family: var(--font-display); font-weight: 650; font-size: 1.3rem; margin: 2.4rem 0 .6rem; text-wrap: balance; }
+h2 .step { color: var(--truth); margin-right: .4rem; font-variant-numeric: tabular-nums; }
+p { margin: .6rem 0; }
+ul { padding-left: 1.2rem; margin: .5rem 0; display: grid; gap: .45rem; }
+strong { font-weight: 600; }
+.qs { display: grid; grid-template-columns: 1fr; gap: 1.2rem; margin: 1rem 0; }
+.q { border-top: 3px solid var(--truth); padding-top: .6rem; min-width: 0; }
+.q .tag { font-family: var(--font-display); font-weight: 750; color: var(--truth); font-size: .85rem; letter-spacing: .05em; }
+.q p { margin: .35rem 0; }
+.cite { font-size: .85rem; color: var(--muted); }
+.summaries { display: grid; grid-template-columns: repeat(auto-fit, minmax(10rem, 1fr)); gap: .8rem; margin: .8rem 0; }
+.summaries div { background: var(--panel); border-radius: 6px; padding: .6rem .75rem; min-width: 0; }
+.summaries .k { font-family: var(--font-display); font-weight: 650; font-size: .78rem; letter-spacing: .06em; text-transform: uppercase; color: var(--muted); }
+figure { margin: 1.2rem 0; background: var(--panel); border-radius: 6px; padding: .9rem; }
+figure svg { display: block; width: 100%; height: auto; }
+figcaption { font-size: .85rem; color: var(--muted); margin-top: .5rem; }
+.diagram text { font-family: var(--font-body); fill: var(--fg); }
+.diagram .box { fill: var(--bg); stroke: var(--fg); stroke-width: 1.4; }
+.diagram .head { font-family: var(--font-display); font-weight: 750; font-size: 15px; }
+.diagram .sub { font-size: 13px; fill: var(--muted); }
+.diagram .sym { font-size: 14px; }
+.diagram .prob { stroke: var(--fg); stroke-width: 2; fill: none; }
+.diagram .inf { stroke: var(--infer); stroke-width: 2; fill: none; stroke-dasharray: 7 5; }
+.diagram .prob-t { font-size: 13px; }
+.diagram .inf-t { font-size: 13px; fill: var(--infer); }
+.diagram .ah-p { fill: var(--fg); } .diagram .ah-i { fill: var(--infer); }
+table.road { border-collapse: collapse; width: 100%; font-size: .93rem; }
+table.road td { padding: .4rem .5rem; border-bottom: 1px solid var(--rule); vertical-align: top; }
+table.road td:first-child { font-family: var(--font-display); font-weight: 650; white-space: nowrap; color: var(--truth); width: 1%; }
+table.road tr.now td { background: var(--panel); }
+table.road td.when { white-space: nowrap; color: var(--muted); font-size: .85rem; width: 1%; }
+.chapters { margin-top: 2.4rem; }
+.chapters h2 { margin-top: 0; }
+.next { margin-top: 2.4rem; padding: 1rem; border: 1.5px solid var(--truth); border-radius: 6px; }
+.next h2 { margin-top: 0; }
+.tools { display: flex; justify-content: flex-end; }
+.tools button { font-family: var(--font-display); font-size: .8rem; font-weight: 650; color: var(--fg); background: var(--panel); border: 1px solid var(--rule); border-radius: 4px; padding: .35rem .7rem; cursor: pointer; min-height: 36px; }
+.tools button:focus-visible { outline: 2px solid var(--truth); outline-offset: 2px; }
+.scroll { overflow-x: auto; }
+@media (max-width: 480px) { h1 { font-size: 1.8rem; } }
+</style>
+</head>
+<body>
+
+<div class="wrap">
+<div class="tools"><button id="bigtext" type="button" aria-pressed="false">Larger text (for projecting)</button></div>
+
+<header>
+  <div class="eyebrow">Econ 2222A · Read before class, Thursday Oct 22</div>
+  <h1>Course Map</h1>
+  <p class="lede">I designed this to show how the different parts of this course fit together at a high level. We start Thursday's class here, then go straight to random sampling.</p>
+</header>
+
+<h2><span class="step">1</span>Motivation</h2>
+<p>Our objective is to say something about the underlying truth, or population parameters. Here is an example.</p>
+
+<div class="qs">
+  <div class="q">
+    <div class="tag">EXAMPLE: WAGES</div>
+    <p>You work for a government agency and want to understand the distribution of hourly wages in Canada.</p>
+    <p>Let \(X\) be the hourly wage of an employee: \(X \sim f_X\). We don't know the PDF \(f_X\).</p>
+  </div>
+</div>
+
+<p>This distribution can be summarized in several ways:</p>
+<ul>
+  <li><strong>Central tendency:</strong> mean, median</li>
+  <li><strong>Dispersion:</strong> variance, standard deviation, interquartile range (IQR)</li>
+  <li><strong>Other aspects:</strong> for example, skewness</li>
+</ul>
+
+<p>In this course, we will focus on the population mean, here the mean wage \(\mu\). As a measure of central tendency (or "typical" values), it is informative about the underlying distribution. It also connects with economic concepts such as efficiency. Fixing hours worked (the same for everyone), multiply the mean hourly wage by those hours and by the number of people and you get total income, so the mean tells us about the size of the pie. If the pie gets bigger, we might be able to find transfers from those who gain to those who lose so that everyone is at least as well off and someone is better off (a Pareto improvement). We'll discuss on Nov 5 (NCT Chapter 8) how we can model differences between populations using the mean difference.</p>
+
+<h2><span class="step">2</span>We can't see the whole population, so we sample</h2>
+<p>To learn about \(\mu\) we need data on wages. Getting information on everyone in the population is expensive, or may even be infeasible. So we take a <strong>random sample</strong> from the population. The idea is to cover the units in the population well enough to build a representative picture of what's going on.</p>
+<p>Statistics Canada does this for wages. The Labour Force Survey asks a random sample of households about work each month, rather than asking everyone.</p>
+
+
+
+<h2><span class="step">3</span>Probability, inference, and the map</h2>
+<p>We want to go from the data back to the truth. To do that, we first need to know how the data behave when the truth is known. That is probability. Going the other way is inference.</p>
+
+<figure>
+  <div class="scroll"><svg class="diagram" viewBox="0 0 640 300" role="img" aria-label="Diagram: a Truth box on the left (population, parameter) and a Data box on the right (sample, statistic). A solid arrow over the top from Truth to Data is labelled Probability. A dashed red arrow along the bottom from Data back to Truth is labelled Inference.">
+    <defs>
+      <marker id="ap" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="8" markerHeight="8" orient="auto-start-reverse"><path class="ah-p" d="M0,0 L10,5 L0,10 z"/></marker>
+      <marker id="ai" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="8" markerHeight="8" orient="auto-start-reverse"><path class="ah-i" d="M0,0 L10,5 L0,10 z"/></marker>
+    </defs>
+    <rect class="box" x="20" y="105" width="170" height="92" rx="8"/>
+    <text class="head" x="105" y="130" text-anchor="middle">Truth</text>
+    <text class="sub" x="105" y="150" text-anchor="middle">population, parameter</text>
+    <text class="sym" x="105" y="178" text-anchor="middle">μ</text>
+    <rect class="box" x="450" y="105" width="170" height="92" rx="8"/>
+    <text class="head" x="535" y="130" text-anchor="middle">Data</text>
+    <text class="sub" x="535" y="150" text-anchor="middle">sample, statistic</text>
+    <text class="sym" x="535" y="178" text-anchor="middle">a sample of wages,  x̄</text>
+    <path class="prob" d="M150,103 C230,25 410,25 490,103" marker-end="url(#ap)"/>
+    <text class="prob-t" x="320" y="22" text-anchor="middle"><tspan font-weight="700">Probability</tspan> (NCT Chapters 3 to 6):</text>
+    <text class="prob-t" x="320" y="40" text-anchor="middle">given the truth, how the data are distributed</text>
+    <path class="inf" d="M490,199 C410,277 230,277 150,199" marker-end="url(#ai)"/>
+    <text class="inf-t" x="320" y="270" text-anchor="middle"><tspan font-weight="700">Inference</tspan> (NCT Chapters 7 to 10, from Oct 29):</text>
+    <text class="inf-t" x="320" y="288" text-anchor="middle">given the data, what can be said about the truth</text>
+  </svg></div>
+  <figcaption>On Thursday we fix \(\mu\) and \(\sigma^2\) and derive the (approximate) distribution of the sample mean \(\overline{X}\). The results apply to any population, not just wages. From Oct 29 we go the other way.</figcaption>
+</figure>
+
+<p>Course map, by topic (dates tentative):</p>
+<div class="scroll">
+<table class="road">
+  <tr><td>Sep 10 to Oct 20</td><td><strong>NCT Chapters 1 to 5.</strong> Describing data (Chapters 1 and 2). Then probability and random variables: discrete, Binomial, two at once, continuous, normal (Chapters 3 to 5). These are the tools for "given the truth, how are the data distributed?"</td></tr>
+  <tr class="now"><td>Oct 22 (Thu)</td><td><strong>Chapter 6. Sampling and the sample mean.</strong> Random sampling. Given \(\mu\) and \(\sigma^2\), the distribution of \(\overline{X}\). The sample proportion (which can tell us about another kind of mean, the success proportion \(\pi\) for Binomial random variables) follows on Oct 29.</td></tr>
+  <tr><td>Oct 29, Nov 3</td><td><strong>Chapter 7. Estimating one parameter.</strong> Given \(\overline{x}\), an estimate of \(\mu\) and a confidence interval for it.</td></tr>
+  <tr><td>Nov 5</td><td><strong>Chapter 8. Comparing two populations.</strong> A confidence interval for the difference between two population means.</td></tr>
+  <tr><td>Nov 12 to 26</td><td><strong>Chapters 9 and 10. Hypothesis tests</strong>, for one parameter and for two populations. We assume a value for the truth and use probability to ask how surprising our data would be if it were true.</td></tr>
+  <tr><td>Econ 2223</td><td>Regression. The slope of a line of best fit is a mean-like statistic too, and the same steps apply.</td></tr>
+</table>
+</div>
+
+
+<section class="next">
+  <h2>Next, in class: random sampling</h2>
+  <p>A random sample can teach us about \(\mu\) as long as it gives a good enough picture of the population. On Thursday we say exactly what makes a sample random, and then work out how the sample mean behaves. In class we'll also use a simulation of the sample mean (clt.html, linked on Brightspace), so bring a phone or laptop if you can.</p>
+</section>
+
+<section class="chapters">
+  <h2>The textbook chapters (dates tentative)</h2>
+  <p class="cite">NCT is Newbold, Carlson and Thorne, <em>Statistics for Business and Economics</em>. The 7th and 8th editions use the same chapter numbers.</p>
+  <div class="scroll">
+  <table class="road">
+    <tr><td>Ch. 1 and 2</td><td>Describing data</td><td class="when">Sep 10</td></tr>
+    <tr><td>Ch. 3</td><td>Probability</td><td class="when">Sep 15 to 24</td></tr>
+    <tr><td>Ch. 4</td><td>Discrete random variables, the Binomial, two random variables</td><td class="when">Sep 24 to Oct 1</td></tr>
+    <tr><td>Ch. 5</td><td>Continuous random variables, the normal</td><td class="when">Oct 8, Oct 20</td></tr>
+    <tr class="now"><td>Ch. 6</td><td>Sampling and the sample mean; the sample proportion</td><td class="when">Oct 22, Oct 29</td></tr>
+    <tr><td>Ch. 7</td><td>Estimating one parameter</td><td class="when">Oct 29, Nov 3</td></tr>
+    <tr><td>Ch. 8</td><td>Comparing two populations</td><td class="when">Nov 5</td></tr>
+    <tr><td>Ch. 9</td><td>Hypothesis tests, one parameter</td><td class="when">Nov 12 to 19</td></tr>
+    <tr><td>Ch. 10</td><td>Hypothesis tests, two populations</td><td class="when">Nov 19, Nov 26</td></tr>
+  </table>
+  </div>
+</section>
+</div>
+
+<script>
+(function () {
+  var NS = "http://www.w3.org/2000/svg";
+  function el(tag, attrs, parent, text) {
+    var e = document.createElementNS(NS, tag);
+    for (var k in attrs) e.setAttribute(k, attrs[k]);
+    if (text !== undefined) e.textContent = text;
+    if (parent) parent.appendChild(e);
+    return e;
+  }
+
+  // ---- Larger text toggle (per viewer) ----
+  (function () {
+    var btn = document.getElementById("bigtext"), root = document.documentElement;
+    function set(on) { root.classList.toggle("big", on); btn.setAttribute("aria-pressed", on ? "true" : "false"); }
+    try { set(localStorage.getItem("wtm-big") === "1"); } catch (e) {}
+    btn.addEventListener("click", function () {
+      var on = !root.classList.contains("big"); set(on);
+      try { localStorage.setItem("wtm-big", on ? "1" : "0"); } catch (e) {}
+    });
+  })();
+})();
+</script>
+</body>
+</html>
