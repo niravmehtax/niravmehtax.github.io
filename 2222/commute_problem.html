@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Commute Times Problem</title>
+<!-- 2026-10-21: optional in-class problem for Thu Oct 22 (Econ 2222A), projected. Same problem as the
+     optional last page of the Oct 22 board deck (block 16, \contentonly). Answers start hidden. -->
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Libre+Franklin:wght@500;650;750&family=Source+Serif+4:opsz,wght@8..60,400;8..60,600&display=swap">
+<script>
+  window.MathJax = { tex: { inlineMath: [['\\(','\\)']], displayMath: [['\\[','\\]']] } };
+</script>
+<script defer src="https://cdn.jsdelivr.net/npm/mathjax@3.2.2/es5/tex-mml-chtml.js"></script>
+<style>
+/* Layout: one wide reading column sized for a projector; same palette as the Course Map. */
+:root {
+  --bg: #f7f8fa;
+  --panel: #eceff4;
+  --fg: #1d2330;
+  --muted: #5a6273;
+  --rule: #c9ced8;
+  --accent: #2f4f8f;
+  --font-display: "Libre Franklin", "Helvetica Neue", Arial, sans-serif;
+  --font-body: "Source Serif 4", Georgia, "Times New Roman", serif;
+  --base: 26px;
+}
+@media (prefers-color-scheme: dark) { :root:not([data-theme="light"]) {
+  --bg: #151922; --panel: #1f2430; --fg: #e4e7ee; --muted: #9aa2b3; --rule: #394052; --accent: #8fb0ee; color-scheme: dark; } }
+:root[data-theme="dark"] {
+  --bg: #151922; --panel: #1f2430; --fg: #e4e7ee; --muted: #9aa2b3; --rule: #394052; --accent: #8fb0ee; color-scheme: dark; }
+@media (max-width: 700px) { :root { --base: 18px; } }
+
+html { font-size: var(--base); }
+body { margin: 0; background: var(--bg); color: var(--fg); font-family: var(--font-body); line-height: 1.5; }
+.wrap { max-width: 46rem; margin: 0 auto; padding-inline: 16px; padding-block: 1.2rem 3rem; }
+.eyebrow { font-family: var(--font-display); font-weight: 650; font-size: .6rem; letter-spacing: .08em; text-transform: uppercase; color: var(--muted); }
+h1 { font-family: var(--font-display); font-weight: 750; font-size: 1.6rem; line-height: 1.15; margin: .2rem 0 .8rem; text-wrap: balance; }
+.setup { margin: 0 0 1rem; }
+ol { margin: 0; padding-left: 1.4rem; display: grid; gap: .55rem; }
+ol li::marker { font-family: var(--font-display); font-weight: 650; color: var(--accent); }
+.tools { margin-top: 1.6rem; }
+button { font-family: var(--font-display); font-weight: 650; font-size: .6rem; color: var(--fg); background: var(--panel);
+  border: 1px solid var(--rule); border-radius: 4px; padding: .4rem .8rem; cursor: pointer; min-height: 36px; }
+button:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; }
+.answers { margin-top: 1rem; padding: .8rem 1rem; background: var(--panel); border-radius: 6px; font-size: .8rem; }
+.answers ol { gap: .35rem; }
+</style>
+</head>
+<body>
+<div class="wrap">
+  <div class="eyebrow">Econ 2222A · Thursday Oct 22 · if time</div>
+  <h1>Commute times</h1>
+  <p class="setup">Commute times to Western are right-skewed with \(\mu = 35\) min and \(\sigma = 15\) min. Take a random sample of \(n = 36\) students.</p>
+  <ol>
+    <li>Name the population, parameter, sample and statistic.</li>
+    <li>Find \(E[\overline{X}]\) and the standard error.</li>
+    <li>Find \(Pr(\overline{X} > 40)\).</li>
+    <li>How large must \(n\) be for the standard error to be at most 1.5 min?</li>
+    <li>With \(n = 4\), could you compute \(Pr(\overline{X} > 40)\)? What if the population were normal?</li>
+  </ol>
+
+  <div class="tools"><button id="toggle" type="button" aria-expanded="false" aria-controls="answers">Show answers</button></div>
+  <div class="answers" id="answers" hidden>
+    <ol>
+      <li>Population: all students' commute times. Parameters: \(\mu\), \(\sigma^2\). Sample: the 36 students' commute times. Statistic: \(\overline{X}\).</li>
+      <li>\(E[\overline{X}] = 35\). Standard error \(= 15/\sqrt{36} = 2.5\).</li>
+      <li>\(z = (40 - 35)/2.5 = 2\), so \(Pr(\overline{X} > 40) \approx 1 - \Phi(2) = 1 - 0.9772 = 0.0228\).</li>
+      <li>\(15/\sqrt{n} \le 1.5 \Rightarrow \sqrt{n} \ge 10 \Rightarrow n \ge 100\).</li>
+      <li>Skewed population, \(n = 4\): no, the CLT does not apply. Normal population: \(\overline{X} \sim N(35, 15^2/4)\) exactly, so the standard error is 7.5, \(z = 0.67\), and \(Pr(\overline{X} > 40) = 1 - \Phi(0.67) = 1 - 0.7486 = 0.2514\).</li>
+    </ol>
+  </div>
+</div>
+<script>
+(function () {
+  var btn = document.getElementById("toggle"), box = document.getElementById("answers");
+  btn.addEventListener("click", function () {
+    box.hidden = !box.hidden;
+    btn.textContent = box.hidden ? "Show answers" : "Hide answers";
+    btn.setAttribute("aria-expanded", box.hidden ? "false" : "true");
+  });
+})();
+</script>
+</body>
+</html>
