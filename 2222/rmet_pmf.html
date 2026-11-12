@@ -1,0 +1,129 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Choosing the Critical Value</title>
+<!-- Thu Nov 12, board 3 middle panel (2026-11-11 late, Nirav): projected after the halfway break instead of drawing the PMF.
+     Click a row of the table (or press 1-5, or the arrow keys) to shade the rejection region X > Xc.
+     Press O (or the button) to mark the observed score, 27. Press 0 to clear. Numbers: Binomial(36, 1/4), exact. -->
+<style>
+  :root { --ink:#1d1d1f; --muted:#6b6b70; --bar:#7f9fcf; --rej:#b8483e; --line:#d4d4d8; --bg:#ffffff; --hl:#fbeae8; }
+  * { box-sizing:border-box; }
+  body { margin:0; background:var(--bg); color:var(--ink); font-family: "Helvetica Neue", Helvetica, Arial, sans-serif; }
+  main { max-width:1500px; margin:0 auto; padding:20px 16px 28px; }
+  h1 { font-size:clamp(22px,3vw,40px); margin:0 0 4px; font-weight:700; }
+  .sub { font-size:clamp(15px,1.7vw,24px); color:var(--muted); margin:0 0 14px; }
+  .wrap { display:flex; gap:28px; align-items:flex-start; flex-wrap:wrap; }
+  .plot { flex:1 1 640px; min-width:0; }
+  svg { width:100%; height:auto; display:block; }
+  .side { flex:0 1 380px; min-width:260px; font-size:clamp(17px,1.8vw,26px); }
+  table { border-collapse:collapse; width:100%; margin-top:6px; }
+  th, td { padding:6px 12px; text-align:center; border-bottom:1px solid var(--line); }
+  th { font-weight:600; color:var(--muted); font-size:0.8em; }
+  tbody tr { cursor:pointer; }
+  tbody tr:hover { background:#f4f4f5; }
+  tbody tr.on { background:var(--hl); color:var(--rej); font-weight:700; }
+  .note { color:var(--muted); font-size:0.78em; margin:10px 0 0; line-height:1.35; }
+  .x35 { margin:0 0 6px; }
+  button { font:inherit; font-size:0.75em; margin-top:12px; padding:6px 14px; border:1px solid var(--line); background:#fff; border-radius:6px; cursor:pointer; }
+  .readout { min-height:1.4em; margin-top:10px; color:var(--rej); font-weight:700; }
+</style>
+</head>
+<body>
+<main>
+  <h1>Choosing X<sub>c</sub></h1>
+  <p class="sub">X = number right out of 36 if I am guessing: Binomial, n = 36, &pi; = 1/4, mean 9</p>
+  <div class="wrap">
+    <div class="plot"><svg id="pmf" viewBox="0 0 900 470" role="img" aria-label="Binomial(36, 1/4) probabilities"></svg></div>
+    <div class="side">
+      <p class="x35">X<sub>c</sub> = 35: &alpha; = Pr(X &gt; 35) = (1/4)<sup>36</sup> &asymp; 2 &times; 10<sup>&minus;22</sup></p>
+      <table>
+        <thead><tr><th>X<sub>c</sub></th><th>&alpha; = Pr(X &gt; X<sub>c</sub> | &pi; = 1/4)</th></tr></thead>
+        <tbody id="rows"></tbody>
+      </table>
+      <div class="readout" id="readout"></div>
+      <button id="obs" type="button">Show observed score (O)</button>
+      <p class="note">Read down: a higher bar, a smaller &alpha;.</p>
+    </div>
+  </div>
+</main>
+<script>
+(function () {
+  var n = 36, p = 0.25, K = 28;
+  // exact Binomial pmf by recursion
+  var pmf = [Math.pow(1 - p, n)];
+  for (var k = 1; k <= n; k++) pmf.push(pmf[k - 1] * (n - k + 1) / k * p / (1 - p));
+  function tail(c) { var s = 0; for (var k = c + 1; k <= n; k++) s += pmf[k]; return s; }
+  var XC = [10, 11, 12, 13, 14];
+  var state = { xc: null, obs: false };
+
+  var svg = document.getElementById('pmf'), NS = 'http://www.w3.org/2000/svg';
+  var L = 40, R = 885, T = 20, B = 400, ymax = 0.16;
+  var bw = (R - L) / (K + 1);
+  function el(tag, attrs, text) {
+    var e = document.createElementNS(NS, tag);
+    for (var a in attrs) e.setAttribute(a, attrs[a]);
+    if (text != null) e.textContent = text;
+    svg.appendChild(e); return e;
+  }
+  var bars = [];
+  for (var k = 0; k <= K; k++) {
+    var h = (B - T) * pmf[k] / ymax;
+    bars.push(el('rect', { x: L + k * bw + bw * 0.08, y: B - h, width: bw * 0.84, height: Math.max(h, 0.6), fill: '#7f9fcf' }));
+    if (k % 2 === 0) el('text', { x: L + (k + 0.5) * bw, y: B + 28, 'text-anchor': 'middle', 'font-size': 20, fill: '#1d1d1f' }, k);
+  }
+  el('line', { x1: L, x2: R, y1: B, y2: B, stroke: '#9a9aa0', 'stroke-width': 1.5 });
+  el('text', { x: L + 9.5 * bw, y: T + 4, 'text-anchor': 'middle', 'font-size': 20, fill: '#3B6FB6' }, 'mean 9');
+  el('text', { x: (L + R) / 2, y: B + 62, 'text-anchor': 'middle', 'font-size': 21, fill: '#6b6b70' }, 'X = number right out of 36, if guessing');
+  var cut = el('line', { x1: 0, x2: 0, y1: T + 30, y2: B, stroke: '#6b6b70', 'stroke-width': 2, 'stroke-dasharray': '6 5', visibility: 'hidden' });
+  var cutLab = el('text', { x: 0, y: T + 24, 'font-size': 20, fill: '#6b6b70', visibility: 'hidden' }, '');
+  var aLab = el('text', { x: 0, y: B - 150, 'font-size': 21, fill: '#b8483e', 'font-weight': 700, visibility: 'hidden' }, '');
+  var aLab2 = el('text', { x: 0, y: B - 122, 'font-size': 21, fill: '#b8483e', visibility: 'hidden' }, '');
+  var oX = L + 27.5 * bw;
+  var oArrow = el('path', { d: 'M' + oX + ' ' + (B - 120) + ' L' + oX + ' ' + (B - 12) + ' M' + (oX - 9) + ' ' + (B - 26) + ' L' + oX + ' ' + (B - 10) + ' L' + (oX + 9) + ' ' + (B - 26), stroke: '#1d1d1f', 'stroke-width': 3, fill: 'none', visibility: 'hidden' });
+  var oLab = el('text', { x: oX, y: B - 130, 'text-anchor': 'end', 'font-size': 21, fill: '#1d1d1f', 'font-weight': 700, visibility: 'hidden' }, 'observed: 27');
+
+  var tbody = document.getElementById('rows');
+  XC.forEach(function (c, i) {
+    var tr = document.createElement('tr');
+    tr.innerHTML = '<td>' + c + '</td><td>' + tail(c).toFixed(4) + '</td>';
+    tr.addEventListener('click', function () { state.xc = (state.xc === c ? null : c); draw(); });
+    tbody.appendChild(tr);
+  });
+
+  function draw() {
+    var c = state.xc;
+    for (var k = 0; k <= K; k++) bars[k].setAttribute('fill', c !== null && k > c ? '#b8483e' : '#7f9fcf');
+    [].forEach.call(tbody.children, function (tr, i) { tr.className = XC[i] === c ? 'on' : ''; });
+    var vis = c === null ? 'hidden' : 'visible';
+    [cut, cutLab, aLab, aLab2].forEach(function (e) { e.setAttribute('visibility', vis); });
+    if (c !== null) {
+      var x = L + (c + 1) * bw;
+      cut.setAttribute('x1', x); cut.setAttribute('x2', x);
+      cutLab.setAttribute('x', x + 6); cutLab.textContent = 'Xc = ' + c;
+      aLab.setAttribute('x', x + 40); aLab2.setAttribute('x', x + 40);
+      aLab.textContent = 'reject H0: X > ' + c;
+      aLab2.textContent = 'α = Pr(X > ' + c + ') = ' + tail(c).toFixed(4);
+    }
+    oArrow.setAttribute('visibility', state.obs ? 'visible' : 'hidden');
+    oLab.setAttribute('visibility', state.obs ? 'visible' : 'hidden');
+    document.getElementById('readout').textContent = c === null ? '' :
+      'Reject H0 if X > ' + c + ':  α = ' + tail(c).toFixed(4) + (state.obs ? (27 > c ? ';  27 > ' + c + ': reject' : '') : '');
+  }
+  document.getElementById('obs').addEventListener('click', function () { state.obs = !state.obs; draw(); });
+  document.addEventListener('keydown', function (e) {
+    var i = XC.indexOf(state.xc);
+    if (e.key >= '1' && e.key <= '5') state.xc = XC[+e.key - 1];
+    else if (e.key === '0' || e.key === 'Escape') { state.xc = null; state.obs = false; }
+    else if (e.key === 'ArrowDown' || e.key === 'ArrowRight') state.xc = XC[Math.min(i + 1, XC.length - 1)];
+    else if (e.key === 'ArrowUp' || e.key === 'ArrowLeft') state.xc = i <= 0 ? XC[0] : XC[i - 1];
+    else if (e.key === 'o' || e.key === 'O') state.obs = !state.obs;
+    else return;
+    draw();
+  });
+  draw();
+})();
+</script>
+</body>
+</html>
