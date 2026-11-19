@@ -1,0 +1,323 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Power Explorer</title>
+<!-- ECON 2222A power app, FINAL 2026-11-19 (Nirav; Claude draft 2026-11-18). Deck reference: terse_boards/11_19_terse.tex p9-p16;
+     colours = ht_figures/ht_figures.R (null blue, alternative orange, rejection red).
+     2026-11-19 (Nirav): mu0 FIXED at 5; opening values = the p13 power example
+     (sigma = 1, n = 16, alpha = 0.05, mu* = 5.5 -> cutoff 5.41, beta 0.36, power 0.64). Not the chips values. Picture + power curve,
+     alpha as buttons, mu* <= mu0 allowed, deck-style 2 dp rounding. -->
+<style>
+  /* Layout: picture left, controls + worked numbers right; stacks on phones. Projector-first type sizes. */
+  :root {
+    --bg:#ffffff; --ink:#1d1d1f; --muted:#64646b; --line:#d9d9de; --soft:#f4f4f6;
+    --null:#3B6FB6; --alt:#D9822B; --rej:#B8483E;
+    --betafill:rgba(217,130,43,0.33); --powfill:rgba(217,130,43,0.75); --rejfill:rgba(184,72,62,0.80);
+    --ghost:#9a9aa3;
+    --sans:"Helvetica Neue", Helvetica, Arial, sans-serif;
+  }
+  @media (prefers-color-scheme: dark) { :root:not([data-theme="light"]) {
+    --bg:#16171a; --ink:#ececf0; --muted:#a3a3ad; --line:#3a3b42; --soft:#22232a;
+    --null:#7ea6e6; --alt:#f0a65c; --rej:#e0776c;
+    --betafill:rgba(240,166,92,0.30); --powfill:rgba(240,166,92,0.72); --rejfill:rgba(224,119,108,0.82);
+    --ghost:#6f707a; color-scheme:dark; } }
+  :root[data-theme="dark"] {
+    --bg:#16171a; --ink:#ececf0; --muted:#a3a3ad; --line:#3a3b42; --soft:#22232a;
+    --null:#7ea6e6; --alt:#f0a65c; --rej:#e0776c;
+    --betafill:rgba(240,166,92,0.30); --powfill:rgba(240,166,92,0.72); --rejfill:rgba(224,119,108,0.82);
+    --ghost:#6f707a; color-scheme:dark; }
+  * { box-sizing:border-box; }
+  body { margin:0; }
+  body { background:var(--bg); color:var(--ink); font-family:var(--sans); }
+  main { max-width:1500px; margin:0 auto; padding-block:18px 28px;
+         padding-left:max(16px, env(safe-area-inset-left, 0px)); padding-right:max(16px, env(safe-area-inset-right, 0px)); }
+  h1 { font-size:clamp(24px,3vw,40px); margin:0 0 2px; }
+  .sub { font-size:clamp(15px,1.6vw,22px); color:var(--muted); margin:0 0 14px; }
+  .xb { text-decoration:overline; }
+  .guide { max-width:75ch; font-size:clamp(15px,1.4vw,19px); line-height:1.5; margin:0 0 18px; }
+  .guide p { margin:0 0 6px; }
+  .guide ul { margin:0 0 8px; padding-left:1.2em; }
+  .guide li { margin:2px 0; }
+  .wrap { display:flex; gap:28px; flex-wrap:wrap; align-items:flex-start; }
+  .plots { flex:1 1 620px; min-width:0; display:flex; flex-direction:column; gap:6px; }
+  svg { width:100%; height:auto; display:block; }
+  .side { flex:0 1 430px; min-width:0; font-size:clamp(16px,1.5vw,21px); display:flex; flex-direction:column; gap:14px; }
+  .ctl { display:grid; grid-template-columns:auto 1fr auto; gap:6px 12px; align-items:center; }
+  .ctl .nm { white-space:nowrap; }
+  .ctl .val { font-variant-numeric:tabular-nums; min-width:3.6em; text-align:right; font-weight:600; }
+  input[type=range] { width:100%; accent-color:var(--alt); }
+  .alphas { display:flex; gap:6px; flex-wrap:wrap; }
+  .alphas button { font:inherit; font-size:0.85em; padding:3px 10px; border:1px solid var(--line); background:var(--bg); color:var(--ink); border-radius:6px; cursor:pointer; }
+  .alphas button.on { background:var(--rej); border-color:var(--rej); color:#fff; }
+  .work { background:var(--soft); border-radius:8px; padding:10px 14px; line-height:1.6; font-variant-numeric:tabular-nums; }
+  .work p { margin:0; }
+  .work .big { font-weight:700; }
+  .work .warn { color:var(--rej); font-size:0.85em; margin-top:4px; }
+  .btns { display:flex; gap:8px; flex-wrap:wrap; }
+  .btns button { font:inherit; font-size:0.8em; padding:6px 12px; border:1px solid var(--line); background:var(--bg); color:var(--ink); border-radius:6px; cursor:pointer; }
+  .btns button:focus-visible, .alphas button:focus-visible, input:focus-visible { outline:2px solid var(--null); outline-offset:2px; }
+  .cmp { font-size:0.85em; color:var(--muted); min-height:1.3em; }
+  .ax { stroke:var(--muted); stroke-width:1.2; fill:none; }
+  .tk { fill:var(--ink); font-size:20px; font-family:var(--sans); }
+  .tkm { fill:var(--muted); font-size:16px; font-family:var(--sans); }
+  .hide { display:none; }
+</style>
+
+</head>
+<body>
+<main>
+  <h1>Power</h1>
+  <p class="sub">H<sub>0</sub>: &mu; = &mu;<sub>0</sub> vs H<sub>1</sub>: &mu; &gt; &mu;<sub>0</sub>. Normal population, &sigma; known. The truth is a specific &mu;<sup>*</sup>.</p>
+
+  <section class="guide" aria-label="How to use this page">
+    <p>The page opens with the power example from class: &mu;<sub>0</sub> = 5, &sigma; = 1, n = 16, &alpha; = 0.05 and the truth &mu;<sup>*</sup> = 5.5. Change one thing at a time and watch the picture, the numbers on the right and the power curve.</p>
+    <ul>
+      <li><b>Start:</b> work out <span class="xb">X</span><sub>c</sub>, &beta; and power for the opening values by hand, then check them against the numbers on the right.</li>
+      <li><b>Distance from &mu;<sub>0</sub>:</b> drag &mu;<sup>*</sup> away from &mu;<sub>0</sub>, then back toward it. What happens to &beta; and power?</li>
+      <li><b>At and below &mu;<sub>0</sub>:</b> set &mu;<sup>*</sup> = &mu;<sub>0</sub> = 5. What is Pr(reject H<sub>0</sub>), and why? Then move &mu;<sup>*</sup> below 5.</li>
+      <li><b>Significance level:</b> click &alpha; = 0.01, then &alpha; = 0.10. Where does the cutoff move, and what happens to power?</li>
+      <li><b>Spread:</b> make &sigma; smaller, then make n larger. Why do both narrow the curves?</li>
+    </ul>
+    <p><b>Freeze for comparison</b> keeps a dashed grey copy of the current picture and power curve, so you can change one slider and see before and after side by side. The line under the buttons shows the old and new power and what you changed. <b>Clear frozen</b> removes the copy.</p>
+  </section>
+
+  <div class="wrap">
+    <div class="plots">
+      <svg id="pic" viewBox="0 0 900 430" role="img" aria-label="Sampling distributions of the sample mean under the null and under the truth"></svg>
+      <svg id="pc" class="hide" viewBox="0 0 900 260" role="img" aria-label="Power as a function of the true mean"></svg>
+    </div>
+    <div class="side">
+      <div class="ctl">
+        <span class="nm">&mu;<sup>*</sup></span><input type="range" id="ms" min="4" max="7" step="0.05" value="5.5"><span class="val" id="v_ms"></span>
+        <span class="nm">&sigma;</span><input type="range" id="sg" min="0.25" max="3" step="0.05" value="1"><span class="val" id="v_sg"></span>
+        <span class="nm">n</span><input type="range" id="n" min="1" max="144" step="1" value="16"><span class="val" id="v_n"></span>
+        <span class="nm">&alpha;</span>
+        <span><span class="alphas" id="abtns"></span><input type="range" id="as" class="hide" min="0.005" max="0.25" step="0.005" value="0.05"></span>
+        <span class="val" id="v_a"></span>
+      </div>
+      <div class="work" id="work"></div>
+      <div class="btns">
+        <button type="button" id="pin">Freeze for comparison</button>
+        <button type="button" id="unpin">Clear frozen</button>
+        <button type="button" id="reset">Back to the opening values</button>
+      </div>
+      <div class="cmp" id="cmp"></div>
+    </div>
+  </div>
+</main>
+
+<script>
+(function () {
+  // ---------- normal distribution ----------
+  // Phi via erfc (Numerical Recipes erfcc, |error| < 1.2e-7) with x = |z|/sqrt(2)
+  function Phi(z) { var x = Math.abs(z) / Math.SQRT2, t = 1 / (1 + 0.5 * x);
+    var e = t * Math.exp(-x * x - 1.26551223 + t * (1.00002368 + t * (0.37409196 + t * (0.09678418 +
+      t * (-0.18628806 + t * (0.27886807 + t * (-1.13520398 + t * (1.48851587 + t * (-0.82215223 + t * 0.17087277)))))))));
+    return z >= 0 ? 1 - e / 2 : e / 2; }
+  function qnorm(p) { // Acklam
+    var a = [-39.69683028665376, 220.9460984245205, -275.9285104469687, 138.3577518672690, -30.66479806614716, 2.506628277459239],
+        b = [-54.47609879822406, 161.5858368580409, -155.6989798598866, 66.80131188771972, -13.28068155288572],
+        c = [-0.007784894002430293, -0.3223964580411365, -2.400758277161838, -2.549732539343734, 4.374664141464968, 2.938163982698783],
+        d = [0.007784695709041462, 0.3224671290700398, 2.445134137142996, 3.754408661907416], q, r;
+    if (p < 0.02425) { q = Math.sqrt(-2 * Math.log(p)); return (((((c[0]*q+c[1])*q+c[2])*q+c[3])*q+c[4])*q+c[5]) / ((((d[0]*q+d[1])*q+d[2])*q+d[3])*q+1); }
+    if (p > 0.97575) { q = Math.sqrt(-2 * Math.log(1 - p)); return -(((((c[0]*q+c[1])*q+c[2])*q+c[3])*q+c[4])*q+c[5]) / ((((d[0]*q+d[1])*q+d[2])*q+d[3])*q+1); }
+    q = p - 0.5; r = q * q;
+    return (((((a[0]*r+a[1])*r+a[2])*r+a[3])*r+a[4])*r+a[5])*q / (((((b[0]*r+b[1])*r+b[2])*r+b[3])*r+b[4])*r+1);
+  }
+  function dn(x, m, s) { var z = (x - m) / s; return Math.exp(-z * z / 2) / (s * Math.sqrt(2 * Math.PI)); }
+
+  // ---------- state ----------
+  var DEF = { mu0: 5, ms: 5.5, sg: 1, n: 16, a: 0.05 };   // mu0 fixed at the p13 power example value
+  var S = Object.assign({}, DEF), ghost = null;
+  var ALPHAS = [0.01, 0.025, 0.05, 0.10];
+  var $ = function (id) { return document.getElementById(id); };
+  var O = { layout: 'B', below: true, round: 'deck' };   // Nirav 2026-11-19: picture + curve, mu* <= mu0 allowed, deck rounding
+
+  function zalpha(a) { return -qnorm(a); }
+  function f2(x) { return (Math.round(x * 100) / 100).toFixed(2); }
+  function fx(x, d) { return x.toFixed(d); }
+  function compute(st) {
+    var se = st.sg / Math.sqrt(st.n), za = zalpha(st.a), xc = st.mu0 + za * se;
+    var zb = (xc - st.ms) / se, beta = Phi(zb);
+    var r = { se: se, za: za, xc: xc, zb: zb, beta: beta, pow: 1 - beta };
+    if (O.round === 'deck') { // as a student would: round cutoff, then z, then read the table
+      r.xcR = Math.round(xc * 100) / 100; r.zbR = Math.round((r.xcR - st.ms) / se * 100) / 100;
+      r.betaR = Math.round(Phi(r.zbR) * 100) / 100; r.powR = Math.round((1 - r.betaR) * 100) / 100;
+    } else { r.xcR = xc; r.zbR = zb; r.betaR = beta; r.powR = 1 - beta; }
+    return r;
+  }
+  function D(x) { return O.round === 'deck' ? f2(x) : fx(x, 4); }
+
+  // ---------- svg helpers ----------
+  var NS = 'http://www.w3.org/2000/svg';
+  function el(p, tag, at, txt) { var e = document.createElementNS(NS, tag); for (var k in at) e.setAttribute(k, at[k]); if (txt != null) e.textContent = txt; p.appendChild(e); return e; }
+  function txt(p, x, y, parts, at) { // parts: [[text, {baseline-shift, font-size, ...}], ...]
+    var t = el(p, 'text', Object.assign({ x: x, y: y }, at || {}));
+    parts.forEach(function (pt) { var s = el(t, 'tspan', pt[1] || {}); s.textContent = pt[0]; });
+    return t;
+  }
+  var SUB = { 'baseline-shift': 'sub', 'font-size': '0.72em' }, SUP = { 'baseline-shift': 'super', 'font-size': '0.72em' };
+  function lbl(name) { // axis-label pieces
+    if (name === 'mu0') return [['μ'], ['0', SUB]];
+    if (name === 'ms') return [['μ'], ['*', SUP]];
+    if (name === 'xc') return [['X̄'], ['c', SUB]];
+  }
+
+  // ---------- picture ----------
+  var W = 900, L = 24, R = 876, T = 18, B = 330;
+  function range() { return [S.mu0 - 1.5, S.mu0 + 2.5]; }
+  function drawPic() {
+    var svg = $('pic'); svg.innerHTML = '';
+    var rg = range(), lo = rg[0], hi = rg[1], r = compute(S), se = r.se;
+    var peak = dn(0, 0, se); if (ghost) peak = Math.max(peak, dn(0, 0, ghost.r.se));
+    var X = function (x) { return L + (x - lo) / (hi - lo) * (R - L); };
+    var Y = function (y) { return B - y / (peak * 1.22) * (B - T); };
+    var N = 360;
+    function area(m, s, a, b, fill) {
+      a = Math.max(a, lo); b = Math.min(b, hi); if (b <= a) return;
+      var d = 'M' + X(a) + ',' + B;
+      for (var i = 0; i <= N; i++) { var x = a + (b - a) * i / N; d += 'L' + X(x).toFixed(1) + ',' + Y(dn(x, m, s)).toFixed(1); }
+      el(svg, 'path', { d: d + 'L' + X(b) + ',' + B + 'Z', fill: fill, stroke: 'none' });
+    }
+    function curve(m, s, stroke, extra) {
+      var d = '';
+      for (var i = 0; i <= N; i++) { var x = lo + (hi - lo) * i / N; d += (i ? 'L' : 'M') + X(x).toFixed(1) + ',' + Y(dn(x, m, s)).toFixed(1); }
+      el(svg, 'path', Object.assign({ d: d, fill: 'none', stroke: stroke, 'stroke-width': 3 }, extra || {}));
+    }
+    // ghost (frozen) first, underneath
+    if (ghost) {
+      var g = ghost;
+      curve(g.st.mu0, g.r.se, 'var(--ghost)', { 'stroke-dasharray': '6 5', 'stroke-width': 2 });
+      curve(g.st.ms, g.r.se, 'var(--ghost)', { 'stroke-dasharray': '6 5', 'stroke-width': 2 });
+      if (g.r.xc > lo && g.r.xc < hi) el(svg, 'line', { x1: X(g.r.xc), x2: X(g.r.xc), y1: B, y2: T + 30, stroke: 'var(--ghost)', 'stroke-dasharray': '2 5', 'stroke-width': 2 });
+    }
+    area(S.ms, se, lo, r.xc, 'var(--betafill)');
+    area(S.ms, se, r.xc, hi, 'var(--powfill)');
+    area(S.mu0, se, r.xc, hi, 'var(--rejfill)');
+    curve(S.mu0, se, 'var(--null)');
+    curve(S.ms, se, 'var(--alt)');
+    el(svg, 'line', { x1: L, x2: R, y1: B, y2: B, class: 'ax' });
+    if (r.xc < hi) el(svg, 'line', { x1: X(r.xc), x2: X(r.xc), y1: B, y2: T + 12, stroke: 'var(--ink)', 'stroke-dasharray': '7 6', 'stroke-width': 1.6 });
+
+    // ticks: row 1 = mu0 and Xbar_c, row 2 = mu* (as in ht_power_setup)
+    function tick(x, row, name, val) {
+      if (x < lo || x > hi) return;
+      el(svg, 'line', { x1: X(x), x2: X(x), y1: B, y2: B + 8, class: 'ax' });
+      var y = B + 32 + row * 46;
+      var t = txt(svg, X(x), y, lbl(name).concat([[' = ' + val]]), { class: 'tk', 'text-anchor': 'middle' });
+      return t;
+    }
+    tick(S.mu0, 0, 'mu0', fmtIn(S.mu0));
+    tick(r.xc, 0, 'xc', D(r.xcR));
+    tick(S.ms, 1, 'ms', fmtIn(S.ms));
+    txt(svg, R, B + 32, [['X̄']], { class: 'tkm', 'text-anchor': 'end' });
+
+    // curve labels
+    var yl = T + 16;
+    txt(svg, X(S.mu0) - 10, yl, [['X̄ if μ = μ'], ['0', SUB]], { fill: 'var(--null)', 'font-size': 20, 'text-anchor': 'end', 'font-family': 'var(--sans)' });
+    txt(svg, X(S.ms) + 10, yl + (Math.abs(S.ms - S.mu0) < 0.35 ? 26 : 0), [['X̄ if μ = μ'], ['*', SUP]], { fill: 'var(--alt)', 'font-size': 20, 'text-anchor': 'start', 'font-family': 'var(--sans)' });
+
+    // region labels, only where the region is wide enough to hold them
+    var bx = Math.max(lo + 0.05, S.ms - 1.6 * se), by = (bx + r.xc) / 2;
+    if (r.beta > 0.04 && X(r.xc) - X(bx) > 40) txt(svg, X(by), Y(dn(by, S.ms, se)) + 0.55 * (B - Y(dn(by, S.ms, se))), [['β']], { fill: 'var(--alt)', 'font-size': 26, 'font-weight': 700, 'text-anchor': 'middle', 'font-family': 'var(--sans)' });
+    var px = Math.min(hi - 0.05, Math.max(r.xc, S.ms) + 0.9 * se), pmid = (r.xc + px) / 2;
+    if (r.pow > 0.06 && X(px) - X(r.xc) > 50) txt(svg, X(Math.max(pmid, r.xc + 0.6 * se)), B - 0.42 * (B - Y(dn(Math.max(pmid, r.xc + 0.6 * se), S.ms, se))), [['1 − β']], { fill: '#fff', 'font-size': 22, 'font-weight': 700, 'text-anchor': 'middle', 'font-family': 'var(--sans)' });
+    if (r.xc < hi - 0.05) txt(svg, X(r.xc) + 6, B - 8, [['α']], { fill: '#fff', 'font-size': 24, 'font-weight': 700, 'font-family': 'var(--sans)' });
+
+    // legend
+    var lx = L + 4, ly = T + 56, items = [['var(--rejfill)', 'α = ' + fmtA(S.a)], ['var(--betafill)', 'β = ' + D(r.betaR)], ['var(--powfill)', (S.ms > S.mu0 ? 'power = ' : 'Pr(reject) = ') + D(r.powR)]];
+    items.forEach(function (it, i) {
+      el(svg, 'rect', { x: lx, y: ly + i * 30 - 15, width: 20, height: 18, fill: it[0] });
+      txt(svg, lx + 28, ly + i * 30, [[it[1]]], { class: 'tk' });
+    });
+    if (ghost) txt(svg, lx, ly + 3 * 30 + 4, [['dashed grey = frozen']], { class: 'tkm' });
+  }
+
+  // ---------- power curve (layout B) ----------
+  function drawPC() {
+    var svg = $('pc'); svg.innerHTML = '';
+    if (O.layout !== 'B') { svg.classList.add('hide'); return; }
+    svg.classList.remove('hide');
+    var rg = range(), lo = rg[0], hi = rg[1], r = compute(S), PT = 24, PB = 200;
+    var X = function (x) { return L + (x - lo) / (hi - lo) * (R - L); };
+    var Y = function (p) { return PB - p * (PB - PT); };
+    [0, 0.5, 1].forEach(function (p) {
+      el(svg, 'line', { x1: L + 44, x2: R, y1: Y(p), y2: Y(p), stroke: 'var(--line)', 'stroke-width': 1 });
+      txt(svg, L + 38, Y(p) + 6, [[p.toFixed(p === 0.5 ? 1 : 0)]], { class: 'tkm', 'text-anchor': 'end' });
+    });
+    function pline(st, rr, stroke, extra) {
+      var d = '', a = Math.max(lo, O.below ? lo : st.mu0);
+      for (var i = 0; i <= 300; i++) { var m = a + (hi - a) * i / 300; var p = 1 - Phi((rr.xc - m) / rr.se);
+        d += (i ? 'L' : 'M') + Math.max(X(m), L + 44).toFixed(1) + ',' + Y(p).toFixed(1); }
+      el(svg, 'path', Object.assign({ d: d, fill: 'none', stroke: stroke, 'stroke-width': 3 }, extra || {}));
+    }
+    if (ghost) pline(ghost.st, ghost.r, 'var(--ghost)', { 'stroke-dasharray': '6 5', 'stroke-width': 2 });
+    el(svg, 'line', { x1: L + 44, x2: R, y1: Y(S.a), y2: Y(S.a), stroke: 'var(--rej)', 'stroke-dasharray': '4 5', 'stroke-width': 1.5 });
+    txt(svg, R, Y(S.a) - 6, [['α']], { fill: 'var(--rej)', 'font-size': 18, 'text-anchor': 'end', 'font-family': 'var(--sans)' });
+    pline(S, r, 'var(--alt)');
+    var cx = X(S.ms), cy = Y(r.pow);
+    el(svg, 'line', { x1: cx, x2: cx, y1: PB, y2: cy, stroke: 'var(--alt)', 'stroke-dasharray': '3 4', 'stroke-width': 1.5 });
+    el(svg, 'circle', { cx: cx, cy: cy, r: 8, fill: 'var(--alt)', stroke: 'var(--bg)', 'stroke-width': 2 });
+    el(svg, 'line', { x1: L + 44, x2: R, y1: PB, y2: PB, class: 'ax' });
+    [['mu0', S.mu0], ['ms', S.ms]].forEach(function (k) { if (k[1] >= lo && k[1] <= hi)
+      txt(svg, X(k[1]), PB + 28 + (k[0] === 'ms' && Math.abs(S.ms - S.mu0) < 0.3 ? 24 : 0), lbl(k[0]), { class: 'tk', 'text-anchor': 'middle' }); });
+    txt(svg, L + 50, PT - 6, [['power = Pr(reject H'], ['0', SUB], [' | μ = μ'], ['*', SUP], [') as μ'], ['*', SUP], [' varies']], { class: 'tkm' });
+  }
+
+  // ---------- worked numbers (deck p13 / p15 form) ----------
+  function fmtIn(x) { return (Math.round(x * 100) / 100).toString(); }
+  function fmtA(a) { return (Math.round(a * 1000) / 1000).toString(); }
+  function seStr() { var s = fmtIn(S.sg), rt = Math.sqrt(S.n);
+    var nice = Math.abs(rt - Math.round(rt)) < 1e-9 ? fmtIn(S.sg) + '/' + Math.round(rt) : s + '/√' + S.n;
+    return nice + ' = ' + fx(S.sg / rt, 4).replace(/0+$/, '').replace(/\.$/, ''); }
+  function drawWork() {
+    var r = compute(S), za = fx(r.za, 3), H = '';
+    H += '<p>&sigma;<sub><span class="xb">X</span></sub> = &sigma;/&radic;n = ' + seStr() + '</p>';
+    H += '<p><span class="xb">X</span><sub>c</sub> = &mu;<sub>0</sub> + Z<sub>' + fmtA(S.a) + '</sub>&sigma;/&radic;n = ' + fmtIn(S.mu0) + ' + ' + za + ' &times; ' + fx(r.se, 4).replace(/0+$/, '').replace(/\.$/, '') + ' = ' + D(r.xcR) + '</p>';
+    var cond = '&mu; = ' + fmtIn(S.ms);
+    H += '<p>&beta; = Pr(<span class="xb">X</span> &le; ' + D(r.xcR) + ' | ' + cond + ') = Pr(Z &le; ' + (O.round === 'deck' ? f2(r.zbR) : fx(r.zbR, 4)) + ') = ' + D(r.betaR) + '</p>';
+    if (S.ms > S.mu0) H += '<p class="big">Power = 1 &minus; &beta; = ' + D(r.powR) + '</p>';
+    else if (Math.abs(S.ms - S.mu0) < 1e-9) H += '<p class="big">Pr(reject H<sub>0</sub>) = ' + D(r.powR) + ' = &alpha;</p><p class="warn">&mu;<sup>*</sup> = &mu;<sub>0</sub>: H<sub>0</sub> is true, so rejecting is a Type I error.</p>';
+    else H += '<p class="big">Pr(reject H<sub>0</sub>) = ' + D(r.powR) + ' &lt; &alpha;</p><p class="warn">&mu;<sup>*</sup> &lt; &mu;<sub>0</sub> is not in H<sub>1</sub>: this is not power.</p>';
+    $('work').innerHTML = H;
+    $('cmp').innerHTML = ghost ? 'Frozen: power ' + D(ghost.r.powR) + ' &rarr; now ' + D(r.powR) + ' (' + diffText(ghost.st) + ')' : '';
+  }
+  function diffText(g) { var c = [];
+    [['mu0', '&mu;<sub>0</sub>'], ['ms', '&mu;<sup>*</sup>'], ['sg', '&sigma;'], ['n', 'n'], ['a', '&alpha;']].forEach(function (k) {
+      if (Math.abs(g[k[0]] - S[k[0]]) > 1e-9) c.push(k[1] + ' ' + (k[0] === 'a' ? fmtA(g.a) : fmtIn(g[k[0]])) + ' &rarr; ' + (k[0] === 'a' ? fmtA(S.a) : fmtIn(S[k[0]]))); });
+    return c.length ? c.join(', ') : 'nothing changed'; }
+
+  // ---------- controls ----------
+  ALPHAS.forEach(function (a) { var b = document.createElement('button'); b.type = 'button'; b.textContent = a.toString(); b.dataset.a = a;
+    b.onclick = function () { S.a = a; $('as').value = a; render(); }; $('abtns').appendChild(b); });
+  function syncInputs() {
+    $('sg').value = S.sg; $('n').value = S.n; $('as').value = S.a;
+    var msMin = O.below ? S.mu0 - 1 : S.mu0 + 0.05;
+    $('ms').min = msMin; $('ms').max = S.mu0 + 2;
+    if (S.ms < +$('ms').min) S.ms = +$('ms').min; if (S.ms > +$('ms').max) S.ms = +$('ms').max;
+    $('ms').value = S.ms;
+  }
+  function render() {
+    syncInputs();
+    $('v_ms').textContent = fmtIn(S.ms); $('v_sg').textContent = fmtIn(S.sg);
+    $('v_n').textContent = S.n; $('v_a').textContent = fmtA(S.a);
+    Array.prototype.forEach.call($('abtns').children, function (b) { b.classList.toggle('on', Math.abs(+b.dataset.a - S.a) < 1e-9); });
+    drawPic(); drawPC(); drawWork();
+  }
+  [['ms', 'ms'], ['sg', 'sg'], ['n', 'n'], ['as', 'a']].forEach(function (p) {
+    $(p[0]).addEventListener('input', function () {
+      var v = +this.value;
+      S[p[1]] = v;
+      render(); });
+  });
+  $('pin').onclick = function () { ghost = { st: Object.assign({}, S), r: compute(S) }; render(); };
+  $('unpin').onclick = function () { ghost = null; render(); };
+  $('reset').onclick = function () { S = Object.assign({}, DEF); ghost = null; render(); };
+
+  render();
+})();
+</script>
+</body>
+</html>
