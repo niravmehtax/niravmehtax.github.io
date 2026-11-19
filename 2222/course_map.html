@@ -3,9 +3,9 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<!-- MOCK-UP (2026-10-21, not adopted): course map leading with wages only; incentive example as a Nov 5 signpost. -->
+<!-- Course map, posted to niravmehtax.github.io/2222/. Revised 2026-11-06 (one parameter first) and 2026-11-19 (plan E dates; NCT references checked against the 8e/9e contents). -->
 <style>body{margin:0}</style>
-<title>Course Map (draft)</title>
+<title>Course Map</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Libre+Franklin:wght@500;650;750&family=Source+Serif+4:ital,opsz,wght@0,8..60,400;0,8..60,600;1,8..60,400&family=IBM+Plex+Mono:wght@400;500&display=swap">
@@ -92,9 +92,9 @@ table.road td.when { white-space: nowrap; color: var(--muted); font-size: .85rem
 <div class="tools"><button id="bigtext" type="button" aria-pressed="false">Larger text (for projecting)</button></div>
 
 <header>
-  <div class="eyebrow">Econ 2222A · Read before class, Thursday Oct 22</div>
+  <div class="eyebrow">Econ 2222A · Updated Thursday Nov 19</div>
   <h1>Course Map</h1>
-  <p class="lede">I designed this to show how the different parts of this course fit together at a high level. We start Thursday's class here, then go straight to random sampling.</p>
+  <p class="lede">I designed this to show how the different parts of this course fit together at a high level. Updated Nov 19: we finish one parameter (estimation, then hypothesis tests, ending with power) before comparing two populations.</p>
 </header>
 
 <h2><span class="step">1</span>Motivation</h2>
@@ -115,7 +115,7 @@ table.road td.when { white-space: nowrap; color: var(--muted); font-size: .85rem
   <li><strong>Other aspects:</strong> for example, skewness</li>
 </ul>
 
-<p>In this course, we will focus on the population mean, here the mean wage \(\mu\). As a measure of central tendency (or "typical" values), it is informative about the underlying distribution. It also connects with economic concepts such as efficiency. Fixing hours worked (the same for everyone), multiply the mean hourly wage by those hours and by the number of people and you get total income, so the mean tells us about the size of the pie. If the pie gets bigger, we might be able to find transfers from those who gain to those who lose so that everyone is at least as well off and someone is better off (a Pareto improvement). We'll discuss on Nov 5 (NCT Chapter 8) how we can model differences between populations using the mean difference.</p>
+<p>In this course, we will focus on the population mean, here the mean wage \(\mu\). As a measure of central tendency (or "typical" values), it is informative about the underlying distribution. It also connects with economic concepts such as efficiency. Fixing hours worked (the same for everyone), multiply the mean hourly wage by those hours and by the number of people and you get total income, so the mean tells us about the size of the pie. If the pie gets bigger, we might be able to find transfers from those who gain to those who lose so that everyone is at least as well off and someone is better off (a Pareto improvement). We'll discuss on Nov 19 and 26 (NCT Chapters 8 and 10) how we can model differences between populations using the mean difference.</p>
 
 <h2><span class="step">2</span>We can't see the whole population, so we sample</h2>
 <p>To learn about \(\mu\) we need data on wages. Getting information on everyone in the population is expensive, or may even be infeasible. So we take a <strong>random sample</strong> from the population. The idea is to cover the units in the population well enough to build a representative picture of what's going on.</p>
@@ -147,41 +147,41 @@ table.road td.when { white-space: nowrap; color: var(--muted); font-size: .85rem
     <text class="inf-t" x="320" y="270" text-anchor="middle"><tspan font-weight="700">Inference</tspan> (NCT Chapters 7 to 10, from Oct 29):</text>
     <text class="inf-t" x="320" y="288" text-anchor="middle">given the data, what can be said about the truth</text>
   </svg></div>
-  <figcaption>On Thursday we fix \(\mu\) and \(\sigma^2\) and derive the (approximate) distribution of the sample mean \(\overline{X}\). The results apply to any population, not just wages. From Oct 29 we go the other way.</figcaption>
+  <figcaption>On Oct 22 we fixed \(\mu\) and \(\sigma^2\) and derived the (approximate) distribution of the sample mean \(\overline{X}\). The results apply to any population, not just wages. From Oct 29 we went the other way.</figcaption>
 </figure>
 
 <p>Course map, by topic (dates tentative):</p>
 <div class="scroll">
 <table class="road">
   <tr><td>Sep 10 to Oct 20</td><td><strong>NCT Chapters 1 to 5.</strong> Describing data (Chapters 1 and 2). Then probability and random variables: discrete, Binomial, two at once, continuous, normal (Chapters 3 to 5). These are the tools for "given the truth, how are the data distributed?"</td></tr>
-  <tr class="now"><td>Oct 22 (Thu)</td><td><strong>Chapter 6. Sampling and the sample mean.</strong> Random sampling. Given \(\mu\) and \(\sigma^2\), the distribution of \(\overline{X}\). The sample proportion (which can tell us about another kind of mean, the success proportion \(\pi\) for Binomial random variables) follows on Oct 29.</td></tr>
-  <tr><td>Oct 29, Nov 3</td><td><strong>Chapter 7. Estimating one parameter.</strong> Given \(\overline{x}\), an estimate of \(\mu\) and a confidence interval for it.</td></tr>
-  <tr><td>Nov 5</td><td><strong>Chapter 8. Comparing two populations.</strong> A confidence interval for the difference between two population means.</td></tr>
-  <tr><td>Nov 12 to 26</td><td><strong>Chapters 9 and 10. Hypothesis tests</strong>, for one parameter and for two populations. We assume a value for the truth and use probability to ask how surprising our data would be if it were true.</td></tr>
+  <tr><td>Oct 22</td><td><strong>Chapter 6. Sampling and the sample mean.</strong> Random sampling. Given \(\mu\) and \(\sigma^2\), the distribution of \(\overline{X}\). The sample proportion (which can tell us about another kind of mean, the success proportion \(\pi\) for Binomial random variables) follows on Oct 29.</td></tr>
+  <tr><td>Oct 29 to Nov 5</td><td><strong>Chapter 7. Estimating one parameter.</strong> What makes a good estimator (unbiasedness, efficiency). Given \(\overline{x}\), an estimate of \(\mu\) and a confidence interval for it; the same for a proportion \(\pi\). How large a sample we need is worked through on Homework 5.</td></tr>
+  <tr><td>Nov 12 to 19</td><td><strong>Chapter 9. Hypothesis tests for one parameter.</strong> We assume a value for the truth and use probability to ask how surprising our data would be if it were true. p-values; two-sided tests and how they line up with confidence intervals; a proportion; power.</td></tr>
+  <tr class="now"><td>Nov 19, 26</td><td><strong>Chapters 8 and 10. Comparing two populations.</strong> Two independent samples. A confidence interval and then a hypothesis test for the difference between two population means (Nov 19; the test may move to Nov 26), and a confidence interval and a test for two proportions (Nov 26).</td></tr>
   <tr><td>Econ 2223</td><td>Regression. The slope of a line of best fit is a mean-like statistic too, and the same steps apply.</td></tr>
 </table>
 </div>
 
 
 <section class="next">
-  <h2>Next, in class: random sampling</h2>
-  <p>A random sample can teach us about \(\mu\) as long as it gives a good enough picture of the population. On Thursday we say exactly what makes a sample random, and then work out how the sample mean behaves. In class we'll also use a simulation of the sample mean (clt.html, linked on Brightspace), so bring a phone or laptop if you can.</p>
+  <h2>Next, in class: power, then comparing two populations</h2>
+  <p>On Thursday Nov 19 we finish one parameter with power, then start comparing two populations: a confidence interval for the difference between two means, then a test. Quiz 5 is on Tuesday Nov 24 (tests for one parameter through power, plus estimators and sample size). On Thursday Nov 26 we finish comparing two populations with proportions. Quiz 6 (comparing two populations) is on Tuesday Dec 1. Thursday Dec 3 is a practice final, and Tuesday Dec 8 is a review session.</p>
 </section>
 
 <section class="chapters">
   <h2>The textbook chapters (dates tentative)</h2>
-  <p class="cite">NCT is Newbold, Carlson and Thorne, <em>Statistics for Business and Economics</em>. The 7th and 8th editions use the same chapter numbers.</p>
+  <p class="cite">NCT is Newbold, Carlson and Thorne, <em>Statistics for Business and Economics</em>. The 7th and 8th editions use the same chapter numbers, with one exception: sample size is in Chapter 7 of the 8th edition (Section 7.7) but in Chapter 8 of the 7th (Section 8.4).</p>
   <div class="scroll">
   <table class="road">
     <tr><td>Ch. 1 and 2</td><td>Describing data</td><td class="when">Sep 10</td></tr>
     <tr><td>Ch. 3</td><td>Probability</td><td class="when">Sep 15 to 24</td></tr>
     <tr><td>Ch. 4</td><td>Discrete random variables, the Binomial, two random variables</td><td class="when">Sep 24 to Oct 1</td></tr>
     <tr><td>Ch. 5</td><td>Continuous random variables, the normal</td><td class="when">Oct 8, Oct 20</td></tr>
-    <tr class="now"><td>Ch. 6</td><td>Sampling and the sample mean; the sample proportion</td><td class="when">Oct 22, Oct 29</td></tr>
-    <tr><td>Ch. 7</td><td>Estimating one parameter</td><td class="when">Oct 29, Nov 3</td></tr>
-    <tr><td>Ch. 8</td><td>Comparing two populations</td><td class="when">Nov 5</td></tr>
+    <tr><td>Ch. 6</td><td>Sampling and the sample mean; the sample proportion</td><td class="when">Oct 20 to 29</td></tr>
+    <tr><td>Ch. 7</td><td>Estimating one parameter (sample size: Homework 5)</td><td class="when">Oct 29 to Nov 5</td></tr>
+    <tr class="now"><td>Ch. 8</td><td>Confidence intervals, two populations</td><td class="when">Nov 19, Nov 26</td></tr>
     <tr><td>Ch. 9</td><td>Hypothesis tests, one parameter</td><td class="when">Nov 12 to 19</td></tr>
-    <tr><td>Ch. 10</td><td>Hypothesis tests, two populations</td><td class="when">Nov 19, Nov 26</td></tr>
+    <tr class="now"><td>Ch. 10</td><td>Hypothesis tests, two populations (the Nov 19 test may move to Nov 26)</td><td class="when">Nov 19, Nov 26</td></tr>
   </table>
   </div>
 </section>
